@@ -1,0 +1,761 @@
+[gd_scene load_steps=31 format=2]
+
+[ext_resource path="res://Scripts/Helm.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Platform/Ship.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Platform/NavTerm.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/pulse1.png" type="Texture" id=4]
+[ext_resource path="res://Scenes/Players/Player1.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Players/Player2.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scripts/Ship.gd" type="Script" id=7]
+[ext_resource path="res://Scenes/Players/Player3.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/Platform/SheildTerminal.tscn" type="PackedScene" id=9]
+[ext_resource path="res://assets/unnamed-6.png" type="Texture" id=10]
+[ext_resource path="res://Scenes/Platform/Transporter.tscn" type="PackedScene" id=11]
+[ext_resource path="res://assets/ship.png" type="Texture" id=12]
+[ext_resource path="res://assets/CosmicLilac_Tiles.png" type="Texture" id=13]
+[ext_resource path="res://Scenes/Platform/PropoTerminal.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Scenes/Platform/Gunners.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Scenes/Platform/Repairs.tscn" type="PackedScene" id=16]
+[ext_resource path="res://assets/ship (2).png" type="Texture" id=17]
+[ext_resource path="res://Scenes/Players/Player4.tscn" type="PackedScene" id=18]
+[ext_resource path="res://assets/HitboxIndicator.png" type="Texture" id=19]
+
+[sub_resource type="Animation" id=24]
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.00041949, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=25]
+resource_name = "pulse"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ) ]
+}
+
+[sub_resource type="TileSet" id=33]
+1/name = "ship.png 1"
+1/texture = ExtResource( 12 )
+1/tex_offset = Vector2( 0, 0 )
+1/modulate = Color( 1, 1, 1, 1 )
+1/region = Rect2( 276, 276, 24, 23 )
+1/tile_mode = 0
+1/occluder_offset = Vector2( 0, 0 )
+1/navigation_offset = Vector2( 0, 0 )
+1/shape_offset = Vector2( 0, 0 )
+1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+1/shape_one_way = false
+1/shape_one_way_margin = 0.0
+1/shapes = [  ]
+1/z_index = 0
+2/name = "ship.png 2"
+2/texture = ExtResource( 12 )
+2/tex_offset = Vector2( 0, 0 )
+2/modulate = Color( 1, 1, 1, 1 )
+2/region = Rect2( 250, 301, 75, 24 )
+2/tile_mode = 0
+2/occluder_offset = Vector2( 0, 0 )
+2/navigation_offset = Vector2( 0, 0 )
+2/shape_offset = Vector2( 0, 0 )
+2/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+2/shape_one_way = false
+2/shape_one_way_margin = 0.0
+2/shapes = [  ]
+2/z_index = 0
+3/name = "ship.png 3"
+3/texture = ExtResource( 12 )
+3/tex_offset = Vector2( 0, 0 )
+3/modulate = Color( 1, 1, 1, 1 )
+3/region = Rect2( 426, 175, 49, 25 )
+3/tile_mode = 0
+3/occluder_offset = Vector2( 0, 0 )
+3/navigation_offset = Vector2( 0, 0 )
+3/shape_offset = Vector2( 0, 0 )
+3/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+3/shape_one_way = false
+3/shape_one_way_margin = 0.0
+3/shapes = [  ]
+3/z_index = 0
+4/name = "ship.png 4"
+4/texture = ExtResource( 12 )
+4/tex_offset = Vector2( 0, 0 )
+4/modulate = Color( 1, 1, 1, 1 )
+4/region = Rect2( 374, 425, 26, 49 )
+4/tile_mode = 0
+4/occluder_offset = Vector2( 0, 0 )
+4/navigation_offset = Vector2( 0, 0 )
+4/shape_offset = Vector2( 0, 0 )
+4/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+4/shape_one_way = false
+4/shape_one_way_margin = 0.0
+4/shapes = [  ]
+4/z_index = 0
+5/name = "ship.png 5"
+5/texture = ExtResource( 12 )
+5/tex_offset = Vector2( 0, 0 )
+5/modulate = Color( 1, 1, 1, 1 )
+5/region = Rect2( 450, 424, 24, 51 )
+5/tile_mode = 0
+5/occluder_offset = Vector2( 0, 0 )
+5/navigation_offset = Vector2( 0, 0 )
+5/shape_offset = Vector2( 0, 0 )
+5/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+5/shape_one_way = false
+5/shape_one_way_margin = 0.0
+5/shapes = [  ]
+5/z_index = 0
+6/name = "ship.png 6"
+6/texture = ExtResource( 12 )
+6/tex_offset = Vector2( 0, 0 )
+6/modulate = Color( 1, 1, 1, 1 )
+6/region = Rect2( 400, 425, 14, 7 )
+6/tile_mode = 0
+6/occluder_offset = Vector2( 0, 0 )
+6/navigation_offset = Vector2( 0, 0 )
+6/shape_offset = Vector2( 0, 0 )
+6/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+6/shape_one_way = false
+6/shape_one_way_margin = 0.0
+6/shapes = [  ]
+6/z_index = 0
+7/name = "ship.png 7"
+7/texture = ExtResource( 12 )
+7/tex_offset = Vector2( 0, 0 )
+7/modulate = Color( 1, 1, 1, 1 )
+7/region = Rect2( 400, 432, 12, 4 )
+7/tile_mode = 0
+7/occluder_offset = Vector2( 0, 0 )
+7/navigation_offset = Vector2( 0, 0 )
+7/shape_offset = Vector2( 0, 0 )
+7/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+7/shape_one_way = false
+7/shape_one_way_margin = 0.0
+7/shapes = [  ]
+7/z_index = 0
+8/name = "ship.png 8"
+8/texture = ExtResource( 12 )
+8/tex_offset = Vector2( 0, 0 )
+8/modulate = Color( 1, 1, 1, 1 )
+8/region = Rect2( 400, 436, 10, 2 )
+8/tile_mode = 0
+8/occluder_offset = Vector2( 0, 0 )
+8/navigation_offset = Vector2( 0, 0 )
+8/shape_offset = Vector2( 0, 0 )
+8/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+8/shape_one_way = false
+8/shape_one_way_margin = 0.0
+8/shapes = [  ]
+8/z_index = 0
+9/name = "ship.png 9"
+9/texture = ExtResource( 12 )
+9/tex_offset = Vector2( 0, 0 )
+9/modulate = Color( 1, 1, 1, 1 )
+9/region = Rect2( 400, 438, 8, 1 )
+9/tile_mode = 0
+9/occluder_offset = Vector2( 0, 0 )
+9/navigation_offset = Vector2( 0, 0 )
+9/shape_offset = Vector2( 0, 0 )
+9/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+9/shape_one_way = false
+9/shape_one_way_margin = 0.0
+9/shapes = [  ]
+9/z_index = 0
+10/name = "ship.png 10"
+10/texture = ExtResource( 12 )
+10/tex_offset = Vector2( 0, 0 )
+10/modulate = Color( 1, 1, 1, 1 )
+10/region = Rect2( 400, 439, 6, 1 )
+10/tile_mode = 0
+10/occluder_offset = Vector2( 0, 0 )
+10/navigation_offset = Vector2( 0, 0 )
+10/shape_offset = Vector2( 0, 0 )
+10/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+10/shape_one_way = false
+10/shape_one_way_margin = 0.0
+10/shapes = [  ]
+10/z_index = 0
+11/name = "ship.png 11"
+11/texture = ExtResource( 12 )
+11/tex_offset = Vector2( 0, 0 )
+11/modulate = Color( 1, 1, 1, 1 )
+11/region = Rect2( 392, 423, 21, 2 )
+11/tile_mode = 0
+11/occluder_offset = Vector2( 0, 0 )
+11/navigation_offset = Vector2( 0, 0 )
+11/shape_offset = Vector2( 0, 0 )
+11/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+11/shape_one_way = false
+11/shape_one_way_margin = 0.0
+11/shapes = [  ]
+11/z_index = 0
+12/name = "ship.png 12"
+12/texture = ExtResource( 12 )
+12/tex_offset = Vector2( 0, 0 )
+12/modulate = Color( 1, 1, 1, 1 )
+12/region = Rect2( 393, 421, 19, 2 )
+12/tile_mode = 0
+12/occluder_offset = Vector2( 0, 0 )
+12/navigation_offset = Vector2( 0, 0 )
+12/shape_offset = Vector2( 0, 0 )
+12/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+12/shape_one_way = false
+12/shape_one_way_margin = 0.0
+12/shapes = [  ]
+12/z_index = 0
+13/name = "ship.png 13"
+13/texture = ExtResource( 12 )
+13/tex_offset = Vector2( 0, 0 )
+13/modulate = Color( 1, 1, 1, 1 )
+13/region = Rect2( 394, 419, 16, 2 )
+13/tile_mode = 0
+13/occluder_offset = Vector2( 0, 0 )
+13/navigation_offset = Vector2( 0, 0 )
+13/shape_offset = Vector2( 0, 0 )
+13/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+13/shape_one_way = false
+13/shape_one_way_margin = 0.0
+13/shapes = [  ]
+13/z_index = 0
+14/name = "ship.png 14"
+14/texture = ExtResource( 12 )
+14/tex_offset = Vector2( 0, 0 )
+14/modulate = Color( 1, 1, 1, 1 )
+14/region = Rect2( 399, 417, 7, 2 )
+14/tile_mode = 0
+14/occluder_offset = Vector2( 0, 0 )
+14/navigation_offset = Vector2( 0, 0 )
+14/shape_offset = Vector2( 0, 0 )
+14/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+14/shape_one_way = false
+14/shape_one_way_margin = 0.0
+14/shapes = [  ]
+14/z_index = 0
+15/name = "ship.png 15"
+15/texture = ExtResource( 12 )
+15/tex_offset = Vector2( 0, 0 )
+15/modulate = Color( 1, 1, 1, 1 )
+15/region = Rect2( 435, 422, 5, 2 )
+15/tile_mode = 0
+15/occluder_offset = Vector2( 0, 0 )
+15/navigation_offset = Vector2( 0, 0 )
+15/shape_offset = Vector2( 0, 0 )
+15/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+15/shape_one_way = false
+15/shape_one_way_margin = 0.0
+15/shapes = [  ]
+15/z_index = 0
+16/name = "ship.png 16"
+16/texture = ExtResource( 12 )
+16/tex_offset = Vector2( 0, 0 )
+16/modulate = Color( 1, 1, 1, 1 )
+16/region = Rect2( 434, 424, 22, 8 )
+16/tile_mode = 0
+16/occluder_offset = Vector2( 0, 0 )
+16/navigation_offset = Vector2( 0, 0 )
+16/shape_offset = Vector2( 0, 0 )
+16/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+16/shape_one_way = false
+16/shape_one_way_margin = 0.0
+16/shapes = [  ]
+16/z_index = 0
+17/name = "ship.png 17"
+17/texture = ExtResource( 12 )
+17/tex_offset = Vector2( 0, 0 )
+17/modulate = Color( 1, 1, 1, 1 )
+17/region = Rect2( 435, 432, 5, 2 )
+17/tile_mode = 0
+17/occluder_offset = Vector2( 0, 0 )
+17/navigation_offset = Vector2( 0, 0 )
+17/shape_offset = Vector2( 0, 0 )
+17/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+17/shape_one_way = false
+17/shape_one_way_margin = 0.0
+17/shapes = [  ]
+17/z_index = 0
+18/name = "ship.png 18"
+18/texture = ExtResource( 12 )
+18/tex_offset = Vector2( 0, 0 )
+18/modulate = Color( 1, 1, 1, 1 )
+18/region = Rect2( 440, 417, 9, 22 )
+18/tile_mode = 0
+18/occluder_offset = Vector2( 0, 0 )
+18/navigation_offset = Vector2( 0, 0 )
+18/shape_offset = Vector2( 0, 0 )
+18/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+18/shape_one_way = false
+18/shape_one_way_margin = 0.0
+18/shapes = [  ]
+18/z_index = 0
+19/name = "ship.png 19"
+19/texture = ExtResource( 12 )
+19/tex_offset = Vector2( 0, 0 )
+19/modulate = Color( 1, 1, 1, 1 )
+19/region = Rect2( 438, 417, 2, 5 )
+19/tile_mode = 0
+19/occluder_offset = Vector2( 0, 0 )
+19/navigation_offset = Vector2( 0, 0 )
+19/shape_offset = Vector2( 0, 0 )
+19/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+19/shape_one_way = false
+19/shape_one_way_margin = 0.0
+19/shapes = [  ]
+19/z_index = 0
+20/name = "ship.png 20"
+20/texture = ExtResource( 12 )
+20/tex_offset = Vector2( 0, 0 )
+20/modulate = Color( 1, 1, 1, 1 )
+20/region = Rect2( 438, 434, 1, 3 )
+20/tile_mode = 0
+20/occluder_offset = Vector2( 0, 0 )
+20/navigation_offset = Vector2( 0, 0 )
+20/shape_offset = Vector2( 0, 0 )
+20/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+20/shape_one_way = false
+20/shape_one_way_margin = 0.0
+20/shapes = [  ]
+20/z_index = 0
+21/name = "ship.png 21"
+21/texture = ExtResource( 12 )
+21/tex_offset = Vector2( 0, 0 )
+21/modulate = Color( 1, 1, 1, 1 )
+21/region = Rect2( 83, 425, 82, 52 )
+21/tile_mode = 0
+21/occluder_offset = Vector2( 0, 0 )
+21/navigation_offset = Vector2( 0, 0 )
+21/shape_offset = Vector2( 0, 0 )
+21/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+21/shape_one_way = false
+21/shape_one_way_margin = 0.0
+21/shapes = [  ]
+21/z_index = 0
+22/name = "ship.png 22"
+22/texture = ExtResource( 12 )
+22/tex_offset = Vector2( 0, 0 )
+22/modulate = Color( 1, 1, 1, 1 )
+22/region = Rect2( 165, 427, 6, 47 )
+22/tile_mode = 0
+22/occluder_offset = Vector2( 0, 0 )
+22/navigation_offset = Vector2( 0, 0 )
+22/shape_offset = Vector2( 0, 0 )
+22/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+22/shape_one_way = false
+22/shape_one_way_margin = 0.0
+22/shapes = [  ]
+22/z_index = 0
+23/name = "ship.png 23"
+23/texture = ExtResource( 12 )
+23/tex_offset = Vector2( 0, 0 )
+23/modulate = Color( 1, 1, 1, 1 )
+23/region = Rect2( 77, 427, 6, 46 )
+23/tile_mode = 0
+23/occluder_offset = Vector2( 0, 0 )
+23/navigation_offset = Vector2( 0, 0 )
+23/shape_offset = Vector2( 0, 0 )
+23/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+23/shape_one_way = false
+23/shape_one_way_margin = 0.0
+23/shapes = [  ]
+23/z_index = 0
+24/name = "ship.png 24"
+24/texture = ExtResource( 12 )
+24/tex_offset = Vector2( 0, 0 )
+24/modulate = Color( 1, 1, 1, 1 )
+24/region = Rect2( 104, 175, 68, 25 )
+24/tile_mode = 0
+24/occluder_offset = Vector2( 0, 0 )
+24/navigation_offset = Vector2( 0, 0 )
+24/shape_offset = Vector2( 0, 0 )
+24/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+24/shape_one_way = false
+24/shape_one_way_margin = 0.0
+24/shapes = [  ]
+24/z_index = 0
+25/name = "ship.png 25"
+25/texture = ExtResource( 12 )
+25/tex_offset = Vector2( 0, 0 )
+25/modulate = Color( 1, 1, 1, 1 )
+25/region = Rect2( 275, 175, 49, 25 )
+25/tile_mode = 0
+25/occluder_offset = Vector2( 0, 0 )
+25/navigation_offset = Vector2( 0, 0 )
+25/shape_offset = Vector2( 0, 0 )
+25/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+25/shape_one_way = false
+25/shape_one_way_margin = 0.0
+25/shapes = [  ]
+25/z_index = 0
+26/name = "ship.png 26"
+26/texture = ExtResource( 12 )
+26/tex_offset = Vector2( 0, 0 )
+26/modulate = Color( 1, 1, 1, 1 )
+26/region = Rect2( 303, 170, 4, 7 )
+26/tile_mode = 0
+26/occluder_offset = Vector2( 0, 0 )
+26/navigation_offset = Vector2( 0, 0 )
+26/shape_offset = Vector2( 0, 0 )
+26/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+26/shape_one_way = false
+26/shape_one_way_margin = 0.0
+26/shapes = [  ]
+26/z_index = 0
+
+[sub_resource type="TileSet" id=34]
+0/name = "CosmicLilac_Tiles.png 0"
+0/texture = ExtResource( 13 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 160, 0, 32, 32 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+
+[sub_resource type="Animation" id=35]
+resource_name = "Pulse"
+length = 0.16
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 7, 5 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -398, -6.00178 ) ]
+}
+
+[sub_resource type="Animation" id=36]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0.99, 0.99 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.858824, 0.858824, 0.858824, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -271, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath(".:frame")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=37]
+resource_name = "StopStart"
+length = 5.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="CapsuleShape2D" id=38]
+radius = 10.9999
+height = 52.0
+
+[sub_resource type="CircleShape2D" id=39]
+radius = 19.0
+
+[sub_resource type="Animation" id=40]
+length = 0.3
+
+[sub_resource type="Animation" id=41]
+resource_name = "pulse"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0.227451 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[node name="KinematicBody2D" type="KinematicBody2D"]
+collision/safe_margin = 0.001
+script = ExtResource( 7 )
+
+[node name="Base" type="Sprite" parent="."]
+position = Vector2( -2, 0 )
+z_index = 1
+texture = ExtResource( 17 )
+
+[node name="Lights" type="Sprite" parent="."]
+modulate = Color( 1, 0.999162, 0.999162, 1 )
+position = Vector2( -124, 3 )
+scale = Vector2( 13, 13 )
+texture = ExtResource( 10 )
+offset = Vector2( 9.61539, -0.307692 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Lights"]
+autoplay = "RESET"
+anims/RESET = SubResource( 24 )
+anims/pulse = SubResource( 25 )
+
+[node name="Player1" parent="." instance=ExtResource( 5 )]
+position = Vector2( 148, 163 )
+z_index = 1
+
+[node name="TileMap" type="TileMap" parent="."]
+modulate = Color( 1, 1, 1, 0.909804 )
+z_index = 3
+tile_set = SubResource( 33 )
+cell_size = Vector2( 1, 1 )
+format = 1
+tile_data = PoolIntArray( -6881252, 26, 0, -6488235, 24, 0, -6553600, 25, 0, -6553449, 3, 0, 65537, 1, 0, 131073, 1, 0, 196608, 1, 0, 196609, 1, 0, 1769447, 2, 0, 9306236, 14, 0, 9306275, 19, 0, 9306277, 18, 0, 9306278, 9, 0, 9371773, 9, 0, 9371775, 10, 0, 9371812, 9, 0, 9437303, 13, 0, 9437347, 20, 0, 9437348, 9, 0, 9502882, 20, 0, 9568374, 12, 0, 9568417, 20, 0, 9633952, 15, 0, 9699445, 11, 0, 9765023, 16, 0, 9765039, 5, 0, 9895744, 21, 0, 9830499, 4, 0, 9830525, 6, 0, 10026810, 23, 0, 10026898, 22, 0, 10223742, 7, 0, 10223776, 20, 0, 10223779, 9, 0, 10289312, 9, 0, 10289313, 20, 0, 10289314, 9, 0, 10354812, 9, 0, 10354849, 14, 0, 10354850, 20, 0, 10354851, 14, 0, 10354852, 9, 0, 10420348, 9, 0, 10420386, 9, 0, 10420387, 14, 0, 10485884, 9, 0, 10485886, 9, 0, 10485889, 9, 0, 10485923, 9, 0, 10485924, 14, 0, 10485925, 9, 0, 10551420, 9, 0, 10551423, 9, 0, 10616956, 9, 0, 10682492, 9, 0, 10748029, 10, 0, 10944645, 0, 0 )
+
+[node name="TileMap2" type="TileMap" parent="."]
+z_index = 1
+tile_set = SubResource( 34 )
+cell_size = Vector2( 1, 1 )
+format = 1
+tile_data = PoolIntArray( 10944645, 0, 0 )
+
+[node name="Gunners" parent="." instance=ExtResource( 15 )]
+
+[node name="SheildTerminal" parent="." instance=ExtResource( 9 )]
+position = Vector2( -2, 1 )
+
+[node name="Transporter" parent="." instance=ExtResource( 11 )]
+
+[node name="NavTerminal" parent="." instance=ExtResource( 3 )]
+
+[node name="PropoTerminal" parent="." instance=ExtResource( 14 )]
+
+[node name="Repairs" parent="." instance=ExtResource( 16 )]
+position = Vector2( -3, -1 )
+
+[node name="Engine" type="Area2D" parent="."]
+rotation = -6.28319
+z_index = -1
+
+[node name="Visible" type="Sprite" parent="Engine"]
+visible = false
+modulate = Color( 0.858824, 0.858824, 0.858824, 1 )
+position = Vector2( -271, 1 )
+scale = Vector2( 0.99, 0.99 )
+z_index = -1
+texture = ExtResource( 4 )
+flip_v = true
+vframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Engine/Visible"]
+autoplay = "StopStart"
+anims/Pulse = SubResource( 35 )
+anims/RESET = SubResource( 36 )
+anims/StopStart = SubResource( 37 )
+
+[node name="Helm" type="Area2D" parent="."]
+script = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Helm"]
+position = Vector2( 12, 36 )
+rotation = 1.5708
+shape = SubResource( 38 )
+
+[node name="HelmBody" type="KinematicBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HelmBody"]
+position = Vector2( 31, 43 )
+rotation = 0.764454
+shape = SubResource( 39 )
+one_way_collision = true
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="HelmBody"]
+position = Vector2( -5, 44 )
+rotation = -0.572468
+shape = SubResource( 39 )
+one_way_collision = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[node name="Ship" parent="." instance=ExtResource( 2 )]
+z_index = 1
+
+[node name="Player4" parent="." instance=ExtResource( 18 )]
+position = Vector2( 148, 174 )
+z_index = 1
+
+[node name="Player3" parent="." instance=ExtResource( 8 )]
+position = Vector2( 149, 169 )
+z_index = 1
+
+[node name="Player2" parent="." instance=ExtResource( 6 )]
+position = Vector2( 148, 166 )
+z_index = 1
+
+[node name="HitBoxIndicator" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0.227451 )
+position = Vector2( 0, -7.50001 )
+scale = Vector2( 2.09375, 2.11562 )
+texture = ExtResource( 19 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HitBoxIndicator"]
+autoplay = "pulse"
+playback_speed = 0.25
+anims/RESET = SubResource( 40 )
+anims/pulse = SubResource( 41 )
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="Hitbox" type="CollisionPolygon2D" parent="Area2D"]
+position = Vector2( -3.55185, -0.500057 )
+scale = Vector2( 1.89637, 1.87322 )
+build_mode = 1
+polygon = PoolVector2Array( 0.818327, -170.028, 43.5315, -165.223, 83.6081, -148.141, 120.521, -119.847, 146.36, -85.6813, 165.343, -44.0418, 170.089, -1.33457, 164.816, 44.0418, 145.832, 86.7491, 121.048, 119.847, 84.1354, 145.471, 43.5315, 163.622, 1.34565, 169.494, -45.5861, 162.021, -86.7173, 146.539, -122.048, 117.178, -144.723, 84.6137, -162.652, 42.9742, -168.98, -1.86841, -164.234, -43.5079, -146.832, -86.749, -120.466, -120.381, -86.7173, -144.938, -46.1134, -162.554, -0.763643, -170.562, -1, -176, -49, -168, -90, -149, -124, -123, -152, -90, -171, -45, -176, -2, -171, 45, -152, 89, -128, 122, -90, 153, -49, 169, 1, 176, 46, 170, 88, 152, 126, 124, 151, 89, 170, 45, 175, -2, 171, -45, 151, -89, 124, -124, 87, -153, 45, -170, 0, -176 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2( -2, -7 )
+scale = Vector2( 1.4, 1.4 )
+polygon = PoolVector2Array( -167, -172, -111, -219, -46, -242, -3, -244, 45, -242, 122, -211, 169, -166, 157, -152, 104, -203, 38, -224, -49, -220, -103, -193, -151, -155 )
+one_way_collision = true
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="."]
+position = Vector2( -1, 12 )
+rotation = 3.14159
+scale = Vector2( 1.4, 1.4 )
+polygon = PoolVector2Array( -167, -172, -111, -219, -46, -242, 45, -242, 122, -211, 169, -166, 157, -152, 104, -203, 38, -224, -49, -220, -103, -193, -151, -155 )
+one_way_collision = true
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="."]
+position = Vector2( -11, 1 )
+rotation = -1.5708
+scale = Vector2( 1.4, 1.4 )
+polygon = PoolVector2Array( -174.736, -163.159, -111, -219, -46, -242, 45, -242, 122, -211, 182.106, -157.894, 166.316, -143.157, 104, -203, 38, -224, -2.10525, -224.211, -49, -220, -103, -193, -165.263, -150.527 )
+one_way_collision = true
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
+position = Vector2( 18, 5 )
+rotation = 1.5708
+scale = Vector2( 1.4, 1.4 )
+polygon = PoolVector2Array( -180.001, -163.157, -111, -219, -46, -242, -8.8889, -246.667, 45, -242, 122, -211, 176.842, -160.001, 162.105, -145.264, 104, -203, 38, -224, -49, -220, -103, -193, -165.264, -151.578 )
+one_way_collision = true
+
+[connection signal="area_entered" from="Helm" to="." method="_on_Helm_area_entered"]
+[connection signal="area_exited" from="Helm" to="." method="_on_Helm_area_exited"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]

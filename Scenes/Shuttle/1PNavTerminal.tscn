@@ -1,0 +1,169 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Scripts/Minimap.gd" type="Script" id=1]
+[ext_resource path="res://assets/frame.png" type="Texture" id=2]
+[ext_resource path="res://Scenes/Players/PlayerUI/HealthUI.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/background.png" type="Texture" id=4]
+[ext_resource path="res://assets/rl.png" type="Texture" id=5]
+[ext_resource path="res://assets/tb.png" type="Texture" id=6]
+[ext_resource path="res://assets/player.png" type="Texture" id=7]
+[ext_resource path="res://assets/LargeSpace.png" type="Texture" id=8]
+[ext_resource path="res://assets/7-noise-texture-overlays-3.png" type="Texture" id=9]
+
+[sub_resource type="CanvasItemMaterial" id=3]
+
+[sub_resource type="NoiseTexture" id=2]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 24.0
+height = 40.0
+
+[node name="KinematicBody2D" type="KinematicBody2D"]
+z_index = 1
+script = ExtResource( 1 )
+
+[node name="ParallaxBackground3" type="ParallaxBackground" parent="."]
+layer = -1
+follow_viewport_enable = true
+follow_viewport_scale = 0.1
+scroll_ignore_camera_zoom = true
+
+[node name="Sprite4" type="Sprite" parent="ParallaxBackground3"]
+scale = Vector2( 68, 68 )
+z_index = -5
+texture = ExtResource( 8 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 10000, 10000 )
+region_filter_clip = true
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+layer = -1
+follow_viewport_enable = true
+follow_viewport_scale = 0.5
+scroll_ignore_camera_zoom = true
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground"]
+modulate = Color( 0, 0.972549, 0.972549, 0.0823529 )
+self_modulate = Color( 1, 1, 1, 0.345098 )
+show_behind_parent = true
+light_mask = 0
+material = SubResource( 3 )
+position = Vector2( 76319, 74804.2 )
+scale = Vector2( 22.4886, 31.789 )
+texture = ExtResource( 9 )
+normal_map = SubResource( 2 )
+offset = Vector2( -2073.54, -1446.54 )
+flip_v = true
+region_rect = Rect2( 100000, 10000, 0, 0 )
+
+[node name="Sprite2" type="Sprite" parent="ParallaxBackground"]
+modulate = Color( 0, 0, 0, 0.0784314 )
+self_modulate = Color( 1, 1, 1, 0.345098 )
+show_behind_parent = true
+light_mask = 0
+material = SubResource( 3 )
+position = Vector2( 76319, 74804.2 )
+scale = Vector2( 22.4886, 31.789 )
+texture = ExtResource( 9 )
+normal_map = SubResource( 2 )
+offset = Vector2( -2073.54, -1446.54 )
+flip_v = true
+region_rect = Rect2( 100000, 10000, 0, 0 )
+
+[node name="NavTerm" type="Area2D" parent="."]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="NavTerm"]
+position = Vector2( 0, 97 )
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+scale = Vector2( 10.9687, 11.1562 )
+current = true
+zoom = Vector2( 0.6, 0.6 )
+smoothing_speed = 10.0
+
+[node name="UI" type="Area2D" parent="."]
+z_index = 1
+
+[node name="HealthUI" parent="UI" instance=ExtResource( 3 )]
+margin_left = -765.0
+margin_top = -501.0
+margin_right = -705.0
+margin_bottom = -490.0
+rect_scale = Vector2( 7, 7 )
+
+[node name="Minimap" type="Area2D" parent="UI"]
+
+[node name="Sprite" type="Sprite" parent="UI/Minimap"]
+position = Vector2( 588, -322 )
+scale = Vector2( 13.8125, 12.625 )
+z_index = 2
+texture = ExtResource( 2 )
+
+[node name="Sprite2" type="Sprite" parent="UI/Minimap"]
+position = Vector2( 597, -319 )
+scale = Vector2( 11.1875, 9.875 )
+texture = ExtResource( 4 )
+
+[node name="Sprite3" type="Sprite" parent="UI/Minimap"]
+position = Vector2( 585, -329 )
+scale = Vector2( 2.75, 2.625 )
+texture = ExtResource( 7 )
+
+[node name="LeftBounds" type="Sprite" parent="UI/Minimap"]
+position = Vector2( 426, -327 )
+scale = Vector2( 3.34375, 10.4844 )
+texture = ExtResource( 5 )
+
+[node name="RightBounds" type="Sprite" parent="UI/Minimap"]
+position = Vector2( 749, -328 )
+scale = Vector2( 4.8125, 10.125 )
+texture = ExtResource( 5 )
+
+[node name="TopBounds" type="Sprite" parent="UI/Minimap"]
+position = Vector2( 584, -465 )
+scale = Vector2( 11.0312, 3.45312 )
+texture = ExtResource( 6 )
+
+[node name="BottomBounds" type="Sprite" parent="UI/Minimap"]
+position = Vector2( 596, -169 )
+scale = Vector2( 10.8594, 2.9375 )
+texture = ExtResource( 6 )
+
+[node name="ParallaxBackground2" type="ParallaxBackground" parent="."]
+layer = -1
+follow_viewport_enable = true
+follow_viewport_scale = 2.0
+scroll_ignore_camera_zoom = true
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground2"]
+modulate = Color( 0, 0.972549, 0.972549, 0.0666667 )
+self_modulate = Color( 1, 1, 1, 0.345098 )
+show_behind_parent = true
+light_mask = 0
+material = SubResource( 3 )
+position = Vector2( 59326, 37793 )
+scale = Vector2( 40.6581, 40.2425 )
+texture = ExtResource( 9 )
+normal_map = SubResource( 2 )
+offset = Vector2( -2073.54, -1446.54 )
+flip_v = true
+region_rect = Rect2( 100000, 10000, 0, 0 )
+
+[node name="Sprite2" type="Sprite" parent="ParallaxBackground2"]
+modulate = Color( 0, 0, 0, 0.0862745 )
+self_modulate = Color( 1, 1, 1, 0.345098 )
+show_behind_parent = true
+light_mask = 0
+material = SubResource( 3 )
+position = Vector2( 77059.1, 74768.8 )
+scale = Vector2( 31.7346, 39.7283 )
+texture = ExtResource( 9 )
+normal_map = SubResource( 2 )
+offset = Vector2( -2073.54, -1446.54 )
+flip_v = true
+region_rect = Rect2( 100000, 10000, 0, 0 )
+
+[connection signal="area_entered" from="NavTerm" to="." method="_on_NavTerm_area_entered"]
+[connection signal="area_exited" from="NavTerm" to="." method="_on_NavTerm_area_exited"]
