@@ -23,6 +23,7 @@ var state = ATTACK
 var velocity2 = Vector2.ZERO
 var roll_vector = Vector2.DOWN
 var init = false
+var smooth_angle = -1.6;
 
 onready var nav = $Engine/NavTerminal/
 onready var minimap = $Engine/NavTerminal/UI/
@@ -30,6 +31,8 @@ onready var player1 = $Engine/Player1
 onready var engine = $Engine
 onready var timer = $Timer
 onready var animationPlayer = $Engine/Visible/AnimationPlayer
+
+const projectile = preload('res://Scenes/Props/Projectile.tscn')
 
 onready var speedLabel = $Speed 
 
@@ -81,7 +84,18 @@ static func normalize_angle(x):
 
 
 func move_state(delta):
+
 	if working && workable:
+		if Input.is_action_just_pressed("p1_fire"):
+			var p = projectile.instance()
+			p.position = engine.position
+			p.velocity = Vector2(10, 0).rotated(smooth_angle)
+			p.rotation = smooth_angle
+			p.z_index = 2
+			p.scale = Vector2(2,2)
+			self.add_child(p)
+			
+		
 		if player1.position.x < 40:
 			working = false
 			workable = false
@@ -98,7 +112,7 @@ func move_state(delta):
 			animationPlayer.play("Pulse")
 			var target_angle = input_vector.angle()
 			
-			var smooth_angle
+
 			var lerp_speed = 5.0
 			smooth_angle = lerp_angle(engine.transform.get_rotation(), target_angle, delta*lerp_speed)
 

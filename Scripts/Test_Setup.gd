@@ -104,7 +104,14 @@ func _on_Primary_pressed():
 	saveInputs("p1_swing", current_ev)
 
 func _on_Seconday_pressed():
-	pass # Replace with function body.
+	var ev = InputEventKey.new()
+	ev = current_ev
+	print(ev)
+	if InputMap.has_action("p1_fire"):
+		InputMap.erase_action("p1_fire")
+	InputMap.add_action("p1_fire")
+	InputMap.action_add_event("p1_fire", current_ev)
+	saveInputs("p1_fire", current_ev)
 
 
 func _on_Player2Add_pressed():
