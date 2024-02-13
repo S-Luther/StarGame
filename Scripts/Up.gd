@@ -57,10 +57,10 @@ func move_state():
 	if Input.is_action_just_pressed(prefix+"_fire"):
 			var p = projectile.instance()
 			p.position = gun.position
-			p.velocity = Vector2(-10, 0).rotated(gun.transform.get_rotation())
+			p.velocity = Vector2(-5, 0).rotated(gun.transform.get_rotation())
 			p.rotation = PI+gun.transform.get_rotation()
 			p.z_index = 2
-			p.scale = Vector2(2,2)
+			p.scale = Vector2(1,1)
 			self.add_child(p)
 
 	if rad2deg(input_vector.angle()) < -30 || rad2deg(input_vector.angle()) > 270 || input_vector == Vector2.ZERO:
