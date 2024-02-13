@@ -12,6 +12,7 @@ var i = 0
 
 var state = ATTACK
 
+const projectile = preload('res://Scenes/Shared/Projectile.tscn')
 
 var workable = false
 var working = false
@@ -48,6 +49,16 @@ func move_state():
 	input_vector.y = Input.get_action_strength(prefix+"_up") - Input.get_action_strength(prefix+"_down")
 
 	input_vector = input_vector.normalized()
+	
+	if Input.is_action_just_pressed(prefix+"_fire"):
+			var p = projectile.instance()
+			p.position = gun.position
+			p.velocity = Vector2(-10, 0).rotated(gun.transform.get_rotation())
+			p.rotation = PI + gun.transform.get_rotation()
+			print(gun.transform.get_rotation())
+			p.z_index = 2
+			p.scale = Vector2(2,2)
+			self.add_child(p)
 
 	if rad2deg(input_vector.angle()) < -110 || rad2deg(input_vector.angle()) > 110 || input_vector == Vector2.ZERO:
 		pass

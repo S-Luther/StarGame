@@ -51,7 +51,7 @@ func _process(delta):
 				UI.scale = Vector2(UI.scale.x - .2,UI.scale.y - .19)
 				camera.zoom = Vector2(camera.zoom.x - .1, camera.zoom.y - .1)
 
-			if Input.is_action_just_pressed(prefix+"_up")  && camera.zoom.x < 1.3 && camera.zoom.y < 20:
+			if Input.is_action_just_pressed(prefix+"_up")  && camera.zoom.x < 10.3 && camera.zoom.y < 200:
 				#print(camera.zoom.x)
 				#print(camera.zoom.y)
 				UI.scale = Vector2(UI.scale.x + .2,UI.scale.y + .19)

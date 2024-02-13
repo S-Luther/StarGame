@@ -4,7 +4,7 @@ extends KinematicBody2D
 export var ACCELERATION = 600
 export var MAX_SPEED = 1000
 
-export var ROLL_SPEED = 100
+export var ROLL_SPEED = 10
 export var FRICTION = 1
 
 
@@ -32,7 +32,7 @@ onready var engine = $Engine
 onready var timer = $Timer
 onready var animationPlayer = $Engine/Visible/AnimationPlayer
 
-const projectile = preload('res://Scenes/Props/Projectile.tscn')
+const projectile = preload('res://Scenes/Shared/Projectile.tscn')
 
 onready var speedLabel = $Speed 
 

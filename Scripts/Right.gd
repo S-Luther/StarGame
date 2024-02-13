@@ -8,6 +8,8 @@ enum {
 	HIT
 }
 
+const projectile = preload('res://Scenes/Shared/Projectile.tscn')
+
 
 var i = 0
 
@@ -49,6 +51,15 @@ func move_state():
 	var input_vector = Vector2.ZERO
 	input_vector.x = Input.get_action_strength(prefix+"_right") - Input.get_action_strength(prefix+"_left")
 	input_vector.y = Input.get_action_strength(prefix+"_down") - Input.get_action_strength(prefix+"_up")
+
+	if Input.is_action_just_pressed(prefix+"_fire"):
+				var p = projectile.instance()
+				p.position = gun.position
+				p.velocity = Vector2(10, 0).rotated(gun.transform.get_rotation())
+				p.rotation = gun.transform.get_rotation()
+				p.z_index = 2
+				p.scale = Vector2(2,2)
+				self.add_child(p)
 
 	input_vector = input_vector.normalized()
 

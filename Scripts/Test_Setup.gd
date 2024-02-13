@@ -178,6 +178,14 @@ func _on_p2Primary_pressed():
 	saveInputs("p2_swing", ev)
 
 func _on_p2Secondary_pressed():
+	var ev = InputEventKey.new()
+	ev = current_ev
+	print(ev)
+	if InputMap.has_action("p2_fire"):
+		InputMap.erase_action("p2_fire")
+	InputMap.add_action("p2_fire")
+	InputMap.action_add_event("p2_fire", current_ev)
+	saveInputs("p2_fire", current_ev)
 	pass # Replace with function body.
 
 

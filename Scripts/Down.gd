@@ -21,6 +21,7 @@ var working = false
 
 onready var gun = $GunDown
 
+const projectile = preload('res://Scenes/Shared/Projectile.tscn')
 
 func _ready():
 	randomize()
@@ -49,6 +50,15 @@ func move_state():
 	input_vector.y = Input.get_action_strength(prefix+"_down") - Input.get_action_strength(prefix+"_up")
 
 	input_vector = input_vector.normalized()
+	
+	if Input.is_action_just_pressed(prefix+"_fire"):
+			var p = projectile.instance()
+			p.position = gun.position
+			p.velocity = Vector2(10, 0).rotated(gun.transform.get_rotation())
+			p.rotation = gun.transform.get_rotation()
+			p.z_index = 2
+			p.scale = Vector2(2,2)
+			self.add_child(p)
 
 	if rad2deg(input_vector.angle()) < -10 || input_vector == Vector2.ZERO:
 		pass
@@ -58,7 +68,7 @@ func move_state():
 		###print(rad2deg(engine.transform.get_rotation()))
 		if rad2deg(input_vector.angle()) > rad2deg(gun.transform.get_rotation()):
 			gun.rotate(.07)
-		elif rad2deg(gun.transform.get_rotation()) > 170 && rad2deg(input_vector.angle()) < -80:
+		elif rad2deg(gun.transform.get_rotation()) > 170 && rad2deg(input_vector.angle()) < 0:
 			gun.rotate(.07)
 		else:
 			gun.rotate(-.07)
