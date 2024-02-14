@@ -60,6 +60,7 @@ func move_state():
 				p.z_index = 2
 				p.scale = Vector2(1,1)
 				self.add_child(p)
+				p.add_to_group("shots")
 
 	input_vector = input_vector.normalized()
 

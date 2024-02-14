@@ -62,6 +62,7 @@ func move_state():
 			p.z_index = 2
 			p.scale = Vector2(1,1)
 			self.add_child(p)
+			p.add_to_group("shots")
 
 	if rad2deg(input_vector.angle()) < -30 || rad2deg(input_vector.angle()) > 270 || input_vector == Vector2.ZERO:
 		pass

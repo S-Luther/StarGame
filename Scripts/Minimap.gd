@@ -14,6 +14,7 @@ onready var TopBounds = $UI/Minimap/TopBounds
 onready var BottomBounds = $UI/Minimap/BottomBounds
 const PlanetMarker = preload('res://Scenes/Props/PlanetMarker.tscn')
 const AsteroidMarker = preload('res://Scenes/Props/AsteroidMarker.tscn')
+const ShotMarker = preload('res://Scenes/Props/ShotMarker.tscn')
 
 var prefix = ""
 
@@ -27,6 +28,7 @@ func _process(delta):
 		var player = get_owner()
 		var asteroids = []
 		var planets = []
+		var shots = []
 #		var LeftBD = player.get_p osition().x - get_tree().get_nodes_in_group("LeftB")[0].get_position().x
 #		var RightBD = player.get_position().x - get_tree().get_nodes_in_group("RightB")[0].get_position().x
 #		var TopBD = player.get_position().y - get_tree().get_nodes_in_group("TopB")[0].get_position().y
@@ -37,7 +39,10 @@ func _process(delta):
 		for object in get_tree().get_nodes_in_group("planets"):
 			if(player.get_position().distance_to(object.get_position())<5000):
 				planets.append(object.get_position())
-#		self.radar(player.get_position(),asteroids,planets,abs(LeftBD),abs(RightBD),abs(TopBD),abs(BottomBD))	
+		for object in get_tree().get_nodes_in_group("shots"):
+			if(player.get_position().distance_to(object.get_position())<5000):
+				shots.append(object.get_position())
+		self.radar(player.get_position(),asteroids,planets,shots)	
 	if navWorkable:
 		if navWorking:
 			minimap.visible = true
@@ -64,7 +69,7 @@ func _process(delta):
 		minimap.visible = false
 		pass
 		
-func radar(player,asteroids,planets,LeftBD,RightBD,TopBD,BottomBD):
+func radar(player,asteroids,planets,shots):
 	#left 426 - 584
 	#right 752 - 588
 	#top -468 - -333
@@ -95,23 +100,32 @@ func radar(player,asteroids,planets,LeftBD,RightBD,TopBD,BottomBD):
 		#print(planetm.position)
 		minimap.add_child(asteroidm)
 		asteroidm.add_to_group("asteroidsm")
+		
+	for shot in shots:
+
+		var shotm = ShotMarker.instance()
+
+		shotm.position = Vector2(510 + (1 - (player.x - shot.x)/5000) * 158, -130 + ((1 - (shot.y - player.y)/5000) * -156))
+
+		minimap.add_child(shotm)
+		shotm.add_to_group("asteroidsm")
 	
-	if LeftBD > 5000:
-		LeftBounds.position.x = 426
-	else:
-		LeftBounds.position.x = 426 + (1 - LeftBD/5000) * 158
-	if RightBD > 5000:
-		RightBounds.position.x = 752
-	else:
-		RightBounds.position.x = 752 - (1 - RightBD/5000) * 158
-	if TopBD > 5000:
-		TopBounds.position.y = -468
-	else:
-		TopBounds.position.y = -468 + (1 - TopBD/5000) * 135
-	if BottomBD > 5000:
-		BottomBounds.position.y = -169
-	else:
-		BottomBounds.position.y = -169 + ((1 - BottomBD/5000) * -156)
+#	if LeftBD > 5000:
+#		LeftBounds.position.x = 426
+#	else:
+#		LeftBounds.position.x = 426 + (1 - LeftBD/5000) * 158
+#	if RightBD > 5000:
+#		RightBounds.position.x = 752
+#	else:
+#		RightBounds.position.x = 752 - (1 - RightBD/5000) * 158
+#	if TopBD > 5000:
+#		TopBounds.position.y = -468
+#	else:
+#		TopBounds.position.y = -468 + (1 - TopBD/5000) * 135
+#	if BottomBD > 5000:
+#		BottomBounds.position.y = -169
+#	else:
+#		BottomBounds.position.y = -169 + ((1 - BottomBD/5000) * -156)
 			
 func crash():
 	navWorkable = false

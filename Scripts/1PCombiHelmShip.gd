@@ -94,6 +94,7 @@ func move_state(delta):
 			p.z_index = 2
 			p.scale = Vector2(2,2)
 			self.add_child(p)
+			p.add_to_group("shots")
 			
 		
 		if player1.position.x < 40:

@@ -5438,7 +5438,8 @@ var extensions = [
     "shire",
     "ford",
     "port",
-    "peak"
+    "peak",
+    ""
 ]
 
 var factions = [
@@ -5681,9 +5682,7 @@ function genSim(steps){
         else{
             genStep();
         }
-
     }
-    
 }
 
 function findPlaceByName(placeName){
@@ -5692,7 +5691,6 @@ function findPlaceByName(placeName){
             return i;
         }
     }
-
 }
 
 function cleanStep(residents){
@@ -5906,34 +5904,40 @@ function generateMap(rooms,services){
             roomCoords.push({x,y})
             if(myGrid[x][y] === undefined)
                 myGrid[x][y] = (i<services.length) ? services[i] : " X";
-            myGrid[x][y+1] = "║"
-            myGrid[x][y-1] = "║"
-            myGrid[x-1][y] = "══"
+            myGrid[x][y+1] = "|"
+            myGrid[x][y-1] = "|"
+            myGrid[x-1][y] = "=="
 
-            myGrid[x-1][y-1] = "╔"
-            myGrid[x-1][y+1] = "╗"
+            myGrid[x-1][y-1] = "|-"
+            myGrid[x-1][y+1] = "-|"
 
-            myGrid[x+1][y] = "══"
+            myGrid[x+1][y] = "=="
 
-            myGrid[x+1][y-1] = "╚"
-            myGrid[x+1][y+1] = "╝"
+            myGrid[x+1][y-1] = "|-"
+            myGrid[x+1][y+1] = "-|"
         }
 
 
 
 
     }
-    // console.log(roomCoords)
+    console.log(roomCoords)
 
     for(var i =0; i<rooms*2; i++){
         var temp = myGrid[i]
+        var s = "";
         for(var j =0; j<rooms*2; j++){
-            // if(temp[j] === undefined)
-            //     // process.stdout.write((Math.floor(Math.random() * 7)===1)?".":" ");
-            // else
-            //     process.stdout.write(temp[j]);
+            if(temp[j] === undefined){
+                s += (Math.floor(Math.random() * 7)===1)?".":" "
+                // console.log((Math.floor(Math.random() * 7)===1)?".":" ");
+            }
+            else{
+                s += temp[j];
+            }
+
         }
-        // process.stdout.write("\n");
+        console.log(s);
+
 
     }
 
