@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 var spawnDuration = Timer.new()
+var activeWait = Timer.new()
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -8,8 +9,17 @@ var spawnDuration = Timer.new()
 
 var velocity = Vector2.ZERO
 
+onready var animationPlayer = $Area2D/Sprite/ProjectilePlayer
+onready var collider = $CollisionShape2D
+
+#onready var animationTree = $Sprite/ProjectileTree
+#onready var animationState = animationTree.get('parameters/playback')
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	self.add_child(activeWait)
+	activeWait.one_shot = true
+	activeWait.start(.3)
 	self.add_child(spawnDuration)
 	spawnDuration.one_shot = true
 	spawnDuration.start(4)
@@ -17,9 +27,25 @@ func _ready():
 	set_process(true)
 
 	
+	
 func _process(delta):
-	move_and_collide(velocity)
+	
+	var collision = move_and_collide(velocity)
+	if collision:
+		collider.disabled = true;
+		velocity = Vector2.ZERO
+		animationPlayer.play("Hit")
+
+		
+#		queue_free()
+	
 	if spawnDuration.is_stopped():
 		queue_free()
+	if activeWait.is_stopped():
+		collider.disabled = false;
 
+func hit_animation_finished():
+	queue_free()
 
+func _on_Area2D_area_entered(area):
+	pass

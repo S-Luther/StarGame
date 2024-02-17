@@ -6,20 +6,17 @@ extends KinematicBody2D
 # var b = "text"
 
 
+
 var velocity = Vector2()
-var prevelocity = Vector2()
+
+
+func ready():
+	pass
+		
 func _process(delta):
+#	move_and_collide(velocity)
+	
+	pass
+	
 
-	var collision = move_and_collide(velocity * delta)
-	if collision:
-		if collision.collider_velocity == Vector2.ZERO:
-			
-			velocity = prevelocity*collision.get_angle()
-		else:	
-			velocity = collision.collider_velocity
-			print(collision.collider_rid)
-			print(collision.collider_metadata)
-			print(collision.collider_shape)
-
-	prevelocity = -velocity
 		

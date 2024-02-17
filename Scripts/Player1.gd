@@ -37,6 +37,7 @@ onready var animationState = animationTree.get("parameters/playback")
 func _ready():
 	randomize()
 	animationPlayer.play(colors[0])
+	self.add_to_group("player")
 	#stats.connect("no_health", self, "queue_free")
 	animationTree.active = true
 

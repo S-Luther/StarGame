@@ -351,7 +351,7 @@ position = Vector2( 0.999996, 1 )
 rotation = 1.5708
 
 [node name="KinematicBody2D2" parent="Engine" instance=ExtResource( 7 )]
-position = Vector2( 0.999986, 4 )
+position = Vector2( -2.33335, 4.33332 )
 rotation = 1.5708
 
 [node name="Hitbox" type="KinematicBody2D" parent="Engine"]
@@ -359,14 +359,17 @@ position = Vector2( 0.999996, 1 )
 rotation = 1.5708
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Engine/Hitbox"]
-polygon = PoolVector2Array( -8, -176, -149, 128, -149, 176, 147, 179, 149, 125, 2, -179, 6, -175, 155, 126, 152, 182, -155, 179, -155, 127, -12, -180, 5.96046e-08, -180 )
+position = Vector2( 3.00001, -3.12798 )
+scale = Vector2( 1.22177, 1.12799 )
+polygon = PoolVector2Array( -8, -176, -145.963, 102.064, -149, 176, 147, 179, 141.052, 92.6082, 2, -179, 6, -175, 148.145, 83.7429, 152, 182, -155, 179, -155.784, 97.3363, -12, -180, 5.96046e-08, -180 )
+disabled = true
 
 [node name="Gunner" type="Area2D" parent="Engine"]
-position = Vector2( 0.999996, 1 )
+position = Vector2( 1.00001, -1.66666 )
 rotation = 1.5708
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Engine/Gunner"]
-position = Vector2( -1, 124 )
+position = Vector2( -2.66666, 118.667 )
 rotation = 1.5708
 shape = SubResource( 8 )
 
@@ -379,7 +382,7 @@ __meta__ = {
 }
 
 [node name="GunDown" type="Sprite" parent="Engine/Down"]
-position = Vector2( 0, 9 )
+position = Vector2( 0, 1 )
 rotation = 1.5708
 texture = ExtResource( 4 )
 
