@@ -32,7 +32,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0.00041949, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ) ]
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0.234375, 0, 1 ) ]
 }
 
 [sub_resource type="Animation" id=25]
@@ -594,11 +594,12 @@ tracks/0/keys = {
 }
 
 [node name="KinematicBody2D" type="KinematicBody2D"]
+z_index = 3
 collision/safe_margin = 0.001
 script = ExtResource( 7 )
 
 [node name="Base" type="Sprite" parent="."]
-position = Vector2( -2, 0 )
+position = Vector2( -2, -2 )
 z_index = 1
 texture = ExtResource( 17 )
 
@@ -620,6 +621,7 @@ z_index = 1
 
 [node name="TileMap" type="TileMap" parent="."]
 modulate = Color( 1, 1, 1, 0.909804 )
+position = Vector2( -2, -2 )
 z_index = 3
 tile_set = SubResource( 33 )
 cell_size = Vector2( 1, 1 )
@@ -641,6 +643,7 @@ position = Vector2( -2, 1 )
 [node name="Transporter" parent="." instance=ExtResource( 11 )]
 
 [node name="NavTerminal" parent="." instance=ExtResource( 3 )]
+position = Vector2( 6, 0 )
 
 [node name="PropoTerminal" parent="." instance=ExtResource( 14 )]
 
@@ -684,7 +687,7 @@ shape = SubResource( 39 )
 one_way_collision = true
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="HelmBody"]
-position = Vector2( -5, 44 )
+position = Vector2( -13, 44 )
 rotation = -0.572468
 shape = SubResource( 39 )
 one_way_collision = true

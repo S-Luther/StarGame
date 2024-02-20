@@ -47,7 +47,7 @@ position = Vector2( 1077, 282 )
 shape = SubResource( 2 )
 
 [node name="Nav" parent="ShipBase" instance=ExtResource( 4 )]
-position = Vector2( 957, 166 )
+position = Vector2( 958, 165 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ShipBase/Nav"]
 position = Vector2( 9, -19 )
