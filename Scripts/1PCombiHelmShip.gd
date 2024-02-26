@@ -182,6 +182,8 @@ func move():
 	for i in get_slide_count():
 		var collision = get_slide_collision(i)
 		has_collided = true;
+		if collision.get_collider() is KinematicBody2D:
+			collision.get_collider().hit()
 #		print("Collided with: ", collisions)
 
 

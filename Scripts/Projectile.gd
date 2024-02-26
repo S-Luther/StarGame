@@ -30,7 +30,7 @@ func _ready():
 	
 func _process(delta):
 	
-	var collision = move_and_collide(velocity)
+	var collision = move_and_collide(velocity,false)
 	if collision:
 		collider.disabled = true;
 		velocity = Vector2.ZERO
@@ -43,6 +43,11 @@ func _process(delta):
 		queue_free()
 	if activeWait.is_stopped():
 		collider.disabled = false;
+
+func hit():
+	collider.disabled = true;
+	velocity = Vector2.ZERO
+	animationPlayer.play("Hit")
 
 func hit_animation_finished():
 	queue_free()

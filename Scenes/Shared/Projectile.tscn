@@ -90,6 +90,7 @@ rotation = 1.5708
 script = ExtResource( 2 )
 
 [node name="Area2D" type="Area2D" parent="."]
+position = Vector2( 19, -6.10352e-05 )
 
 [node name="Sprite" type="Sprite" parent="Area2D"]
 position = Vector2( 65.5, 1.00013 )
@@ -110,7 +111,7 @@ active = true
 parameters/playback = SubResource( 10 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 89, 1.99968 )
+position = Vector2( 108, 1.99962 )
 shape = SubResource( 5 )
 disabled = true
 
