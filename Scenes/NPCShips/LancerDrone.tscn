@@ -5,6 +5,7 @@
 [ext_resource path="res://assets/explosion-6.png" type="Texture" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
+radius = 10.6301
 
 [sub_resource type="Animation" id=2]
 resource_name = "Hit"
@@ -106,6 +107,7 @@ script = ExtResource( 2 )
 position = Vector2( -3.2, 0.2 )
 rotation = -1.5708
 shape = SubResource( 1 )
+disabled = true
 
 [node name="Sprite" type="Sprite" parent="."]
 rotation = 1.5708

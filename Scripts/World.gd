@@ -158,7 +158,7 @@ func _ready():
 		var rng = RandomNumberGenerator.new()
 		rng.randomize()
 
-		drone.position = Vector2(rng.randi_range(sep*2,-sep*2), rng.randi_range(sep*2,-sep*2))
+		drone.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
 		drone.z_index = 0
 		self.add_child(drone)
 		drone.add_to_group("drones")

@@ -18,6 +18,7 @@ func set_max_hearts(value):
 		heartUIEmpty.rect_size.x = max_hearts * 15
 
 func _ready():
+	self.add_to_group("life");
 	self.max_hearts = 4
 	self.hearts = 4
 	# warning-ignore:return_value_discarded

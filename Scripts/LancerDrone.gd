@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-var SPEED = 50
+var SPEED = 100
 
 var attack_timer = Timer.new()
 var pause_timer = Timer.new()
@@ -35,25 +35,40 @@ func _ready():
 	
 
 func _physics_process(delta):
+#	print((self.velocity - get_tree().get_nodes_in_group("player")[0].global_position).angle(), " - ", self.velocity.angle())
+	var upper = abs(rad2deg(get_tree().get_nodes_in_group("player")[0].global_position.angle_to_point(self.global_position))) + 15
+	var lower = abs(rad2deg(get_tree().get_nodes_in_group("player")[0].global_position.angle_to_point(self.global_position)))  - 15
+
+
+#
+
 	if attack_timer.is_stopped():
-		attack_timer.start(4)
+		attack_timer.start(1)
 		rng.randomize()
 		randomnum = rng.randf()
-		state = ATTACK
+#		print("(", lower, ", ", upper, ")", " - ", rad2deg(self.velocity.angle()))
+		if abs(rad2deg(self.velocity.angle())) > lower:
+#			print("one ", rad2deg(self.velocity.angle()), " > ", lower)
+			if abs(rad2deg(self.velocity.angle())) < upper:
+#				print("two ", rad2deg(self.velocity.angle()), " < ", upper)
+				if self.global_position.distance_to(get_tree().get_nodes_in_group("player")[0].global_position) < 1000:
+					state = ATTACK
+
+
 	
 	match state:
 		SURROUND:
 			move(get_circle_position(randomnum), delta)
 		ATTACK:
-#			var p = projectile.instance()
-#			p.position = global_position
-#			p.velocity = Vector2(10, 0).rotated(velocity.angle())
-#			p.rotation = velocity.angle()
-#			p.z_index = 2
-#			p.scale = Vector2(2,2)
-#			add_child(p)
-#			p.add_to_group("shots")
-
+#			print("boom")
+			var p = projectile.instance()
+			p.position = Vector2(self.position.x, self.position.y)
+			p.velocity = Vector2(20, 0).rotated(velocity.angle())
+			p.rotation = velocity.angle()
+			p.z_index = 2
+			p.scale = Vector2(1,1)
+			get_tree().get_root().add_child(p)
+			p.add_to_group("shots")
 			state = SURROUND
 
 

@@ -7,6 +7,7 @@ export var MAX_SPEED = 1000
 export var ROLL_SPEED = 10
 export var FRICTION = 1
 
+var colCheckTimer = Timer.new();
 
 enum {
 	MOVE,
@@ -40,7 +41,12 @@ var workable = false
 var working = false
 var prevelocity = Vector2()
 
+var has_collided = false;
+
 func _ready():
+	self.add_child(colCheckTimer)
+	colCheckTimer.one_shot = true
+	colCheckTimer.start(2)
 	randomize()
 	self.add_to_group("Player")
 	set_process(true)
@@ -48,6 +54,14 @@ func _ready():
 
 func _process(delta):
 	update()
+	
+	if colCheckTimer.is_stopped():
+		if has_collided:
+			var life = get_tree().get_nodes_in_group("life")[0]
+			var new_life = life.hearts - .25;
+			life.set_hearts(new_life)
+		has_collided = false;
+		colCheckTimer.start(1)
 
 	if player1.position.x >100 || player1.position.x<-100 || player1.position.y >100 || player1.position.y<-100 :
 		player1.position = Vector2.ZERO
@@ -93,7 +107,7 @@ func move_state(delta):
 			p.rotation = smooth_angle
 			p.z_index = 2
 			p.scale = Vector2(2,2)
-			self.add_child(p)
+			add_child(p)
 			p.add_to_group("shots")
 			
 		
@@ -159,11 +173,17 @@ func attack_state(delta):
 	animationPlayer.play("StopStart")
 
 	move()
-
+var collisions = 0;
 func move():
 	##print(velocity2)
 
 	velocity2 = move_and_slide(velocity2)
+	collisions = collisions + 1
+	for i in get_slide_count():
+		var collision = get_slide_collision(i)
+		has_collided = true;
+#		print("Collided with: ", collisions)
+
 
 func crash():
 	player1.crash()
@@ -184,28 +204,28 @@ func _on_Helm_area_exited(area):
 
 
 
-func _on_Engine_area_entered(area):
-	if area.name == "LeftBounds":
-		if init:
-			##print(area)
-			velocity2 = Vector2(689, 0)
-			move()
-			crash()
-	elif area.name == "RightBounds":
-		if init:
-			##print(area)
-			velocity2 = Vector2(-689, 0)
-			move()
-			crash()
-	elif area.name == "TopBounds":
-		if init:
-			##print(area)
-			velocity2 = Vector2(0,689)
-			move()
-			crash()
-	elif area.name == "BottomBounds":
-		if init:
-			##print(area)
-			velocity2 = Vector2(0,-689)
-			move()
-			crash()
+#func _on_Engine_area_entered(area):
+#	if area.name == "LeftBounds":
+#		if init:
+#			##print(area)
+#			velocity2 = Vector2(689, 0)
+#			move()
+#			crash()
+#	elif area.name == "RightBounds":
+#		if init:
+#			##print(area)
+#			velocity2 = Vector2(-689, 0)
+#			move()
+#			crash()
+#	elif area.name == "TopBounds":
+#		if init:
+#			##print(area)
+#			velocity2 = Vector2(0,689)
+#			move()
+#			crash()
+#	elif area.name == "BottomBounds":
+#		if init:
+#			##print(area)
+#			velocity2 = Vector2(0,-689)
+#			move()
+#			crash()

@@ -90,10 +90,9 @@ rotation = 1.5708
 script = ExtResource( 2 )
 
 [node name="Area2D" type="Area2D" parent="."]
-position = Vector2( -40, 0.000144839 )
 
 [node name="Sprite" type="Sprite" parent="Area2D"]
-position = Vector2( 101.5, 0 )
+position = Vector2( 65.5, 1.00013 )
 texture = ExtResource( 1 )
 hframes = 2
 vframes = 6
