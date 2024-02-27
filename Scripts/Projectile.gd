@@ -3,6 +3,8 @@ extends KinematicBody2D
 var spawnDuration = Timer.new()
 var activeWait = Timer.new()
 
+
+
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"

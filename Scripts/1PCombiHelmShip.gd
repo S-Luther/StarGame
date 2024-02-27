@@ -46,7 +46,7 @@ var has_collided = false;
 func _ready():
 	self.add_child(colCheckTimer)
 	colCheckTimer.one_shot = true
-	colCheckTimer.start(2)
+	colCheckTimer.start(.2)
 	randomize()
 	self.add_to_group("Player")
 	set_process(true)
@@ -60,8 +60,9 @@ func _process(delta):
 			var life = get_tree().get_nodes_in_group("life")[0]
 			var new_life = life.hearts - .25;
 			life.set_hearts(new_life)
+			get_tree().get_nodes_in_group("cam")[0].apply_shake()
 		has_collided = false;
-		colCheckTimer.start(1)
+		colCheckTimer.start(.2)
 
 	if player1.position.x >100 || player1.position.x<-100 || player1.position.y >100 || player1.position.y<-100 :
 		player1.position = Vector2.ZERO
@@ -183,6 +184,7 @@ func move():
 		var collision = get_slide_collision(i)
 		has_collided = true;
 		if collision.get_collider() is KinematicBody2D:
+			print("Collided with: ", collision.get_collider())
 			collision.get_collider().hit()
 #		print("Collided with: ", collisions)
 

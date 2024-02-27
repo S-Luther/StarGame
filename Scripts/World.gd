@@ -22,12 +22,12 @@ const Planet7 = preload('res://Scenes/Props/Planet7.tscn')
 const Planet8 = preload('res://Scenes/Props/Planet8.tscn')
 
 const Asteroid1 = preload('res://Scenes/Props/Asteroid1.tscn')
-const Asteroid2 = preload('res://Scenes/Props/Asteroid2.tscn')
-const Asteroid3 = preload('res://Scenes/Props/Asteroid3.tscn')
-const Asteroid4 = preload('res://Scenes/Props/Asteroid4.tscn')
-const Asteroid5 = preload('res://Scenes/Props/Asteroid5.tscn')
-const Asteroid6 = preload('res://Scenes/Props/Asteroid6.tscn')
-const Asteroid7 = preload('res://Scenes/Props/Asteroid7.tscn')
+#const Asteroid2 = preload('res://Scenes/Props/Asteroid2.tscn')
+#const Asteroid3 = preload('res://Scenes/Props/Asteroid3.tscn')
+#const Asteroid4 = preload('res://Scenes/Props/Asteroid4.tscn')
+#const Asteroid5 = preload('res://Scenes/Props/Asteroid5.tscn')
+#const Asteroid6 = preload('res://Scenes/Props/Asteroid6.tscn')
+#const Asteroid7 = preload('res://Scenes/Props/Asteroid7.tscn')
 var coeff = .25
 var sep = 50000
 # Called when the node enters the scene tree for the first time.
@@ -67,32 +67,8 @@ func _ready():
 #
 #		self.add_child(planet)
 #		planet.add_to_group("planets")
-	for i in 9:
+	for i in 50:
 		var planet = Planet3.instance()
-		var rng = RandomNumberGenerator.new()
-		rng.randomize()
-
-		planet.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
-		planet.z_index = 0
-		var temp = rng.randi_range(50, 100) * coeff
-		planet.scale = Vector2(temp,temp)
-
-		self.add_child(planet)
-		planet.add_to_group("planets")
-	for i in 9:
-		var planet = Planet4.instance()
-		var rng = RandomNumberGenerator.new()
-		rng.randomize()
-
-		planet.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
-		planet.z_index = 0
-		var temp = rng.randi_range(50, 100) * coeff
-		planet.scale = Vector2(temp,temp)
-
-		self.add_child(planet)
-		planet.add_to_group("planets")
-	for i in 9:
-		var planet = Planet5.instance()
 		var rng = RandomNumberGenerator.new()
 		rng.randomize()
 
@@ -146,14 +122,14 @@ func _ready():
 
 		asteroid.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
 		asteroid.z_index = 0
-		var temp = rng.randi_range(35, 50) * .2
-		asteroid.scale = Vector2(temp,temp)
+		var temp = rng.randi_range(35, 50) * 2
+#		asteroid.tran.scale = Vector2(temp,temp)
 		asteroid.rotate(rng.randi_range(0, 360))
 		self.add_child(asteroid)
 		asteroid.add_to_group("asteroids")
-		asteroid.velocity = Vector2(rng.randi_range(10,-10), rng.randi_range(10,-10))
+#		asteroid.velocity = Vector2(rng.randi_range(10,-10), rng.randi_range(10,-10))
 		
-	for i in 100:
+	for i in 50:
 		var drone = LancerDrone.instance()
 		var rng = RandomNumberGenerator.new()
 		rng.randomize()

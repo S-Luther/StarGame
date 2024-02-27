@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scripts/Minimap.gd" type="Script" id=1]
 [ext_resource path="res://assets/frame.png" type="Texture" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://assets/LargeSpace.png" type="Texture" id=8]
 [ext_resource path="res://assets/7-noise-texture-overlays-3.png" type="Texture" id=9]
 [ext_resource path="res://Scenes/Shared/Background.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/Shuttle/Camera2D.gd" type="Script" id=11]
 
 [sub_resource type="CanvasItemMaterial" id=3]
 
@@ -85,6 +86,7 @@ scale = Vector2( 10.9687, 11.1562 )
 current = true
 zoom = Vector2( 0.6, 0.6 )
 smoothing_speed = 10.0
+script = ExtResource( 11 )
 
 [node name="UI" type="Area2D" parent="."]
 z_index = 1

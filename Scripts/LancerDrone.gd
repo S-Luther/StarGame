@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-var SPEED = 100
+var SPEED = 50
 
 var attack_timer = Timer.new()
 var pause_timer = Timer.new()
@@ -10,6 +10,8 @@ onready var animationPlayer = $AnimationPlayer
 var velocity = Vector2.ZERO
 
 var player
+
+var alive = true
 
 var randomnum
 
@@ -22,6 +24,7 @@ var rng = RandomNumberGenerator.new()
 var state = SURROUND
 
 func _ready():
+	self.add_to_group("baddies")
 	rng.randomize()
 	randomnum = rng.randf()
 	self.add_child(attack_timer)
@@ -51,8 +54,9 @@ func _physics_process(delta):
 #			print("one ", rad2deg(self.velocity.angle()), " > ", lower)
 			if abs(rad2deg(self.velocity.angle())) < upper:
 #				print("two ", rad2deg(self.velocity.angle()), " < ", upper)
-				if self.global_position.distance_to(get_tree().get_nodes_in_group("player")[0].global_position) < 1000:
-					state = ATTACK
+				if self.global_position.distance_to(get_tree().get_nodes_in_group("player")[0].global_position) < 1500:
+					if self.global_position.distance_to(get_tree().get_nodes_in_group("player")[0].global_position) > 500:
+						state = ATTACK
 
 
 	
@@ -60,19 +64,21 @@ func _physics_process(delta):
 		SURROUND:
 			move(get_circle_position(randomnum), delta)
 		ATTACK:
-#			print("boom")
-			var p = projectile.instance()
-			p.position = Vector2(self.position.x, self.position.y)
-			p.velocity = Vector2(20, 0).rotated(velocity.angle())
-			p.rotation = velocity.angle()
-			p.z_index = 2
-			p.scale = Vector2(1,1)
-			get_tree().get_root().add_child(p)
-			p.add_to_group("shots")
+			if alive:
+	#			print("boom")
+				var p = projectile.instance()
+				p.position = Vector2(self.position.x, self.position.y)
+				p.velocity = Vector2(20, 0).rotated(velocity.angle())
+				p.rotation = velocity.angle()
+				p.z_index = 2
+				p.scale = Vector2(1,1)
+				get_tree().get_root().add_child(p)
+				p.add_to_group("shots")
 			state = SURROUND
 
 
 		HIT:
+			alive = false
 			velocity = Vector2.ZERO
 			animationPlayer.play("Hit")
 	
@@ -95,6 +101,10 @@ func move(target, delta):
 func hit_animation_finished():
 	queue_free()
 	
+func hit():
+	state = HIT
+	velocity = Vector2.ZERO
+
 	
 func get_circle_position(random):
 	var kill_circle_centre = get_tree().get_nodes_in_group("player")[0].global_position

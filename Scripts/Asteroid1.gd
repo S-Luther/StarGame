@@ -1,4 +1,4 @@
-extends KinematicBody2D
+
 
 
 # Declare member variables here. Examples:
@@ -18,5 +18,6 @@ func _process(delta):
 	
 	pass
 	
-
+func hit():
+	pass
 		

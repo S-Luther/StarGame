@@ -13,7 +13,7 @@ onready var RightBounds = $UI/Minimap/RightBounds
 onready var TopBounds = $UI/Minimap/TopBounds
 onready var BottomBounds = $UI/Minimap/BottomBounds
 const PlanetMarker = preload('res://Scenes/Props/PlanetMarker.tscn')
-const AsteroidMarker = preload('res://Scenes/Props/AsteroidMarker.tscn')
+const AsteroidMarker = preload('res://Scenes/Props/ShotMarker.tscn')
 const ShotMarker = preload('res://Scenes/Props/ShotMarker.tscn')
 
 var prefix = ""
@@ -33,15 +33,19 @@ func _process(delta):
 #		var RightBD = player.get_position().x - get_tree().get_nodes_in_group("RightB")[0].get_position().x
 #		var TopBD = player.get_position().y - get_tree().get_nodes_in_group("TopB")[0].get_position().y
 #		var BottomBD = player.get_position().y - get_tree().get_nodes_in_group("BottomB")[0].get_position().y
+		for object in get_tree().get_nodes_in_group("baddies"):
+			if(player.get_position().distance_to(object.get_position())<5000):
+				asteroids.append(object.get_position())
+		for object in get_tree().get_nodes_in_group("shots"):
+			if(player.get_position().distance_to(object.get_position())<5000):
+				asteroids.append(object.get_position())
 		for object in get_tree().get_nodes_in_group("asteroids"):
 			if(player.get_position().distance_to(object.get_position())<5000):
 				asteroids.append(object.get_position())
 		for object in get_tree().get_nodes_in_group("planets"):
 			if(player.get_position().distance_to(object.get_position())<5000):
 				planets.append(object.get_position())
-		for object in get_tree().get_nodes_in_group("shots"):
-			if(player.get_position().distance_to(object.get_position())<5000):
-				shots.append(object.get_position())
+		
 		self.radar(player.get_position(),asteroids,planets,shots)	
 	if navWorkable:
 		if navWorking:
@@ -108,7 +112,7 @@ func radar(player,asteroids,planets,shots):
 		shotm.position = Vector2(510 + (1 - (player.x - shot.x)/5000) * 158, -130 + ((1 - (shot.y - player.y)/5000) * -156))
 
 		minimap.add_child(shotm)
-		shotm.add_to_group("asteroidsm")
+		shotm.add_to_group("shotm")
 	
 #	if LeftBD > 5000:
 #		LeftBounds.position.x = 426
