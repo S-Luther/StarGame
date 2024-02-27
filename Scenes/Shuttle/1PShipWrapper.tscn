@@ -1,14 +1,16 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Scenes/Shuttle/1PShip.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Helm.gd" type="Script" id=2]
 [ext_resource path="res://assets/pulse1.png" type="Texture" id=3]
 [ext_resource path="res://Scripts/1PCombiHelmShip.gd" type="Script" id=4]
-[ext_resource path="res://assets/1pship.png" type="Texture" id=5]
+[ext_resource path="res://assets/Shuttle.png" type="Texture" id=5]
 [ext_resource path="res://assets/HitboxIndicator.png" type="Texture" id=6]
 [ext_resource path="res://Scenes/Shuttle/1PNavTerminal.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/Players/Player1.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/Platform/Radar.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/Shuttle/AnimationPlayer.gd" type="Script" id=10]
+[ext_resource path="res://Scenes/Shuttle/Area2D.gd" type="Script" id=11]
 
 [sub_resource type="Animation" id=2]
 resource_name = "Pulse"
@@ -62,6 +64,18 @@ tracks/3/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ Vector2( -322.429, -6.00164 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Area2D/CollisionShape2D:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -126,6 +140,18 @@ tracks/4/keys = {
 "update": 0,
 "values": [ 0 ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("Area2D/CollisionShape2D:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=4]
 resource_name = "StopStart"
@@ -142,6 +168,124 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ false ]
+}
+
+[sub_resource type="CapsuleShape2D" id=9]
+radius = 3.40016
+height = 26.705
+
+[sub_resource type="Animation" id=7]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "dodge"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../Player1:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.2, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Node2D:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.2, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("../../CollisionPolygon2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("../../CollisionPolygon2D4:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("../../CollisionPolygon2D3:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("../../CollisionPolygon2D2:disabled")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("../1PShip:collision_layer")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 128, 1 ]
 }
 
 [sub_resource type="CapsuleShape2D" id=1]
@@ -228,17 +372,34 @@ anims/Pulse = SubResource( 2 )
 anims/RESET = SubResource( 3 )
 anims/StopStart = SubResource( 4 )
 
+[node name="Area2D" type="Area2D" parent="Engine/Visible"]
+position = Vector2( 0, 0.6 )
+script = ExtResource( 11 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Engine/Visible/Area2D"]
+position = Vector2( 2.09231, 0.418636 )
+rotation = 1.5708
+shape = SubResource( 9 )
+
 [node name="Base" type="Sprite" parent="Engine"]
 position = Vector2( 1, 1 )
 rotation = 1.5708
+scale = Vector2( 0.5, 0.5 )
 z_index = 1
 texture = ExtResource( 5 )
+hframes = 3
+vframes = 4
 
 [node name="Node2D" parent="Engine/Base" instance=ExtResource( 9 )]
-position = Vector2( -8, 88 )
+position = Vector2( -14, 174 )
 rotation = 1.5708
-scale = Vector2( 0.1, 0.09 )
+scale = Vector2( 0.19697, 0.215152 )
 z_index = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Engine/Base"]
+anims/RESET = SubResource( 7 )
+anims/dodge = SubResource( 8 )
+script = ExtResource( 10 )
 
 [node name="1PShip" parent="Engine" instance=ExtResource( 1 )]
 position = Vector2( -1, -2.38419e-07 )

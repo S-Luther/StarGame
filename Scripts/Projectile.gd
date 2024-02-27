@@ -50,6 +50,11 @@ func hit():
 	collider.disabled = true;
 	velocity = Vector2.ZERO
 	animationPlayer.play("Hit")
+	
+func slice():
+	collider.disabled = true;
+	velocity = Vector2.ZERO
+	animationPlayer.play("Hit")
 
 func hit_animation_finished():
 	queue_free()

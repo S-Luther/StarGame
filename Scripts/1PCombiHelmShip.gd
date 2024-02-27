@@ -188,6 +188,8 @@ func move():
 			collision.get_collider().hit()
 #		print("Collided with: ", collisions)
 
+func slice():
+	pass
 
 func crash():
 	player1.crash()
@@ -206,6 +208,8 @@ func _on_Helm_area_exited(area):
 	#print("turn off heml")
 	workable = false
 
+func hit():
+	pass
 
 
 #func _on_Engine_area_entered(area):

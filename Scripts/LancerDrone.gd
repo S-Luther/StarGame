@@ -104,6 +104,10 @@ func hit_animation_finished():
 func hit():
 	state = HIT
 	velocity = Vector2.ZERO
+	
+func slice():
+	state = HIT
+	velocity = Vector2.ZERO
 
 	
 func get_circle_position(random):

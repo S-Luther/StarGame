@@ -74,7 +74,7 @@ func _ready():
 
 		planet.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
 		planet.z_index = 0
-		var temp = rng.randi_range(50, 100) * coeff
+		var temp = rng.randi_range(100, 150) * coeff
 		planet.scale = Vector2(temp,temp)
 
 		self.add_child(planet)

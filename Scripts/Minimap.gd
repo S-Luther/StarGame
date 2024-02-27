@@ -16,6 +16,8 @@ const PlanetMarker = preload('res://Scenes/Props/PlanetMarker.tscn')
 const AsteroidMarker = preload('res://Scenes/Props/ShotMarker.tscn')
 const ShotMarker = preload('res://Scenes/Props/ShotMarker.tscn')
 
+
+
 var prefix = ""
 
 var sep = 0;
@@ -50,6 +52,8 @@ func _process(delta):
 	if navWorkable:
 		if navWorking:
 			minimap.visible = true
+			if Input.is_action_just_pressed("p1_fire"):
+				get_tree().get_nodes_in_group("anim")[0].play("dodge")
 			
 			if Input.is_action_just_pressed(prefix+"_swing"):
 				navWorking = false
