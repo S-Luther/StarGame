@@ -478,6 +478,14 @@ margin_bottom = 178.0
 custom_fonts/font = ExtResource( 1 )
 text = "+ Player 4"
 
+[node name="Map" type="Button" parent="."]
+margin_left = 2748.0
+margin_top = 1876.17
+margin_right = 3128.0
+margin_bottom = 2021.17
+custom_fonts/font = ExtResource( 1 )
+text = "Map"
+
 [connection signal="pressed" from="Scene_configure/1Player2" to="." method="_on_1Player2_pressed"]
 [connection signal="pressed" from="Scene_configure/1Player2" to="Scene_configure" method="_on_1Player2_pressed"]
 [connection signal="pressed" from="Scene_configure/2Player" to="." method="_on_2Player_pressed"]
@@ -513,3 +521,5 @@ text = "+ Player 4"
 [connection signal="pressed" from="Player2Add" to="." method="_on_Player2Add_pressed"]
 [connection signal="pressed" from="Player3Add" to="." method="_on_Player3Add_pressed"]
 [connection signal="pressed" from="Player4Add" to="." method="_on_Player4Add_pressed"]
+[connection signal="pressed" from="Map" to="." method="_on_Map_pressed"]
+[connection signal="pressed" from="Map" to="Scene_configure" method="_on_Map_pressed"]

@@ -9,8 +9,8 @@
 [ext_resource path="res://Scenes/Shuttle/1PNavTerminal.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/Players/Player1.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/Platform/Radar.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Scenes/Shuttle/AnimationPlayer.gd" type="Script" id=10]
-[ext_resource path="res://Scenes/Shuttle/Area2D.gd" type="Script" id=11]
+[ext_resource path="res://Scripts/AnimationPlayer.gd" type="Script" id=10]
+[ext_resource path="res://Scripts/Area2D.gd" type="Script" id=11]
 
 [sub_resource type="Animation" id=2]
 resource_name = "Pulse"

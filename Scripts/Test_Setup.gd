@@ -128,6 +128,9 @@ func _on_Player4Add_pressed():
 	Player4.visible = true
 	Player4B.visible = false
 
+func _on_Map_pressed():
+	Test_Setup.visible =false
+	setup = false
 
 func _on_p2Right_pressed():
 	var ev = InputEventKey.new()

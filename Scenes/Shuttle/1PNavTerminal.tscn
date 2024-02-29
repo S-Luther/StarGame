@@ -10,7 +10,7 @@
 [ext_resource path="res://assets/LargeSpace.png" type="Texture" id=8]
 [ext_resource path="res://assets/7-noise-texture-overlays-3.png" type="Texture" id=9]
 [ext_resource path="res://Scenes/Shared/Background.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Scenes/Shuttle/Camera2D.gd" type="Script" id=11]
+[ext_resource path="res://Scripts/Camera2D.gd" type="Script" id=11]
 
 [sub_resource type="CanvasItemMaterial" id=3]
 
