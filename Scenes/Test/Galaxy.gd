@@ -5372,10 +5372,13 @@ class Place:
 		color = new_color
 		culture = new_culture
 		
-	func new_Node():
-		pos = Vector2(randi()%1350+100, randi()%940+50)
+	func new_Node(new_pos):
+		pos = new_pos
 		mass = (2 * PI * residents.size())/1.5
 		return self
+	func update():
+		var vel = force / mass
+		pos = pos + vel
 
 
 class Person:
@@ -5594,8 +5597,8 @@ func getRandomColor():
 
 var noNodes = 100;
 var noConn = 50;
-var gravityConstant = 2.1;
-var forceConstant = 300000;
+var gravityConstant = 1.1;
+var forceConstant = 30000;
 var physics = true;
 
 var nodes = [];
@@ -5619,7 +5622,8 @@ class Planet:
 		mass = (2 * PI * size)/1.5
 		color = new_color
 		
-		
+var final = false
+
 func applyForces(Nodes):
 
 	for node in Nodes:
@@ -5631,10 +5635,11 @@ func applyForces(Nodes):
 		for j in range(Nodes.size()):
 			var pos = Nodes[i].pos
 			var dir = Nodes[j].pos + (-pos)
-			var force = dir / (dir.length() * dir.length())
-			force * forceConstant
-			Nodes[i].force + force * -1 
-			Nodes[j].force + force 
+			if !(dir == Vector2.ZERO):
+				var force = dir / dir.length_squared()
+				force * forceConstant
+				Nodes[i].force = (Nodes[i].force  + -force)
+				Nodes[j].force = Nodes[j].force  + force 
 		
 	
 
@@ -5642,13 +5647,26 @@ func applyForces(Nodes):
 	for con in nodeCon:
 		var node1 = Nodes[con[0]]
 		var node2 = Nodes[con[1]]
+		if final:
+			var line = Line2D.new()
+			line.add_point(node1.pos,1)
+			line.add_point(node2.pos,2)
+			add_child(line)
+			line.add_to_group("lines")
 		var maxDis = con[2]
 		var dis = node1.pos + (-node2.pos)
-		var diff = dis.length() - maxDis
-		node1.force + (-dis)
-		node2.force + dis
+#		var diff = Vector2(dis.length_squared() - maxDis,dis.length_squared() - maxDis)
+		if node1.pos.distance_to(node2.pos) < maxDis:
+			print(node1.pos.distance_to(node2.pos))
+			var gravity = node1.pos * gravityConstant
+			node1.force = gravity
+		else:
+			node1.force = node1.force + (-dis)
+			node2.force = node2.force + dis
 
 func clash():
+	for a in get_tree().get_nodes_in_group("lines"):
+		a.queue_free()
 	for e in places:
 		var attack = pickRandom(e.neighbors);
 		var index = -1
@@ -5663,7 +5681,13 @@ func clash():
 		if(!(places[index].faction == e.faction)):
 			var attackerMight = e.value * e.residents.size() * randf();
 			var defenderMight = places[index].value * places[index].residents.size() * randf()
-
+			var line = Line2D.new()
+			line.add_point(places[index].pos,1)
+			line.add_point(e.pos,2)
+			line.default_color = Color(e.color)
+			line.width = 2
+			add_child(line)
+			line.add_to_group("lines")
 			if(attackerMight > defenderMight):
 				places[index].faction = e.faction;
 				places[index].color = e.color;
@@ -5674,7 +5698,7 @@ var t = Timer.new()
 
 func _ready():
 	randomize()
-	genSim(2000)
+	genSim(20000)
 	cleanSim(1000)
 	print("Total Pop: ", totalPop, " Worlds: ", places.size())
 	print("A Pop: ", Apop, " F Pop: ", Fpop, " E Pop: ", Epop)
@@ -5682,21 +5706,29 @@ func _ready():
 	add_child(t)
 	t.one_shot = true
 	t.start(2)
+	
 
 
 	for p in places:
-		nodes.append(p.new_Node())
+		var pos = Vector2(randi()%1600, randi()%1000)
+		for g in places:
+			if pos.distance_to(g.pos) < 100:
+				print("true")
+				pos = Vector2(randi()%1600, randi()%1000)
+		nodes.append(p.new_Node(pos))
 		
 	for p in places:
 		var neighb = p.neighbors
 		for l in places:
 			if neighb.has(l.name):
-				nodeCon.append([places.find(l), places.find(p),10])
+				nodeCon.append([places.find(l), places.find(p),100])
 
 				
 			
-	applyForces(nodes)
-
+#	for i in range(10):
+#		applyForces(nodes)
+#		for p in places:
+#			p.update()
 
 	
 	
@@ -5705,36 +5737,52 @@ func _ready():
 		label.set_position(p.pos)
 #		label.set_position(p.pos)
 		label.text = "      "+p.name+"   " + String(p.residents.size()) + "  " + p.culture
-		
+		label.rect_scale = Vector2(2,2);
+		label
 		self.add_child(label)
 		label.add_to_group("labels")
 		var asteroidm = PlanetMarker.instance()
 		asteroidm.position = p.pos
 		asteroidm.scale = Vector2(7,7)
 		asteroidm.modulate = p.color
+		asteroidm.z_index = -1
 		self.add_child(asteroidm)
 		asteroidm.add_to_group("asteroidsm")
 		
 	
 	
 func _process(delta):
+#	applyForces(nodes)
+#	for p in places:
+#		p.update()
+	var mousePos = get_global_mouse_position()
+	var labels = get_tree().get_nodes_in_group("labels")
+	for p in range(places.size()):
+		if mousePos.distance_to(places[p].pos) < 50:
+			labels[p].visible = true
 	
 	if t.is_stopped():
-		t.start(2)
+	#
+		t.start(.5)
 		clash()
 		cleanSim(100)
 
-	#	for a in get_tree().get_nodes_in_group("asteroidsm"):
-	#		queue_free()
-		var labels = get_tree().get_nodes_in_group("labels")
+
+		for a in get_tree().get_nodes_in_group("asteroidsm"):
+			a.queue_free()
+		
 		for i in range(places.size()):
-			labels[i].text = "      "+places[i].name+"   " + String(places[i].residents.size()) + "  " + places[i].culture
+			labels[i].text = "  "+places[i].name+" " + String(places[i].residents.size()) + " " + places[i].culture
+			labels[i].visible = false
 		for p in nodes:
 			var asteroidm = PlanetMarker.instance()
 			asteroidm.position = p.pos
-			asteroidm.scale = Vector2(7,7)
+			asteroidm.scale = Vector2(4,4)
 			asteroidm.modulate = p.color
+			asteroidm.z_index = -1
 			self.add_child(asteroidm)
 			asteroidm.add_to_group("asteroidsm")
+#	for a in get_tree().get_nodes_in_group("lines"):
+#		a.queue_free()
 
 
