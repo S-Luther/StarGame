@@ -5253,7 +5253,7 @@ var extensions = [
 	"peak"
 ]
 
-var cultures = ["A", "F", "E"]
+var cultures = ["A", "F", "E", "A"]
 
 var endings = [
 	"Cave",
@@ -5696,9 +5696,11 @@ func clash():
 		   
 var t = Timer.new()
 
+var finish = false
+
 func _ready():
 	randomize()
-	genSim(20000)
+	genSim(5000)
 	cleanSim(1000)
 	print("Total Pop: ", totalPop, " Worlds: ", places.size())
 	print("A Pop: ", Apop, " F Pop: ", Fpop, " E Pop: ", Epop)
@@ -5734,11 +5736,10 @@ func _ready():
 	
 	for p in nodes:
 		var label = Label.new()
-		label.set_position(p.pos)
+		label.set_position(p.pos + Vector2(-120,20))
 #		label.set_position(p.pos)
 		label.text = "      "+p.name+"   " + String(p.residents.size()) + "  " + p.culture
 		label.rect_scale = Vector2(2,2);
-		label
 		self.add_child(label)
 		label.add_to_group("labels")
 		var asteroidm = PlanetMarker.instance()
@@ -5751,6 +5752,8 @@ func _ready():
 		
 	
 	
+var unique_factions = [10000,10000,10000];
+
 func _process(delta):
 #	applyForces(nodes)
 #	for p in places:
@@ -5760,12 +5763,16 @@ func _process(delta):
 	for p in range(places.size()):
 		if mousePos.distance_to(places[p].pos) < 50:
 			labels[p].visible = true
+		else:
+			labels[p].visible = false
+
 	
-	if t.is_stopped():
+	if t.is_stopped() && !finish:
+		unique_factions = [0, 0, 0]
 	#
 		t.start(.5)
 		clash()
-		cleanSim(100)
+		cleanSim(500)
 
 
 		for a in get_tree().get_nodes_in_group("asteroidsm"):
@@ -5775,6 +5782,15 @@ func _process(delta):
 			labels[i].text = "  "+places[i].name+" " + String(places[i].residents.size()) + " " + places[i].culture
 			labels[i].visible = false
 		for p in nodes:
+			
+			if p.culture == "A":
+				unique_factions[0] = unique_factions[0] + 1
+			if p.culture == "F":
+				unique_factions[1] = unique_factions[1] + 1
+			if p.culture == "E":
+				unique_factions[2] = unique_factions[2] + 1
+
+			
 			var asteroidm = PlanetMarker.instance()
 			asteroidm.position = p.pos
 			asteroidm.scale = Vector2(4,4)
@@ -5782,7 +5798,12 @@ func _process(delta):
 			asteroidm.z_index = -1
 			self.add_child(asteroidm)
 			asteroidm.add_to_group("asteroidsm")
+		print(unique_factions[0], ", ", unique_factions[1], ", ",unique_factions[2])
 #	for a in get_tree().get_nodes_in_group("lines"):
 #		a.queue_free()
+	if unique_factions.has(2) || unique_factions.has(1) || unique_factions.has(0):
+		finish = true
+		for a in get_tree().get_nodes_in_group("lines"):
+			a.queue_free()
 
 
