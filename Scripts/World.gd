@@ -22,9 +22,9 @@ const Planet7 = preload('res://Scenes/Props/Planet7.tscn')
 const Planet8 = preload('res://Scenes/Props/Planet8.tscn')
 
 const Asteroid1 = preload('res://Scenes/Props/Asteroid1.tscn')
-#const Asteroid2 = preload('res://Scenes/Props/Asteroid2.tscn')
-#const Asteroid3 = preload('res://Scenes/Props/Asteroid3.tscn')
-#const Asteroid4 = preload('res://Scenes/Props/Asteroid4.tscn')
+const Asteroid2 = preload('res://Scenes/Props/Asteroid2.tscn')
+const Asteroid3 = preload('res://Scenes/Props/Asteroid3.tscn')
+const Asteroid4 = preload('res://Scenes/Props/Asteroid4.tscn')
 #const Asteroid5 = preload('res://Scenes/Props/Asteroid5.tscn')
 #const Asteroid6 = preload('res://Scenes/Props/Asteroid6.tscn')
 #const Asteroid7 = preload('res://Scenes/Props/Asteroid7.tscn')
@@ -140,42 +140,42 @@ func _ready():
 		drone.add_to_group("drones")
 
 		
-#	for i in 20:
-#		var asteroid = Asteroid2.instance()
-#		var rng = RandomNumberGenerator.new()
-#		rng.randomize()
-#
-#		asteroid.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
-#		asteroid.z_index = 0
-#		var temp = rng.randi_range(35, 50) * .4
-#		asteroid.scale = Vector2(temp,temp)
-#		asteroid.rotate(rng.randi_range(0, 360))
-#		self.add_child(asteroid)
-#		asteroid.add_to_group("asteroids")
-#	for i in 20:
-#		var asteroid = Asteroid3.instance()
-#		var rng = RandomNumberGenerator.new()
-#		rng.randomize()
-#
-#		asteroid.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
-#		asteroid.z_index = 0
-#		var temp = rng.randi_range(35, 50) * .4
-#		asteroid.scale = Vector2(temp,temp)
-#		asteroid.rotate(rng.randi_range(0, 360))
-#		self.add_child(asteroid)
-#		asteroid.add_to_group("asteroids")
-#	for i in 20:
-#		var asteroid = Asteroid4.instance()
-#		var rng = RandomNumberGenerator.new()
-#		rng.randomize()
-#
-#		asteroid.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
-#		asteroid.z_index = 0
-#		var temp = rng.randi_range(35, 50) * .4
-#		asteroid.scale = Vector2(temp,temp)
-#		asteroid.rotate(rng.randi_range(0, 360))
-#		self.add_child(asteroid)
-#		asteroid.add_to_group("asteroids")
+	for i in 200:
+		var asteroid = Asteroid2.instance()
+		var rng = RandomNumberGenerator.new()
+		rng.randomize()
+
+		asteroid.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
+		asteroid.z_index = 0
+		var temp = rng.randi_range(35, 50)  * 20
+
+		asteroid.rotate(rng.randi_range(0, 360))
+		self.add_child(asteroid)
+		asteroid.add_to_group("asteroids")
+	for i in 200:
+		var asteroid = Asteroid3.instance()
+		var rng = RandomNumberGenerator.new()
+		rng.randomize()
+
+		asteroid.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
+		asteroid.z_index = 0
+		var temp = rng.randi_range(35, 50) 
+
+		asteroid.rotate(rng.randi_range(0, 360))
+		self.add_child(asteroid)
+		asteroid.add_to_group("asteroids")
+	for i in 200:
+		var asteroid = Asteroid4.instance()
+		var rng = RandomNumberGenerator.new()
+		rng.randomize()
+
+		asteroid.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
+		asteroid.z_index = 0
+		var temp = rng.randi_range(35, 50) 
+
+		asteroid.rotate(rng.randi_range(0, 360))
+		self.add_child(asteroid)
+		asteroid.add_to_group("asteroids")
 #	for i in 20:
 #		var asteroid = Asteroid5.instance()
 #		var rng = RandomNumberGenerator.new()

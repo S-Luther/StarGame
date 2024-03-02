@@ -5575,8 +5575,13 @@ func cleanSim(steps):
 
 		for i in range(steps):
 			if(stop):
-				var newHome = pickRandom(p.neighbors)
-				nomad.travels.append(newHome)
+				var newHome = ""
+				if p.neighbors.size() > 0:
+					newHome = pickRandom(p.neighbors)
+					nomad.travels.append(newHome)
+				else:
+					newHome = pickRandom(places).name
+					nomad.travels.append(newHome)
 				nomad.boredom = 50;
 				nomad.happiness = 50;
 
@@ -5664,7 +5669,10 @@ func applyForces(Nodes):
 			node1.force = node1.force + (-dis)
 			node2.force = node2.force + dis
 
+var clashCount = 0
+
 func clash():
+	clashCount = clashCount + 1
 	for a in get_tree().get_nodes_in_group("lines"):
 		a.queue_free()
 	for e in places:
@@ -5698,9 +5706,15 @@ var t = Timer.new()
 
 var finish = false
 
-func _ready():
+var collisions = 0;
+
+func build():
+	currentplace = -1
+	currentStep = 0
+	places = []
+	nodes = []
 	randomize()
-	genSim(5000)
+	genSim(2000)
 	cleanSim(1000)
 	print("Total Pop: ", totalPop, " Worlds: ", places.size())
 	print("A Pop: ", Apop, " F Pop: ", Fpop, " E Pop: ", Epop)
@@ -5716,6 +5730,7 @@ func _ready():
 		for g in places:
 			if pos.distance_to(g.pos) < 100:
 				print("true")
+				collisions = collisions + 1
 				pos = Vector2(randi()%1600, randi()%1000)
 		nodes.append(p.new_Node(pos))
 		
@@ -5749,6 +5764,11 @@ func _ready():
 		asteroidm.z_index = -1
 		self.add_child(asteroidm)
 		asteroidm.add_to_group("asteroidsm")
+	
+
+func _ready():
+	build()
+
 		
 	
 	
@@ -5801,9 +5821,19 @@ func _process(delta):
 		print(unique_factions[0], ", ", unique_factions[1], ", ",unique_factions[2])
 #	for a in get_tree().get_nodes_in_group("lines"):
 #		a.queue_free()
-	if unique_factions.has(2) || unique_factions.has(1) || unique_factions.has(0):
+	if unique_factions.has(1) || unique_factions.has(0) || collisions > 10:
 		finish = true
 		for a in get_tree().get_nodes_in_group("lines"):
 			a.queue_free()
+		if clashCount < 5 || unique_factions.has(0):
+			collisions = 0
+			clashCount = 0
+			unique_factions = [10000,10000,10000];
+			for a in get_tree().get_nodes_in_group("asteroidsm"):
+				a.queue_free()
+			for a in get_tree().get_nodes_in_group("labels"):
+				a.queue_free()
+			finish = false
+			build()
 
 

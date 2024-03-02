@@ -2,11 +2,12 @@ extends KinematicBody2D
 
 
 export var ACCELERATION = 200
-export var MAX_SPEED = 600
+export var MAX_SPEED = 0
 
 export var ROLL_SPEED = 0.5
 export var FRICTION = 1
 
+onready var animationPlayer = $ShipBase/Sprite/AnimationPlayer
 
 enum {
 	MOVE,
@@ -38,6 +39,34 @@ var workable = false
 var working = false
 var prevelocity = Vector2()
 
+var sail_dep = 0
+
+func cycle():
+	sail_dep = sail_dep + 1
+	if sail_dep > 4:
+		sail_dep = 0
+	if sail_dep == 0:
+		MAX_SPEED = 0
+		animationPlayer.play("0")
+	
+	if sail_dep == 1:
+		MAX_SPEED = 100
+		animationPlayer.play("1")
+		
+	if sail_dep == 2:
+		MAX_SPEED = 300
+		animationPlayer.play("2")
+	
+	if sail_dep == 3:
+		MAX_SPEED = 500
+		animationPlayer.play("3")
+	
+	if sail_dep == 4:
+		MAX_SPEED = 700
+		animationPlayer.play("Full")
+	
+	
+
 func _ready():
 	randomize()
 	self.add_to_group("Player")
@@ -46,7 +75,7 @@ func _ready():
 
 func _process(delta):
 	update()
-
+	velocity2 = velocity2.move_toward(Vector2(cos(engine.rotation), sin(engine.rotation)).tangent() * MAX_SPEED, ACCELERATION * delta)
 #	if player1.position.x >100 || player1.position.x<-100 || player1.position.y >100 || player1.position.y<-100 :
 #		player1.position = Vector2.ZERO
 	if timer.is_stopped():
@@ -83,6 +112,8 @@ static func normalize_angle(x):
 
 func move_state(delta):
 	if working && workable:
+		if Input.is_action_just_pressed("p1_fire"):
+			cycle()
 		if player1.position.x < 40:
 			working = false
 			workable = false
@@ -121,7 +152,7 @@ func move_state(delta):
 			input_vector.x = input_vector.y
 			input_vector.y = tempX*-1
 			
-			velocity2 = velocity2.move_toward(input_vector * MAX_SPEED, ACCELERATION * delta)
+
 			#state = ROLL
 		else:
 

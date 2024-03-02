@@ -11,7 +11,7 @@ var TwoPlayerWorld = preload("res://Scenes/ExpeditionaryVessel/2pWorld.tscn").in
 var OnePlayerWorld = preload("res://Scenes/Shuttle/1pWorld.tscn").instance()
 var ThreePlayerWorld = preload("res://Scenes/Platform/World.tscn").instance()
 var Map = preload("res://Scenes/Test/Galaxy.tscn").instance()
-#var FacsWorld = preload("res://Scenes/Levels/Test.tscn").instance()
+var FacsWorld = preload("res://Scenes/Leaflet/Facsimidoxy Leaflet.tscn").instance()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -42,7 +42,7 @@ func _on_3Player_pressed():
 
 
 func _on_Extra_pressed():
-#	get_tree().get_root().add_child(FacsWorld)
+	get_tree().get_root().add_child(FacsWorld)
 	ThreePB.visible = false
 	OnePB.visible = false
 	Background.visible = false

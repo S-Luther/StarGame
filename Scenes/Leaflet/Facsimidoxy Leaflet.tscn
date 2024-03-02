@@ -1,69 +1,174 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://assets/Facsimidoxy Leaflet.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Facsimidoxy Leaflet.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/Players/Player1.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Shuttle/1PNavTerminal.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/New Piskel (1).png" type="Texture" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 5.01818
+radius = 7.96837
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 48.0937
 
 [sub_resource type="CircleShape2D" id=3]
-radius = 72.3671
+radius = 86.5022
+
+[sub_resource type="Animation" id=4]
+resource_name = "0"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 4 ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "1"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "2"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 2 ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "3"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "Full"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
 
 [node name="Node2D" type="KinematicBody2D"]
-position = Vector2( -980, -181 )
+position = Vector2( -7, 0 )
 script = ExtResource( 2 )
 
 [node name="ShipBase" type="KinematicBody2D" parent="."]
+position = Vector2( -6, -3 )
 
 [node name="Player" parent="ShipBase" instance=ExtResource( 3 )]
-position = Vector2( 1175, 281 )
+position = Vector2( 253.2, -25 )
 scale = Vector2( 1.5, 1.5 )
 z_index = 1
 
 [node name="Sail" type="Area2D" parent="ShipBase"]
+position = Vector2( -921.8, -306 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ShipBase/Sail"]
+visible = false
 position = Vector2( 956, 152 )
 scale = Vector2( 11.56, 10.64 )
 shape = SubResource( 1 )
 
 [node name="Gunner" type="Area2D" parent="ShipBase"]
-position = Vector2( -259, -88 )
+position = Vector2( -1180.8, -394 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ShipBase/Gunner"]
+visible = false
 position = Vector2( 1506, 381 )
 scale = Vector2( 11.56, 10.64 )
 shape = SubResource( 1 )
 
+[node name="Sprite" type="Sprite" parent="ShipBase/Gunner"]
+visible = false
+position = Vector2( 1575.8, 376 )
+rotation = 1.5708
+texture = ExtResource( 5 )
+
+[node name="Sprite2" type="Sprite" parent="ShipBase/Gunner"]
+visible = false
+position = Vector2( 308.8, 378 )
+rotation = -1.5708
+texture = ExtResource( 5 )
+
 [node name="Area2D" type="KinematicBody2D" parent="ShipBase"]
+position = Vector2( -921.8, -306 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ShipBase/Area2D"]
+visible = false
 position = Vector2( 1077, 282 )
 shape = SubResource( 2 )
 
 [node name="Nav" parent="ShipBase" instance=ExtResource( 4 )]
-position = Vector2( 958, 165 )
+position = Vector2( 22, 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ShipBase/Nav"]
-position = Vector2( 9, -19 )
+visible = false
+position = Vector2( -7, -148 )
 shape = SubResource( 3 )
 disabled = true
 
 [node name="Sprite" type="Sprite" parent="ShipBase"]
-position = Vector2( 702, 302 )
+position = Vector2( -219.8, -4 )
 texture = ExtResource( 1 )
 vframes = 5
+frame = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ShipBase/Sprite"]
+anims/0 = SubResource( 4 )
+anims/1 = SubResource( 5 )
+anims/2 = SubResource( 6 )
+anims/3 = SubResource( 7 )
+anims/Full = SubResource( 8 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ShipBase"]
+visible = false
+position = Vector2( -921.8, -306 )
 polygon = PoolVector2Array( 50, 297, 52, 268, 68, 230, 122, 188, 197, 150, 333, 107, 518, 81, 585, 77, 771, 76, 836, 80, 945, 94, 957, 96, 1076, 120, 1186, 160, 1239, 186, 1288, 229, 1303, 266, 1304, 299, 1296, 324, 1261, 368, 1214, 399, 1127, 438, 959, 479, 925, 478, 897, 441, 884, 393, 881, 374, 701, 371, 588, 366, 477, 360, 365, 356, 253, 351, 139, 347, 73, 341, 52, 302, 73, 297, 84, 322, 898, 355, 902, 383, 934, 381, 953, 413, 1003, 410, 1013, 443, 1118, 416, 1205, 379, 1244, 355, 1232, 321, 1256, 289, 1250, 267, 1231, 248, 1251, 226, 1226, 205, 1175, 178, 1064, 141, 1005, 122, 995, 155, 956, 154, 949, 185, 909, 183, 903, 202, 897, 239, 896, 339, 896, 352, 875, 352, 765, 342, 100, 294 )
 
 [node name="vines" type="Sprite" parent="ShipBase"]
-position = Vector2( 1086, 293 )
+position = Vector2( 164.2, -13 )
 texture = ExtResource( 1 )
 hframes = 11
 vframes = 22
