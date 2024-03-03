@@ -10,7 +10,7 @@ onready var Background = $Sprite
 var TwoPlayerWorld = preload("res://Scenes/ExpeditionaryVessel/2pWorld.tscn").instance()
 var OnePlayerWorld = preload("res://Scenes/Shuttle/1pWorld.tscn").instance()
 var ThreePlayerWorld = preload("res://Scenes/Platform/World.tscn").instance()
-var Map = preload("res://Scenes/Test/Galaxy.tscn").instance()
+var Map = preload("res://Scenes/UI/World_Gen.tscn").instance()
 var FacsWorld = preload("res://Scenes/Leaflet/Facsimidoxy Leaflet.tscn").instance()
 # Called when the node enters the scene tree for the first time.
 func _ready():

@@ -114,9 +114,9 @@ func move_state(delta):
 	if working && workable:
 		if Input.is_action_just_pressed("p1_fire"):
 			cycle()
-		if player1.position.x < 40:
-			working = false
-			workable = false
+#		if player1.position.x < 40:
+#			working = false
+#			workable = false
 		var input_vector = Vector2.ZERO
 		input_vector.x = Input.get_action_strength("p1_left") - Input.get_action_strength("p1_right")
 		input_vector.y = Input.get_action_strength("p1_up") - Input.get_action_strength("p1_down")

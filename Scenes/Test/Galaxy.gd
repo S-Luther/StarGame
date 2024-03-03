@@ -3,7 +3,9 @@ extends Node2D
 const PlanetMarker = preload('res://Scenes/Props/PlanetMarker.tscn')
 const AsteroidMarker = preload('res://Scenes/Props/AsteroidMarker.tscn')
 const ShotMarker = preload('res://Scenes/Props/ShotMarker.tscn')
+var dynamic_font = DynamicFont.new()
 
+	
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -5300,7 +5302,9 @@ var factions = [
 	"State",
 	"Rebels",
 	"Emperium",
-	"Federation"
+	"Federation",
+	"Dawn",
+	"Freaks"
 ]
 
 var enneagramCombos = [
@@ -5443,9 +5447,15 @@ func newBase(seedCharacter):
 		places[currentplace].neighbors.append(places[currentplace-1].name)
 		places[currentplace-1].neighbors.append(places[currentplace].name)
 		
+		var randomPlace = pickRandom(places)
+		
+		places[currentplace].neighbors.append(randomPlace.name)
+		randomPlace.neighbors.append(places[currentplace].name)
+		
 		places[currentplace].residents.append(seedCharacter);
 	
-	var residents = randi() % 40 + 10
+	var residents = 0
+	residents = randi() % 40 + 10
 	for i in range(residents):
 #		print("hi")
 		places[currentplace].residents.append(addRandomCharacter(places[currentplace].name, places[currentplace].culture));
@@ -5676,7 +5686,11 @@ func clash():
 	for a in get_tree().get_nodes_in_group("lines"):
 		a.queue_free()
 	for e in places:
-		var attack = pickRandom(e.neighbors);
+		var attack
+		if e.neighbors.size() > 0:
+			attack = pickRandom(e.neighbors);
+		else:
+			attack = pickRandom(places).name;
 		var index = -1
 		var found = false
 		for p in places:
@@ -5693,7 +5707,7 @@ func clash():
 			line.add_point(places[index].pos,1)
 			line.add_point(e.pos,2)
 			line.default_color = Color(e.color)
-			line.width = 2
+			line.width = 4
 			add_child(line)
 			line.add_to_group("lines")
 			if(attackerMight > defenderMight):
@@ -5711,10 +5725,15 @@ var collisions = 0;
 func build():
 	currentplace = -1
 	currentStep = 0
-	places = []
-	nodes = []
+	totalPop = 0
+	Apop = 0
+	Fpop = 0
+	Epop = 0
+	cultModifier = 0
+	places.clear()
+	nodes.clear()
 	randomize()
-	genSim(2000)
+	genSim(4000)
 	cleanSim(1000)
 	print("Total Pop: ", totalPop, " Worlds: ", places.size())
 	print("A Pop: ", Apop, " F Pop: ", Fpop, " E Pop: ", Epop)
@@ -5751,10 +5770,15 @@ func build():
 	
 	for p in nodes:
 		var label = Label.new()
-		label.set_position(p.pos + Vector2(-120,20))
-#		label.set_position(p.pos)
+		
 		label.text = "      "+p.name+"   " + String(p.residents.size()) + "  " + p.culture
-		label.rect_scale = Vector2(2,2);
+		print((label.text.length()))
+		label.visible = false
+		label.set_position(p.pos + Vector2((label.text.length()) * -8,20))
+#		label.set_position(p.pos)
+		
+		label.rect_scale = Vector2(3,3);
+#		label.add_font_override("font", dynamic_font)
 		self.add_child(label)
 		label.add_to_group("labels")
 		var asteroidm = PlanetMarker.instance()
@@ -5767,12 +5791,15 @@ func build():
 	
 
 func _ready():
+	dynamic_font.font_data = load("res://assets/Base_font.tres")
 	build()
 
 		
 	
 	
-var unique_factions = [10000,10000,10000];
+var unique_cultures = [10000,10000,10000];
+var unique_factions = []
+var fullStop = false
 
 func _process(delta):
 #	applyForces(nodes)
@@ -5787,8 +5814,9 @@ func _process(delta):
 			labels[p].visible = false
 
 	
-	if t.is_stopped() && !finish:
-		unique_factions = [0, 0, 0]
+	if t.is_stopped() && !finish && !fullStop:
+		unique_factions.clear()
+		unique_cultures = [0, 0, 0]
 	#
 		t.start(.5)
 		clash()
@@ -5803,12 +5831,15 @@ func _process(delta):
 			labels[i].visible = false
 		for p in nodes:
 			
+			if !unique_factions.has(p.faction):
+				unique_factions.append(p.faction + " " + p.culture)
+			
 			if p.culture == "A":
-				unique_factions[0] = unique_factions[0] + 1
+				unique_cultures[0] = unique_cultures[0] + 1
 			if p.culture == "F":
-				unique_factions[1] = unique_factions[1] + 1
+				unique_cultures[1] = unique_cultures[1] + 1
 			if p.culture == "E":
-				unique_factions[2] = unique_factions[2] + 1
+				unique_cultures[2] = unique_cultures[2] + 1
 
 			
 			var asteroidm = PlanetMarker.instance()
@@ -5818,22 +5849,38 @@ func _process(delta):
 			asteroidm.z_index = -1
 			self.add_child(asteroidm)
 			asteroidm.add_to_group("asteroidsm")
-		print(unique_factions[0], ", ", unique_factions[1], ", ",unique_factions[2])
+		print(unique_cultures[0], ", ", unique_cultures[1], ", ",unique_cultures[2])
 #	for a in get_tree().get_nodes_in_group("lines"):
 #		a.queue_free()
-	if unique_factions.has(1) || unique_factions.has(0) || collisions > 10:
+	if unique_cultures.has(1) || unique_cultures.has(0) || collisions > 10:
 		finish = true
 		for a in get_tree().get_nodes_in_group("lines"):
 			a.queue_free()
-		if clashCount < 5 || unique_factions.has(0):
+		
+		if clashCount < 5 || unique_cultures.has(0):
 			collisions = 0
 			clashCount = 0
-			unique_factions = [10000,10000,10000];
+			unique_cultures = [10000,10000,10000];
+			unique_factions.clear()
 			for a in get_tree().get_nodes_in_group("asteroidsm"):
 				a.queue_free()
 			for a in get_tree().get_nodes_in_group("labels"):
 				a.queue_free()
 			finish = false
 			build()
+		else:
+			if !fullStop:
+				unique_factions = []
+				for p in nodes:
+					if !unique_factions.has(p.faction + " " + p.culture):
+						unique_factions.append(p.faction + " " + p.culture)
+				for faction in unique_factions:
+					print(faction)
+				fullStop = true
+				for a in get_tree().get_nodes_in_group("asteroidsm"):
+					a.scale = Vector2(6,6)
+			else:
+				pass
+#			t.queue_free()
 
 
