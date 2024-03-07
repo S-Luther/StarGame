@@ -55,12 +55,26 @@ func _ready():
 func _process(delta):
 	update()
 	
+	var overview;
+	var Player
+	for o in get_tree().get_nodes_in_group("OverView"):
+		overview = o
+	for p in get_tree().get_nodes_in_group("Player"):
+		Player = p
+	
 	if colCheckTimer.is_stopped():
 		if has_collided:
 			var life = get_tree().get_nodes_in_group("life")[0]
 			var new_life = life.hearts - .25;
 			life.set_hearts(new_life)
-			get_tree().get_nodes_in_group("cam")[0].apply_shake()
+			var mainCam = get_tree().get_nodes_in_group("cam")[0]
+			mainCam.apply_shake()
+			var cams = get_tree().get_nodes_in_group("OverViewCamera")
+			if cams[0].current:
+				overview.visible = !overview.visible
+				Player.visible = !Player.visible
+				cams[0].current = !cams[0].current
+				mainCam.current = !mainCam.current
 		has_collided = false;
 		colCheckTimer.start(.2)
 

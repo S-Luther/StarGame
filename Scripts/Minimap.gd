@@ -7,6 +7,7 @@ onready var camera = $Camera2D
 onready var healthUI = $UI/HealthUI
 onready var UI = $UI
 onready var minimap = $UI/Minimap
+onready var mainCam = $Camera2D
 
 onready var LeftBounds = $UI/Minimap/LeftBounds
 onready var RightBounds = $UI/Minimap/RightBounds
@@ -24,6 +25,15 @@ var sep = 0;
 
 
 func _process(delta):
+	var overview;
+	var Player
+	for o in get_tree().get_nodes_in_group("OverView"):
+		overview = o
+	for p in get_tree().get_nodes_in_group("Player"):
+		Player = p
+#				overview.z_index = 4
+	
+	
 	
 	sep = sep + 1
 	if sep%4 == 0 && navWorking && navWorkable:
@@ -52,12 +62,25 @@ func _process(delta):
 	if navWorkable:
 		if navWorking:
 			minimap.visible = true
+			var cams = get_tree().get_nodes_in_group("OverViewCamera")
 			if Input.is_action_just_pressed("p1_fire"):
-				get_tree().get_nodes_in_group("anim")[0].play("dodge")
+#				get_tree().paused = !get_tree().pauseds
+				overview.visible = !overview.visible
+				Player.visible = !Player.visible
+				
+				cams[0].current = !cams[0].current
+				if !cams[0].current:
+					mainCam.current = !mainCam.current
+				
 			
 			if Input.is_action_just_pressed(prefix+"_swing"):
 				navWorking = false
 				minimap.visible = false
+				if cams[0].current:
+					overview.visible = !overview.visible
+					Player.visible = !Player.visible
+					cams[0].current = !cams[0].current
+					mainCam.current = !mainCam.current
 			if Input.is_action_just_pressed(prefix+"_down") && camera.zoom.x > .06 && camera.zoom.y > .4:
 				#print(camera.zoom.x)
 				#print(camera.zoom.y)
