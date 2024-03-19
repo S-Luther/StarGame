@@ -9,7 +9,9 @@ onready var avatar = $Node2D2/avatar
 onready var stats = $Node2D2/ScrollContainer2/Label
 onready var logs = $Node2D2/ScrollContainer/Label2
 onready var backup = $Node2D2/ScrollContainer/Label3
+onready var selfStats = $Node2D2/Label3
 onready var randB = $Node2D2/Button
+onready var Pause = $Node2D2/Pause
 
 var factionLength = 0;
 var previousFactions = []
@@ -17,11 +19,18 @@ var galaxy;
 var logsBack = ""
 #onready var randBu = $Button2
 var OnePlayerWorld = preload("res://Scenes/Shuttle/1pWorld.tscn").instance()
+var FacsWorld = preload("res://Scenes/Leaflet/FacsWorld.tscn").instance()
+var Galaxy
+var PlayerStats
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	self.add_to_group("OverView")
 	avatar.frame = randi() % 48
+	Galaxy = get_tree().get_nodes_in_group("Galaxy")
+	for g in Galaxy:
+		PlayerStats = g.addRandomCharacter("Unknown","A");
+	
 
 func difference(arr1, arr2):
 	var only_in_arr1 = []
@@ -36,10 +45,12 @@ func _process(delta):
 	var mousePos = get_global_mouse_position()
 	
 	
-		
-	
-#	print(mousePos)
-	var Galaxy = get_tree().get_nodes_in_group("Galaxy")
+	selfStats.text = "Name:  " +PlayerStats.name + "\n"
+	selfStats.text = selfStats.text + "Age:  " + String(PlayerStats.age) + "\n"
+	selfStats.text = selfStats.text + "Personality:  " + String(PlayerStats.enneagram[0]) + "\n"
+	selfStats.text = selfStats.text + "Home:  " + PlayerStats.home + "\n"
+	selfStats.text = selfStats.text + "Avatar:  " + String(PlayerStats.avatar) + "\n"
+	selfStats.text = selfStats.text + "Culture:  " + PlayerStats.culture + "\n"
 	
 	
 	var nodes = []
@@ -92,10 +103,11 @@ func _process(delta):
 						
 	else:
 		for p in range(nodes.size()):
-			if mousePos.distance_to(nodes[p].pos) < 50:
-				get_tree().get_nodes_in_group("labels")[p].visible = true
-			else:
-				get_tree().get_nodes_in_group("labels")[p].visible = false
+			if galaxy.fullStop && get_tree().get_nodes_in_group("labels").size() > 0:
+				if mousePos.distance_to(nodes[p].pos) < 50:
+					get_tree().get_nodes_in_group("labels")[p].visible = true
+				else:
+					get_tree().get_nodes_in_group("labels")[p].visible = false
 		
 	if !(unique_factions.size() > 0):
 		avatar.frame = randi() % 48
@@ -103,6 +115,10 @@ func _process(delta):
 		
 	stats.text = text
 	stats.rect_scale = Vector2(3,3);
+	if galaxy.fullStop:
+		Pause.text = "Continue"
+	else:
+		Pause.text = "Pause"
 	
 
 
@@ -110,6 +126,7 @@ func _process(delta):
 func _on_Button_pressed():
 	randomize()
 	avatar.frame = randi() % 48
+	PlayerStats.avatar = avatar.frame
 
 
 func _on_Button2_pressed():
@@ -119,3 +136,11 @@ func _on_Button2_pressed():
 func _on_Button3_pressed():
 	get_tree().get_root().add_child(OnePlayerWorld)
 	self.visible = false
+
+
+func _on_Pause_pressed():
+	galaxy.fullStop = !galaxy.fullStop
+	galaxy.finish = !galaxy.finish
+	galaxy.collisions = 2000
+
+	pass # Replace with function body.

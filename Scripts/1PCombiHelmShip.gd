@@ -118,7 +118,7 @@ func move_state(delta):
 		if Input.is_action_just_pressed("p1_fire"):
 			var p = projectile.instance()
 			p.position = engine.position
-			p.velocity = Vector2(10, 0).rotated(smooth_angle)
+			p.velocity = Vector2(20, 0).rotated(smooth_angle)
 			p.rotation = smooth_angle
 			p.z_index = 2
 			p.scale = Vector2(2,2)
@@ -198,7 +198,7 @@ func move():
 		var collision = get_slide_collision(i)
 		has_collided = true;
 		if collision.get_collider() is KinematicBody2D:
-			print("Collided with: ", collision.get_collider())
+#			print("Collided with: ", collision.get_collider())
 			collision.get_collider().hit()
 #		print("Collided with: ", collisions)
 

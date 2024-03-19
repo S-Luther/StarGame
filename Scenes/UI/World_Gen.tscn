@@ -97,6 +97,12 @@ margin_top = 1862.0
 margin_right = 1392.0
 margin_bottom = 2382.0
 
+[node name="Panel4" type="Panel" parent="Node2D2"]
+margin_left = 1864.0
+margin_top = 1859.0
+margin_right = 2822.0
+margin_bottom = 2379.0
+
 [node name="Panel3" type="Panel" parent="Node2D2"]
 margin_left = 3016.0
 margin_top = 1883.0
@@ -120,7 +126,7 @@ margin_bottom = 1789.0
 custom_fonts/font = ExtResource( 6 )
 text = "Regenerate"
 
-[node name="Button4" type="Button" parent="Node2D2"]
+[node name="Pause" type="Button" parent="Node2D2"]
 margin_left = 1872.0
 margin_top = 1683.0
 margin_right = 2240.0
@@ -135,6 +141,13 @@ margin_right = 1392.0
 margin_bottom = 1789.0
 custom_fonts/font = ExtResource( 6 )
 text = "medium"
+
+[node name="Label3" type="Label" parent="Node2D2"]
+margin_left = 1920.0
+margin_top = 1899.0
+margin_right = 2213.0
+margin_bottom = 2046.0
+rect_scale = Vector2( 3, 3 )
 
 [node name="Button3" type="Button" parent="Node2D2"]
 margin_left = 3026.0
@@ -163,4 +176,5 @@ margin_bottom = 14.0
 
 [connection signal="pressed" from="Node2D2/Button" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="Node2D2/Button2" to="." method="_on_Button2_pressed"]
+[connection signal="pressed" from="Node2D2/Pause" to="." method="_on_Pause_pressed"]
 [connection signal="pressed" from="Node2D2/Button3" to="." method="_on_Button3_pressed"]

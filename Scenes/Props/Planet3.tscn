@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://assets/Planets/1512271617 (4).png" type="Texture" id=1]
+[ext_resource path="res://assets/2941667078 (2).png" type="Texture" id=1]
 [ext_resource path="res://assets/New Piskel (2).png" type="Texture" id=2]
 [ext_resource path="res://assets/New Piskel (3).png" type="Texture" id=3]
 [ext_resource path="res://Scenes/Props/SpaceStation.gd" type="Script" id=4]
@@ -38,11 +38,11 @@ tracks/0/keys = {
 [node name="KinematicBody2D" type="StaticBody2D"]
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 1, 0 )
+position = Vector2( 5.96046e-08, 0 )
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 1 )
-hframes = 15
-vframes = 15
+hframes = 10
+vframes = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
 autoplay = "Spin"

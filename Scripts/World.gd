@@ -22,6 +22,11 @@ const Planet5 = preload('res://Scenes/Props/Planet5.tscn')
 const Planet6 = preload('res://Scenes/Props/Planet6.tscn')
 const Planet7 = preload('res://Scenes/Props/Planet7.tscn')
 const Planet8 = preload('res://Scenes/Props/Planet8.tscn')
+const Planet32 = preload('res://Scenes/Props/Planet32.tscn')
+const Planet33 = preload('res://Scenes/Props/Planet33.tscn')
+const Planet34 = preload('res://Scenes/Props/Planet34.tscn')
+const Planet35 = preload('res://Scenes/Props/Planet35.tscn')
+const Planet36 = preload('res://Scenes/Props/Planet36.tscn')
 
 const Asteroid1 = preload('res://Scenes/Props/Asteroid1.tscn')
 const Asteroid2 = preload('res://Scenes/Props/Asteroid2.tscn')
@@ -34,8 +39,9 @@ var t = Timer.new()
 #const Asteroid6 = preload('res://Scenes/Props/Asteroid6.tscn')
 #const Asteroid7 = preload('res://Scenes/Props/Asteroid7.tscn')
 var coeff = .25
-var sep = 100000
+var sep = 40000
 var nodes = []
+var planet_choices = [Planet3, Planet32, Planet33, Planet34, Planet35, Planet36]
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	add_child(t)
@@ -47,17 +53,20 @@ func _ready():
 		nodes = g.nodes
 	
 	for n in nodes:
-		print(n.name)
-		print(n.pos.x, " ", n.pos.y)
-		var planet = Planet3.instance()
+#		print(n.name)
+#		print(n.pos.x, " ", n.pos.y)
 		var rng = RandomNumberGenerator.new()
 		rng.randomize()
+		var planet = planet_choices[rng.randi_range(0,5)].instance()
+
+		
 		var pos = n.pos - Vector2(800, 500)
 		
 		var l = Label.new()
 		l.text = n.name
 		
 		planet.position = pos *500
+		planet.rotation_degrees = (randi() % 4) * 90
 		planet.z_index = 0
 		l.set_position(planet.position)
 		l.rect_scale = Vector2(5,5)
@@ -68,6 +77,11 @@ func _ready():
 
 		self.add_child(planet)
 		planet.add_to_group("planets")
+		
+		if Player.position.distance_to(pos) < 4000:
+			welcome.text = "Welcome to " +n.name
+			welcome.visible = true
+#			get_tree().get_nodes_in_group("Galaxy")[0].Place.add_to_group("current_location")
 		
 
 #	RightB.position.x = RightB.position.x - .5
@@ -152,19 +166,19 @@ func _ready():
 #
 #		self.add_child(planet)
 #		planet.add_to_group("planets")
-#	for i in 500:
-#		var asteroid = Asteroid1.instance()
-#		var rng = RandomNumberGenerator.new()
-#		rng.randomize()
-#
-#		asteroid.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
-#		asteroid.z_index = 0
-#		var temp = rng.randi_range(35, 50) * 2
-##		asteroid.tran.scale = Vector2(temp,temp)
-#		asteroid.rotate(rng.randi_range(0, 360))
-#		self.add_child(asteroid)
-#		asteroid.add_to_group("asteroids")
-##		asteroid.velocity = Vector2(rng.randi_range(10,-10), rng.randi_range(10,-10))
+	for i in 50:
+		var asteroid = Asteroid1.instance()
+		var rng = RandomNumberGenerator.new()
+		rng.randomize()
+
+		asteroid.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
+		asteroid.z_index = 0
+		var temp = rng.randi_range(35, 50) * 2
+#		asteroid.tran.scale = Vector2(temp,temp)
+		asteroid.rotate(rng.randi_range(0, 360))
+		self.add_child(asteroid)
+		asteroid.add_to_group("asteroids")
+#		asteroid.velocity = Vector2(rng.randi_range(10,-10), rng.randi_range(10,-10))
 #
 	for i in 50:
 		var drone = LancerDrone.instance()
@@ -177,42 +191,42 @@ func _ready():
 		drone.add_to_group("drones")
 #
 #
-#	for i in 500:
-#		var asteroid = Asteroid2.instance()
-#		var rng = RandomNumberGenerator.new()
-#		rng.randomize()
-#
-#		asteroid.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
-#		asteroid.z_index = 0
-#		var temp = rng.randi_range(35, 50)  * 20
-#
-#		asteroid.rotate(rng.randi_range(0, 360))
-#		self.add_child(asteroid)
-#		asteroid.add_to_group("asteroids")
-#	for i in 500:
-#		var asteroid = Asteroid3.instance()
-#		var rng = RandomNumberGenerator.new()
-#		rng.randomize()
-#
-#		asteroid.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
-#		asteroid.z_index = 0
-#		var temp = rng.randi_range(35, 50) 
-#
-#		asteroid.rotate(rng.randi_range(0, 360))
-#		self.add_child(asteroid)
-#		asteroid.add_to_group("asteroids")
-#	for i in 500:
-#		var asteroid = Asteroid4.instance()
-#		var rng = RandomNumberGenerator.new()
-#		rng.randomize()
-#
-#		asteroid.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
-#		asteroid.z_index = 0
-#		var temp = rng.randi_range(35, 50) 
-#
-#		asteroid.rotate(rng.randi_range(0, 360))
-#		self.add_child(asteroid)
-#		asteroid.add_to_group("asteroids")
+	for i in 50:
+		var asteroid = Asteroid2.instance()
+		var rng = RandomNumberGenerator.new()
+		rng.randomize()
+
+		asteroid.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
+		asteroid.z_index = 0
+		var temp = rng.randi_range(35, 50)  * 20
+
+		asteroid.rotate(rng.randi_range(0, 360))
+		self.add_child(asteroid)
+		asteroid.add_to_group("asteroids")
+	for i in 50:
+		var asteroid = Asteroid3.instance()
+		var rng = RandomNumberGenerator.new()
+		rng.randomize()
+
+		asteroid.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
+		asteroid.z_index = 0
+		var temp = rng.randi_range(35, 50) 
+
+		asteroid.rotate(rng.randi_range(0, 360))
+		self.add_child(asteroid)
+		asteroid.add_to_group("asteroids")
+	for i in 50:
+		var asteroid = Asteroid4.instance()
+		var rng = RandomNumberGenerator.new()
+		rng.randomize()
+
+		asteroid.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
+		asteroid.z_index = 0
+		var temp = rng.randi_range(35, 50) 
+
+		asteroid.rotate(rng.randi_range(0, 360))
+		self.add_child(asteroid)
+		asteroid.add_to_group("asteroids")
 #	for i in 20:
 #		var asteroid = Asteroid5.instance()
 #		var rng = RandomNumberGenerator.new()
@@ -249,6 +263,70 @@ func _ready():
 #		asteroid.rotate(rng.randi_range(0, 360))
 #		self.add_child(asteroid)
 #		asteroid.add_to_group("asteroids")	
+func addAsteroids():
+	for i in 50:
+		var asteroid = Asteroid2.instance()
+		var rng = RandomNumberGenerator.new()
+		rng.randomize()
+		
+		var x = rng.randi_range(sep,-sep)
+		var y = rng.randi_range(sep,-sep)
+		
+		if x > 4000 || x < -4000 || y > 4000 || y < -4000:
+			asteroid.position = Vector2(x,y) + Player.position
+			asteroid.z_index = 0
+			var temp = rng.randi_range(35, 50)  * 20
+
+			asteroid.rotate(rng.randi_range(0, 360))
+			self.add_child(asteroid)
+			asteroid.add_to_group("asteroids")
+	for i in 50:
+		var asteroid = Asteroid3.instance()
+		var rng = RandomNumberGenerator.new()
+		rng.randomize()
+
+		var x = rng.randi_range(sep,-sep)
+		var y = rng.randi_range(sep,-sep)
+		
+		if x > 4000 || x < -4000 || y > 4000 || y < -4000:
+			asteroid.position = Vector2(x,y) + Player.position
+			asteroid.z_index = 0
+			var temp = rng.randi_range(35, 50) 
+
+			asteroid.rotate(rng.randi_range(0, 360))
+			self.add_child(asteroid)
+			asteroid.add_to_group("asteroids")
+	for i in 50:
+		var asteroid = Asteroid4.instance()
+		var rng = RandomNumberGenerator.new()
+		rng.randomize()
+
+		var x = rng.randi_range(sep,-sep)
+		var y = rng.randi_range(sep,-sep)
+		
+		if x > 4000 || x < -4000 || y > 4000 || y < -4000:
+			asteroid.position = Vector2(x,y) + Player.position
+			asteroid.z_index = 0
+			var temp = rng.randi_range(35, 50) 
+
+			asteroid.rotate(rng.randi_range(0, 360))
+			self.add_child(asteroid)
+			asteroid.add_to_group("asteroids")
+	for i in 50:
+		var asteroid = Asteroid1.instance()
+		var rng = RandomNumberGenerator.new()
+		rng.randomize()
+		var x = rng.randi_range(sep,-sep)
+		var y = rng.randi_range(sep,-sep)
+		if x > 4000 || x < -4000 || y > 4000 || y < -4000:
+			asteroid.position = Vector2(x,y) + Player.position
+			asteroid.z_index = 0
+			var temp = rng.randi_range(35, 50) 
+
+			asteroid.rotate(rng.randi_range(0, 360))
+			self.add_child(asteroid)
+			asteroid.add_to_group("asteroids")
+
 
 var index = 0
 var placeName
@@ -267,7 +345,15 @@ func _process(delta):
 #			for i in range(index):
 #				message = message + string[i]
 #			index = index + 1
-#
+#addAsteroids()
+	var count = 0;
+	for a in get_tree().get_nodes_in_group("asteroids"):
+		count = count + 1
+		if a.position.distance_to(Player.position) > 50000:
+			a.queue_free()
+			
+	if count < 100:
+		addAsteroids()
 	for n in nodes:
 		var pos = n.pos - Vector2(800, 500)
 		pos = pos * 500
@@ -276,7 +362,6 @@ func _process(delta):
 			placeName = n.name
 			welcome.text = "Welcome to " +n.name
 			welcome.visible = true
-#			print(n.name)
 
 #		else:
 #			print("none")

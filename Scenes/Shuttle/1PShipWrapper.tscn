@@ -172,7 +172,7 @@ tracks/0/keys = {
 
 [sub_resource type="CapsuleShape2D" id=9]
 radius = 3.40016
-height = 26.705
+height = 47.6009
 
 [sub_resource type="Animation" id=7]
 length = 0.001
@@ -377,7 +377,7 @@ position = Vector2( 0, 0.6 )
 script = ExtResource( 11 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Engine/Visible/Area2D"]
-position = Vector2( 2.09231, 0.418636 )
+position = Vector2( 0, 0.409088 )
 rotation = 1.5708
 shape = SubResource( 9 )
 

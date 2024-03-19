@@ -14,7 +14,7 @@ onready var RightBounds = $UI/Minimap/RightBounds
 onready var TopBounds = $UI/Minimap/TopBounds
 onready var BottomBounds = $UI/Minimap/BottomBounds
 const PlanetMarker = preload('res://Scenes/Props/PlanetMarker.tscn')
-const AsteroidMarker = preload('res://Scenes/Props/ShotMarker.tscn')
+const AsteroidMarker = preload('res://Scenes/Props/AsteroidMarker.tscn')
 const ShotMarker = preload('res://Scenes/Props/ShotMarker.tscn')
 
 
@@ -39,6 +39,7 @@ func _process(delta):
 	if sep%4 == 0 && navWorking && navWorkable:
 		var player = get_owner()
 		var asteroids = []
+		var baddies = []
 		var planets = []
 		var shots = []
 #		var LeftBD = player.get_p osition().x - get_tree().get_nodes_in_group("LeftB")[0].get_position().x
@@ -47,10 +48,10 @@ func _process(delta):
 #		var BottomBD = player.get_position().y - get_tree().get_nodes_in_group("BottomB")[0].get_position().y
 		for object in get_tree().get_nodes_in_group("baddies"):
 			if(player.get_position().distance_to(object.get_position())<5000):
-				asteroids.append(object.get_position())
+				baddies.append(object.get_position())
 		for object in get_tree().get_nodes_in_group("shots"):
 			if(player.get_position().distance_to(object.get_position())<5000):
-				asteroids.append(object.get_position())
+				shots.append(object.get_position())
 		for object in get_tree().get_nodes_in_group("asteroids"):
 			if(player.get_position().distance_to(object.get_position())<5000):
 				asteroids.append(object.get_position())
@@ -58,7 +59,7 @@ func _process(delta):
 			if(player.get_position().distance_to(object.get_position())<5000):
 				planets.append(object.get_position())
 		
-		self.radar(player.get_position(),asteroids,planets,shots)	
+		self.radar(player.get_position(),asteroids,planets,baddies)	
 	if navWorkable:
 		if navWorking:
 			minimap.visible = true
@@ -100,7 +101,7 @@ func _process(delta):
 		minimap.visible = false
 		pass
 		
-func radar(player,asteroids,planets,shots):
+func radar(player,asteroids,planets,baddies):
 	#left 426 - 584
 	#right 752 - 588
 	#top -468 - -333
@@ -132,14 +133,24 @@ func radar(player,asteroids,planets,shots):
 		minimap.add_child(asteroidm)
 		asteroidm.add_to_group("asteroidsm")
 		
-	for shot in shots:
+	for bad in baddies:
+		#print(planet.x - player.x , " , ", planet.y - player.y)
+		var asteroidm = ShotMarker.instance()
 
-		var shotm = ShotMarker.instance()
-
-		shotm.position = Vector2(510 + (1 - (player.x - shot.x)/5000) * 158, -130 + ((1 - (shot.y - player.y)/5000) * -156))
-
-		minimap.add_child(shotm)
-		shotm.add_to_group("shotm")
+		asteroidm.position = Vector2(426 + (1 - (player.x - bad.x)/5000) * 158, -169 + ((1 - (bad.y - player.y)/5000) * -156))
+		#planetm.position = -planetm.position
+		#print(planetm.position)
+		minimap.add_child(asteroidm)
+		asteroidm.add_to_group("asteroidsm")
+		
+#	for shot in shots:
+#
+#		var shotm = ShotMarker.instance()
+#
+#		shotm.position = Vector2(510 + (1 - (player.x - shot.x)/5000) * 158, -130 + ((1 - (shot.y - player.y)/5000) * -156))
+#
+#		minimap.add_child(shotm)
+#		shotm.add_to_group("shotm")
 	
 #	if LeftBD > 5000:
 #		LeftBounds.position.x = 426

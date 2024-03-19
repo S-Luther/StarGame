@@ -141,3 +141,5 @@ func _on_Player1_area_exited(area):
 		
 	workable = false
 
+func slice():
+	pass
