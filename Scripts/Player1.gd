@@ -28,6 +28,8 @@ var workable = false
 var working = false
 var outfit = false
 
+var NPC = false
+
 onready var animationPlayer = $AnimationPlayer
 onready var animationTree = $AnimationTree
 onready var animationState = animationTree.get("parameters/playback")

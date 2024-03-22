@@ -48,7 +48,7 @@ func _ready():
 	t.one_shot = true
 	t.start(2)
 	
-	self.add_to_group("Player")
+	self.add_to_group("World")
 	for g in get_tree().get_nodes_in_group("Galaxy"):
 		nodes = g.nodes
 	
@@ -327,10 +327,26 @@ func addAsteroids():
 			self.add_child(asteroid)
 			asteroid.add_to_group("asteroids")
 
+var paused = false
+
+func pause():
+	for a in get_tree().get_nodes_in_group("asteroids"):
+		a.queue_free()
+	for d in get_tree().get_nodes_in_group("drones"):
+		d.queue_free()
+	Player.crash()
+	paused = true
+
+func unpause():
+	paused = false
+	addAsteroids()
+
 
 var index = 0
 var placeName
 var message = ""
+var residents = []
+
 func _process(delta):
 	
 	var place = ""
@@ -352,12 +368,13 @@ func _process(delta):
 		if a.position.distance_to(Player.position) > 50000:
 			a.queue_free()
 			
-	if count < 100:
+	if count < 100 && !paused:
 		addAsteroids()
 	for n in nodes:
 		var pos = n.pos - Vector2(800, 500)
 		pos = pos * 500
-		if Player.position.distance_to(pos) < 4000:
+		if Player.position.distance_to(pos) < 5000:
+			residents = n.residents
 			place = n.name
 			placeName = n.name
 			welcome.text = "Welcome to " +n.name

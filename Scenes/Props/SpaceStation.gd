@@ -12,12 +12,15 @@ func _ready():
 
 func slice():
 	pass
+
 func hit():
-	if !hasHappened:
+	
+	if !get_tree().get_nodes_in_group("World")[0].paused:
 		hasHappened = true
 		var SpacePort = preload("res://Scenes/SpacePort/World.tscn").instance()
 		get_tree().get_root().add_child(SpacePort)
-		for p in get_tree().get_nodes_in_group("Player"):
+		for p in get_tree().get_nodes_in_group("World"):
+			p.pause()
 			pass
 	#	get_tree().get_root().
 		get_tree().get_nodes_in_group("SpacePortCamera")[0].current = true

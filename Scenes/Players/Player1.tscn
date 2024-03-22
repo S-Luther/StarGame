@@ -398,7 +398,7 @@ graph_offset = Vector2( 171.735, 44.9787 )
 [sub_resource type="AnimationNodeStateMachinePlayback" id=14]
 
 [sub_resource type="CapsuleShape2D" id=22]
-height = 0.0
+height = 14.0
 
 [sub_resource type="CapsuleShape2D" id=29]
 radius = 18.0
@@ -411,6 +411,7 @@ script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 modulate = Color( 0, 0.345098, 1, 1 )
+position = Vector2( 0, -4 )
 scale = Vector2( 3, 3 )
 texture = ExtResource( 1 )
 flip_h = true
@@ -438,11 +439,11 @@ parameters/playback = SubResource( 14 )
 parameters/Run/blend_position = Vector2( -0.501408, -0.0751445 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 11 )
 shape = SubResource( 22 )
 one_way_collision_margin = 0.0
 
 [node name="p1" type="Area2D" parent="."]
+position = Vector2( 0, -11 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="p1"]
 position = Vector2( 0, 11 )

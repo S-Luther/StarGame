@@ -5396,7 +5396,7 @@ class Place:
 		var vel = force / mass
 		pos = pos + vel
 		if pos.x > 1600 || pos.x < 0 || pos.y > 1000 || pos.y < 0:
-			pos = pos - vel*2
+			pos = pos - vel
 		else:
 			pass
 
@@ -5445,7 +5445,10 @@ func addRandomCharacter(place, pculture) -> Person:
 	else:
 		Epop = Epop + 1
 	
-	var person = Person.new(pickRandom(names),randi() % 90 + 15,place, pickRandom(enneagramCombos),pculture)
+	var name = pickRandom(names)
+	names.pop_at(names.find(name))
+	
+	var person = Person.new(name,randi() % 90 + 15,place, pickRandom(enneagramCombos),pculture)
 	
 	if pculture == "F":
 		person.avatar = pickRandom(Facs)
@@ -5486,7 +5489,7 @@ func newBase(seedCharacter):
 		
 		var randomPlace = pickRandom(places)
 		
-		if randi() % 10 == 0:
+		if randi() % 5 == 0:
 			places[currentplace].neighbors.append(randomPlace.name)
 			randomPlace.neighbors.append(places[currentplace].name)
 		
@@ -5501,11 +5504,11 @@ func newBase(seedCharacter):
 		places[currentplace].residents.append(addRandomCharacter(places[currentplace].name, places[currentplace].culture));
 #		print(places[currentplace].residents[places[currentplace].residents.size()-1].name)
 
-var cultModifier = 0
+var cultModifier = 1
 
 func interact(i,j, c):
-	var iType = i.enneagram[0];
-	var jType = j.enneagram[0];
+	var iType = i.enneagram[randi()%3];
+	var jType = j.enneagram[randi()%3];
 	
 	var firstTime = false;
 	
@@ -5514,12 +5517,14 @@ func interact(i,j, c):
 	if j.culture != c:
 		j.happiness = j.happiness - cultModifier;
 	
-	if !(i.knowledge.has(j.name)) and (j.knowledge.has(i.name)):
+	if !(i.knowledge.has(j.name)) and !(j.knowledge.has(i.name)):
 		i.knowledge.append(j.name);
 		j.knowledge.append(i.name);
 		firstTime=true;
 		i.boredom = i.boredom - 1;
 		j.boredom = j.boredom - 1;
+		
+	
 
 #       console.log(i.name + " just met " + j.name + " for the first time.")
 	if (enneagramCompat[iType-1].has(jType)):
@@ -5553,8 +5558,8 @@ func interact(i,j, c):
 	else:
 #        i.memories.append(i.name+" didn't feel anything after interacting with "+j.name);
 #        j.memories.append(j.name+" didn't feel anything after interacting with "+i.name);
-		i.boredom = i.boredom + 2;
-		j.boredom = j.boredom + 1;
+		i.boredom = i.boredom + 4;
+		j.boredom = j.boredom + 3;
 
 	if(i.thoughts.size() > 20):
 		if((randi() % 1000)<2):
@@ -5575,11 +5580,11 @@ func genStep():
 	for c in places[currentplace].residents:
 #		print(c.name)
 		interact(c, pickRandom(places[currentplace].residents), places[currentplace].culture);
-		if c.happiness<0:
+		if c.happiness<10:
 			stop = true;
 			nomad = c;
 #			print("here")
-		if c.boredom>1000:
+		if c.boredom>500:
 			stop = true;
 			nomad = c;
 #		print(c.happiness, " ", c.boredom)
@@ -5591,7 +5596,7 @@ func genSim(steps):
 	for j in range(steps):
 		if(stop):
 			var index = places[currentplace].residents.find(nomad);
-			places[currentplace].residents.erase(nomad);
+			places[currentplace].residents.pop_at(index);
 			newBase(nomad);
 			stop = false;
 		else:
@@ -5755,6 +5760,8 @@ func clash():
 		   
 var t = Timer.new()
 
+var size = 5000;
+
 var finish = false
 
 var collisions = 0;
@@ -5762,7 +5769,10 @@ var collisions = 0;
 func getNodes() -> Array:
 	return nodes
 
+var spacing = 100;
+
 func build():
+	names = names_backup.duplicate()
 	runs = 0
 	currentplace = -1
 	currentStep = 0
@@ -5774,7 +5784,7 @@ func build():
 	places.clear()
 	nodes.clear()
 	randomize()
-	genSim(8000)
+	genSim(size)
 	cleanSim(1000)
 	logs = "Total Pop: " + String(totalPop)+ " Worlds: " + String(places.size()) + "\n"+ logs
 	logs = "A Pop: " + String(Apop) + " F Pop: " + String(Fpop) + " E Pop: " + String(Epop) + "\n"+ logs
@@ -5794,7 +5804,7 @@ func build():
 		var neighb = p.neighbors
 		for l in places:
 			if neighb.has(l.name):
-				nodeCon.append([l, p, 100])
+				nodeCon.append([l, p, spacing])
 
 				
 			
@@ -5802,8 +5812,10 @@ func build():
 	
 
 	
+var names_backup
 
 func _ready():
+	names_backup = names.duplicate()
 	self.add_to_group("Galaxy")
 	build()
 
@@ -5833,6 +5845,7 @@ func rebuild():
 var runs = 0;
 
 func _process(delta):
+
 	var labels = get_tree().get_nodes_in_group("labels")
 	
 	runs = runs + 1
@@ -5858,6 +5871,20 @@ func _process(delta):
 		for a in get_tree().get_nodes_in_group("mapPlanets"):
 			a.queue_free()
 		for p in nodes:
+			
+			if is_nan(p.pos.x) || p.pos.x > 1600 || p.pos.x < 0 || p.pos.y > 1000 || p.pos.y < 0:
+				logs =  "Rejected for out of bounds" + "\n"+ logs
+				print("Rejected for out of bounds")
+				collisions = 0
+				clashCount = 0
+				unique_cultures = [10000,10000,10000];
+				unique_factions.clear()
+				for a in get_tree().get_nodes_in_group("mapPlanets"):
+					a.queue_free()
+				for a in get_tree().get_nodes_in_group("labels"):
+					a.queue_free()
+				finish = false
+				build()
 			p.update()
 			var asteroidm = PlanetMarker.instance()
 			asteroidm.position = p.pos
@@ -5869,6 +5896,7 @@ func _process(delta):
 			
 		
 	if runs == 1000:
+		
 		
 		for p in places:
 			var label = Label.new()

@@ -11,7 +11,9 @@ onready var logs = $Node2D2/ScrollContainer/Label2
 onready var backup = $Node2D2/ScrollContainer/Label3
 onready var selfStats = $Node2D2/Label3
 onready var randB = $Node2D2/Button
+onready var sizeB = $Node2D2/Button5
 onready var Pause = $Node2D2/Pause
+onready var Ship = $Node2D2/Ship
 
 var factionLength = 0;
 var previousFactions = []
@@ -30,6 +32,7 @@ func _ready():
 	Galaxy = get_tree().get_nodes_in_group("Galaxy")
 	for g in Galaxy:
 		PlayerStats = g.addRandomCharacter("Unknown","A");
+		
 	
 
 func difference(arr1, arr2):
@@ -134,7 +137,10 @@ func _on_Button2_pressed():
 
 
 func _on_Button3_pressed():
-	get_tree().get_root().add_child(OnePlayerWorld)
+	if ship == 0:
+		get_tree().get_root().add_child(OnePlayerWorld)
+	elif ship == 1:
+		get_tree().get_root().add_child(FacsWorld)
 	self.visible = false
 
 
@@ -144,3 +150,31 @@ func _on_Pause_pressed():
 	galaxy.collisions = 2000
 
 	pass # Replace with function body.
+
+var sizes = [2000, 4000, 6000, 8000, 10000]
+var spacing = [100, 100, 50, 25, -50]
+var size_labels = ["Tiny", "Small", "Medium", "Large", "Massive"]
+var size_index = 2
+
+func _on_Button5_pressed():
+	size_index = size_index + 1
+	if size_index == 5:
+		size_index = 0
+	galaxy.size = sizes[size_index]
+	galaxy.spacing = spacing[size_index]
+	sizeB.text = size_labels[size_index]
+
+var ship = 0
+
+func _on_Left_pressed():
+	ship = ship - 1
+	if ship == -1:
+		ship = 1
+	Ship.frame = ship
+
+
+func _on_Right_pressed():
+	ship = ship + 1
+	if ship == 2:
+		ship = 0
+	Ship.frame = ship

@@ -209,8 +209,8 @@ func crash():
 	player1.crash()
 	nav.crash()
 	workable = false
-	working = false
-	state = ATTACK
+#	working = false
+#	state = ATTACK
 	#print("crash")
 
 func _on_Helm_area_entered(area):

@@ -6,7 +6,7 @@
 [ext_resource path="res://assets/Portraits Packed with border.png" type="Texture" id=4]
 [ext_resource path="res://Scenes/UI/World_Gen.gd" type="Script" id=5]
 [ext_resource path="res://assets/Base_font.tres" type="DynamicFont" id=6]
-[ext_resource path="res://assets/1pship.png" type="Texture" id=7]
+[ext_resource path="res://assets/Shuttle (3).png" type="Texture" id=7]
 [ext_resource path="res://Scenes/UI/OverViewCamera.gd" type="Script" id=8]
 
 [node name="Control" type="Control"]
@@ -157,9 +157,32 @@ margin_bottom = 2379.0
 custom_fonts/font = ExtResource( 6 )
 text = "Launch"
 
-[node name="Sprite6" type="Sprite" parent="Node2D2"]
-position = Vector2( 3216, 2065 )
+[node name="Ship" type="Sprite" parent="Node2D2"]
+position = Vector2( 3216, 2091 )
+scale = Vector2( 1.536, 1.51351 )
 texture = ExtResource( 7 )
+hframes = 2
+vframes = 3
+
+[node name="Left" type="Button" parent="Node2D2/Ship"]
+margin_left = -260.417
+margin_top = -79.2857
+margin_right = -148.417
+margin_bottom = 26.7143
+rect_scale = Vector2( 0.713542, 0.851315 )
+rect_pivot_offset = Vector2( 112, 48 )
+custom_fonts/font = ExtResource( 6 )
+text = "<"
+
+[node name="Right" type="Button" parent="Node2D2/Ship"]
+margin_left = 114.583
+margin_top = -79.2857
+margin_right = 226.583
+margin_bottom = 26.7143
+rect_scale = Vector2( 0.741069, 0.836737 )
+rect_pivot_offset = Vector2( 112, 48 )
+custom_fonts/font = ExtResource( 6 )
+text = ">"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Node2D2"]
 margin_left = 482.0
@@ -177,4 +200,7 @@ margin_bottom = 14.0
 [connection signal="pressed" from="Node2D2/Button" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="Node2D2/Button2" to="." method="_on_Button2_pressed"]
 [connection signal="pressed" from="Node2D2/Pause" to="." method="_on_Pause_pressed"]
+[connection signal="pressed" from="Node2D2/Button5" to="." method="_on_Button5_pressed"]
 [connection signal="pressed" from="Node2D2/Button3" to="." method="_on_Button3_pressed"]
+[connection signal="pressed" from="Node2D2/Ship/Left" to="." method="_on_Left_pressed"]
+[connection signal="pressed" from="Node2D2/Ship/Right" to="." method="_on_Right_pressed"]

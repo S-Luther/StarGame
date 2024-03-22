@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 
 export var ACCELERATION = 400
-export var MAX_SPEED = 500
+export var MAX_SPEED = 600
 export var ROLL_SPEED = 1.0
 export var FRICTION = 1
 
@@ -23,9 +23,9 @@ var velocity2 = Vector2.ZERO
 var roll_vector = Vector2.DOWN
 var init = false
 
-onready var minimap = $Engine/NavTerm/UI/
+onready var minimap = $Engine/NavTerminal/UI/
 
-onready var nav = $Engine/NavTerm
+onready var nav = $Engine/NavTerminal
 onready var player1 = $Engine/Player1
 onready var player2 = $Engine/Player2
 onready var engine = $Engine
