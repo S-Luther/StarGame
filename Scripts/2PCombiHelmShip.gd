@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 
-export var ACCELERATION = 400
+export var ACCELERATION = 600
 export var MAX_SPEED = 600
 export var ROLL_SPEED = 1.0
 export var FRICTION = 1
@@ -96,7 +96,7 @@ func move_state(delta):
 			
 			roll_vector = input_vector
 			###print("Vector2" , input_vector, ",")
-			velocity2 = velocity2.move_toward(input_vector * MAX_SPEED, ACCELERATION * delta)
+			velocity2 = velocity2.move_toward(input_vector * MAX_SPEED, ACCELERATION)
 			#state = ROLL
 		else:
 			animationPlayer.play("StopStart")

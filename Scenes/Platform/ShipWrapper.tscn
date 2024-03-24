@@ -604,7 +604,7 @@ z_index = 1
 texture = ExtResource( 17 )
 
 [node name="Lights" type="Sprite" parent="."]
-modulate = Color( 1, 0.999162, 0.999162, 1 )
+modulate = Color( 1, 0.999358, 0.999162, 1 )
 position = Vector2( -124, 3 )
 scale = Vector2( 13, 13 )
 texture = ExtResource( 10 )

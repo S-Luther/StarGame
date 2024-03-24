@@ -74,7 +74,7 @@ func _process(delta):
 					mainCam.current = !mainCam.current
 				
 			
-			if Input.is_action_just_pressed(prefix+"_swing"):
+			if prefix!="" && Input.is_action_just_pressed(prefix+"_swing"):
 				navWorking = false
 				minimap.visible = false
 				if cams[0].current:
@@ -82,19 +82,19 @@ func _process(delta):
 					Player.visible = !Player.visible
 					cams[0].current = !cams[0].current
 					mainCam.current = !mainCam.current
-			if Input.is_action_just_pressed(prefix+"_down") && camera.zoom.x > .06 && camera.zoom.y > .4:
+			if prefix!="" && Input.is_action_just_pressed(prefix+"_down") && camera.zoom.x > .06 && camera.zoom.y > .4:
 				#print(camera.zoom.x)
 				#print(camera.zoom.y)
 				UI.scale = Vector2(UI.scale.x - .2,UI.scale.y - .19)
 				camera.zoom = Vector2(camera.zoom.x - .1, camera.zoom.y - .1)
 
-			if Input.is_action_just_pressed(prefix+"_up")  && camera.zoom.x < 10.3 && camera.zoom.y < 200:
+			if prefix!="" && Input.is_action_just_pressed(prefix+"_up")  && camera.zoom.x < 10.3 && camera.zoom.y < 200:
 				#print(camera.zoom.x)
 				#print(camera.zoom.y)
 				UI.scale = Vector2(UI.scale.x + .2,UI.scale.y + .19)
 				camera.zoom = Vector2(camera.zoom.x + .1, camera.zoom.y + .1)
 
-		elif Input.is_action_just_pressed(prefix+"_swing"):
+		elif prefix!="" && Input.is_action_just_pressed(prefix+"_swing"):
 			navWorking = true
 			minimap.visible = false
 	else:
@@ -178,7 +178,8 @@ func _on_NavTerm_area_entered(area):
 	navWorkable = true
 	#print("nav on")
 	if !navWorking:
-		prefix = area.name
+		if area.name != "Area2D":
+			prefix = area.name
 
 
 func _on_NavTerm_area_exited(area):

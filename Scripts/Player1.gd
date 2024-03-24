@@ -1,5 +1,5 @@
 extends KinematicBody2D
-
+class_name Player1
 
 export var ACCELERATION = 500
 export var MAX_SPEED = 120
@@ -144,4 +144,7 @@ func _on_Player1_area_exited(area):
 	workable = false
 
 func slice():
+	pass
+
+func hit():
 	pass

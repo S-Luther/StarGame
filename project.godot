@@ -9,12 +9,18 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "Player1",
+"language": "GDScript",
+"path": "res://Scripts/Player1.gd"
+}, {
 "base": "Node",
 "class": "Walker",
 "language": "GDScript",
 "path": "res://Scenes/SpacePort/Walker.gd"
 } ]
 _global_script_class_icons={
+"Player1": "",
 "Walker": ""
 }
 
