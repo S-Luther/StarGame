@@ -249,16 +249,17 @@ z_index = 1
 shape = SubResource( 9 )
 
 [node name="Gunner" type="Area2D" parent="ShipBase"]
-position = Vector2( 241, -13 )
+position = Vector2( 249, -10 )
 script = ExtResource( 9 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ShipBase/Gunner"]
-position = Vector2( -67, 2 )
+position = Vector2( -83, -3 )
 scale = Vector2( 11.56, 10.64 )
 shape = SubResource( 1 )
 
 [node name="GunRight" type="Sprite" parent="ShipBase/Gunner"]
-position = Vector2( -0.999985, -2 )
+position = Vector2( -13, -4 )
+rotation = 3.14159
 texture = ExtResource( 5 )
 
 [node name="Gunner2" type="Area2D" parent="ShipBase"]
@@ -271,8 +272,8 @@ scale = Vector2( 11.56, 10.64 )
 shape = SubResource( 1 )
 
 [node name="GunUp" type="Sprite" parent="ShipBase/Gunner2"]
-position = Vector2( 1575.8, 376 )
-rotation = 1.5708
+position = Vector2( 1566.95, 374.774 )
+rotation = 3.14159
 texture = ExtResource( 5 )
 
 [node name="Gunner3" type="Area2D" parent="ShipBase"]
@@ -285,8 +286,8 @@ scale = Vector2( 11.56, 10.64 )
 shape = SubResource( 1 )
 
 [node name="GunDown" type="Sprite" parent="ShipBase/Gunner3"]
-position = Vector2( 1575.8, 376 )
-rotation = 1.5708
+position = Vector2( 1569, 372.006 )
+rotation = 3.14159
 texture = ExtResource( 5 )
 
 [node name="Nav" parent="ShipBase" instance=ExtResource( 4 )]

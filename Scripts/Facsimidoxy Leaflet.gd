@@ -85,6 +85,8 @@ func _ready():
 var toggle = true
 
 func _process(delta):
+	RightGun.AngleOffset = engine.rotation
+				
 	update()
 	if sail_dep != 0:
 		velocity2 = velocity2.move_toward(Vector2(cos(engine.rotation), sin(engine.rotation)).tangent() * MAX_SPEED, ACCELERATION * delta)
@@ -181,8 +183,7 @@ func move_state(delta):
 				var lerp_speed = 5.0
 				smooth_angle = lerp_angle(engine.transform.get_rotation(), target_angle, delta*ROLL_SPEED)
 
-				RightGun.AngleOffset = smooth_angle
-				
+
 				engine.rotation = smooth_angle
 				
 				player1.rotation = -smooth_angle
