@@ -30,7 +30,7 @@ onready var nav = $Engine/NavTerminal/
 onready var minimap = $Engine/NavTerminal/UI/
 onready var player1 = $Engine/Player1
 onready var engine = $Engine
-onready var timer = $Timer
+var timer = Timer.new()
 onready var animationPlayer = $Engine/Visible/AnimationPlayer
 
 const projectile = preload('res://Scenes/Shared/Projectile.tscn')
@@ -185,10 +185,7 @@ func move_state(delta):
 			#state = ATTACK
 		
 		move()
-		var speed = int(sqrt(velocity2.x*velocity2.x + velocity2.y*velocity2.y))/2
-		speedLabel.text = var2str(speed) + "km/hrw"
-		var A = Vector2()
-		var B = Vector2(100, 100)
+
 #		draw_line(A, B, Color(1,1,1), 3)
 	else: 
 		state = ATTACK
@@ -270,7 +267,7 @@ var hits = 0
 
 
 func _on_Area2D_body_entered(body):
-	print(body) # Replace with function body.
+#	print(body) # Replace with function body.
 	if body is KinematicBody2D:
 		if hits < 2:
 			hits = hits + 1

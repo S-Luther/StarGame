@@ -214,6 +214,8 @@ func move_state(delta):
 				player2.rotation = -smooth_angle
 				minimap.rotation = -smooth_angle
 				vines.rotation = -smooth_angle
+				for s in get_tree().get_nodes_in_group("myshots"):
+					s.rotation = -smooth_angle
 				
 				
 	#			if player1.position.x > 55:
@@ -329,7 +331,7 @@ func _on_Sail_area_exited(area):
 var hits = 0
 
 func _on_Area2D_body_entered(body):
-	print(body) # Replace with function body.
+#	print(body) # Replace with function body.
 	if body is KinematicBody2D:
 		if hits < 3:
 			hits = hits + 1

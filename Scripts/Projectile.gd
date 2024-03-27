@@ -21,7 +21,7 @@ onready var collider = $CollisionShape2D
 func _ready():
 	self.add_child(activeWait)
 	activeWait.one_shot = true
-	activeWait.start(.5)
+	activeWait.start(.1)
 	self.add_child(spawnDuration)
 	spawnDuration.one_shot = true
 	spawnDuration.start(4)

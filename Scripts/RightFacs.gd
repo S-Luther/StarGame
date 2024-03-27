@@ -61,17 +61,19 @@ func move_state():
 	else:
 		if Input.is_action_just_pressed(prefix+"_fire"):
 			var p = projectile.instance()
-			p.position = gun.position
-			p.velocity = Vector2(10, 0).rotated(gun.rotation + AngleOffset)
-			p.rotation = gun.rotation
+			var theposition = gun.position.normalized()
+			var therotation = gun.rotation
+			var offset = AngleOffset
+			p.position = theposition
+			p.velocity = Vector2(40, 0).rotated(therotation + offset)
+			p.rotation = therotation
 			p.z_index = 2
 			p.scale = Vector2(1,1)
-			self.add_child(p)
+			add_child(p)
 			p.add_to_group("shots")
 
 	input_vector = input_vector.normalized()
-	print(AngleOffset)
-	print(fmod(gun.rotation, 2*PI))
+
 	if input_vector != Vector2.ZERO:
 		gun.rotation = lerp_angle(gun.rotation, input_vector.angle() - AngleOffset, ROLL_SPEED)
 
@@ -97,7 +99,6 @@ func attack_state():
 func crash():
 	workable = false
 	working = false
-	state=ATTACK
 
 
 func _on_Gunner_area_entered(area):
@@ -108,3 +109,4 @@ func _on_Gunner_area_entered(area):
 
 func _on_Gunner_area_exited(area):
 	workable = false
+
