@@ -65,7 +65,7 @@ func _ready():
 		var l = Label.new()
 		l.text = n.name
 		
-		planet.position = pos *500
+		planet.position = pos *1000
 		planet.rotation_degrees = (randi() % 4) * 90
 		planet.z_index = 0
 		l.set_position(planet.position)
@@ -78,7 +78,7 @@ func _ready():
 		self.add_child(planet)
 		planet.add_to_group("planets")
 		
-		if Player.position.distance_to(pos) < 4000:
+		if Player.position.distance_to(pos) < 2000:
 			welcome.text = "Welcome to " +n.name
 			welcome.visible = true
 #			get_tree().get_nodes_in_group("Galaxy")[0].Place.add_to_group("current_location")
@@ -372,8 +372,8 @@ func _process(delta):
 		addAsteroids()
 	for n in nodes:
 		var pos = n.pos - Vector2(800, 500)
-		pos = pos * 500
-		if Player.position.distance_to(pos) < 5000:
+		pos = pos * 1000
+		if Player.position.distance_to(pos) < 2000:
 			residents = n.residents
 			place = n.name
 			placeName = n.name

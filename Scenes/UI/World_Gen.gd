@@ -107,7 +107,7 @@ func _process(delta):
 	else:
 		for p in range(nodes.size()):
 			if galaxy.fullStop && get_tree().get_nodes_in_group("labels").size() > 0:
-				if mousePos.distance_to(nodes[p].pos) < 50:
+				if mousePos.distance_to(nodes[p].pos) < 10:
 					get_tree().get_nodes_in_group("labels")[p].visible = true
 				else:
 					get_tree().get_nodes_in_group("labels")[p].visible = false
