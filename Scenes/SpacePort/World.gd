@@ -75,9 +75,9 @@ func interact(r):
 	if r.avatar:
 		interactSprite.frame = r.avatar
 	interactLabel.text = "Name: " + String(r.name) + "\n" + "Age: " + String(r.age) + "\n" + "Culture: " + String(r.culture) + "\n"
-	interactLabel.text += "Boredom: " + String(r.boredom) + "\n" + "Happiness: " + String(r.happiness) + "\n" + "Travels: \n"
+	interactLabel.text += "Boredom: " + String(r.boredom) + "\n" + "Happiness: " + String(r.happiness) + "\n" + "Knowledge: \n"
 	
-	for t in r.travels:
+	for t in r.knowledge:
 		interactLabel.text += "  " + t + "\n"
 		
 

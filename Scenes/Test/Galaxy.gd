@@ -206,6 +206,7 @@ class Person:
 		age = new_age
 		home = new_place
 		travels.append(new_place)
+		knowledge.append("Settlement " + new_place)
 		enneagram = new_enneagram
 		culture = new_culture
 		
@@ -264,6 +265,7 @@ func newBase(seedCharacter):
 		seedCharacter.happiness=50;
 		seedCharacter.boredom=50;
 		seedCharacter.travels.append(places[currentplace].name)
+		seedCharacter.knowledge.append("Settlement " + places[currentplace].name)
 #		if randi() % 2 == 0:
 		places[currentplace].neighbors.append(places[currentplace-1].name)
 		places[currentplace-1].neighbors.append(places[currentplace].name)
@@ -298,7 +300,7 @@ func interact(i,j, c):
 	if j.culture != c:
 		j.happiness = j.happiness - cultModifier;
 	
-	if !(i.knowledge.has(j.name)) and !(j.knowledge.has(i.name)):
+	if not(i.knowledge.has(j.name)) and not(j.knowledge.has(i.name)):
 		i.knowledge.append(j.name);
 		j.knowledge.append(i.name);
 		firstTime=true;
@@ -409,9 +411,13 @@ func cleanSim(steps):
 				if p.neighbors.size() > 0:
 					newHome = pickRandom(p.neighbors)
 					nomad.travels.append(newHome)
+					if not(nomad.knowledge.has(newHome)):
+						nomad.knowledge.append("Settlement " + newHome)
 				else:
 					newHome = pickRandom(places).name
 					nomad.travels.append(newHome)
+					if not(nomad.knowledge.has(newHome)):
+						nomad.knowledge.append("Settlement " + newHome)
 				nomad.boredom = 50;
 				nomad.happiness = 50;
 				
@@ -476,7 +482,7 @@ func applyForces(Nodes):
 			var distance = Nodes[i].pos.distance_to(Vector2(Nodes[j].pos))
 
 			if!(distance == 0):
-				Nodes[i].force += Vector2(10000/distance,0).rotated(dir) 
+				Nodes[i].force += Vector2(10000/distance,randi()%2).rotated(dir) 
 #
 #
 #
@@ -783,8 +789,8 @@ func _process(delta):
 				for i in range(places.size()):
 					labels[i].text = "  "+places[i].name+" " + String(places[i].residents.size()) + " " + places[i].culture
 					labels[i].visible = false
-				for a in get_tree().get_nodes_in_group("lines"):
-					a.queue_free()
+#				for a in get_tree().get_nodes_in_group("lines"):
+#					a.queue_free()
 			else:
 				for a in get_tree().get_nodes_in_group("mapPlayer"):
 					a.queue_free()
