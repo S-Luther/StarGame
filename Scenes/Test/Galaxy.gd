@@ -7,10 +7,6 @@ var dynamic_font = DynamicFont.new()
 
 var logs = "";
 
-	
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 var names;
 
 var Facs = [1,2,3,15,32,40,47,39,37,35,48]
@@ -206,7 +202,7 @@ class Person:
 		age = new_age
 		home = new_place
 		travels.append(new_place)
-		knowledge.append("Settlement " + new_place)
+		knowledge.append("SpacePort " + new_place)
 		enneagram = new_enneagram
 		culture = new_culture
 		
@@ -265,7 +261,7 @@ func newBase(seedCharacter):
 		seedCharacter.happiness=50;
 		seedCharacter.boredom=50;
 		seedCharacter.travels.append(places[currentplace].name)
-		seedCharacter.knowledge.append("Settlement " + places[currentplace].name)
+		seedCharacter.knowledge.append("SpacePort " + places[currentplace].name)
 #		if randi() % 2 == 0:
 		places[currentplace].neighbors.append(places[currentplace-1].name)
 		places[currentplace-1].neighbors.append(places[currentplace].name)
@@ -307,9 +303,7 @@ func interact(i,j, c):
 		i.boredom = i.boredom - 1;
 		j.boredom = j.boredom - 1;
 		
-	
 
-#       console.log(i.name + " just met " + j.name + " for the first time.")
 	if (enneagramCompat[iType-1].has(jType)):
 		if (firstTime):
 			i.friends.append(j.name);
@@ -355,7 +349,6 @@ func interact(i,j, c):
 			j.memories.append(j.thoughts.pop_front());
 		else:
 			j.thoughts.pop_front()
-	
 	
 var stop = false;
 
@@ -412,12 +405,12 @@ func cleanSim(steps):
 					newHome = pickRandom(p.neighbors)
 					nomad.travels.append(newHome)
 					if not(nomad.knowledge.has(newHome)):
-						nomad.knowledge.append("Settlement " + newHome)
+						nomad.knowledge.append("SpacePort " + newHome)
 				else:
 					newHome = pickRandom(places).name
 					nomad.travels.append(newHome)
 					if not(nomad.knowledge.has(newHome)):
-						nomad.knowledge.append("Settlement " + newHome)
+						nomad.knowledge.append("SpacePort " + newHome)
 				nomad.boredom = 50;
 				nomad.happiness = 50;
 				
@@ -805,9 +798,3 @@ func _process(delta):
 					asteroidm.z_index = -1
 					self.add_child(asteroidm)
 					asteroidm.add_to_group("mapPlayer")
-
-
-#				pass
-#			t.queue_free()
-
-
