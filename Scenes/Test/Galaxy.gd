@@ -606,6 +606,7 @@ func _ready():
 	
 	
 var unique_cultures = [10000,10000,10000];
+var unique_cultures_true = [0,0,0];
 var unique_factions = []
 var fullStop = false
 
@@ -613,6 +614,7 @@ func rebuild():
 	collisions = 0
 	clashCount = 0
 	unique_cultures = [10000,10000,10000];
+	unique_cultures_true = [0,0,0];
 	unique_factions.clear()
 	fullStop = false
 	for a in get_tree().get_nodes_in_group("mapPlanets"):
@@ -632,7 +634,7 @@ func _process(delta):
 	
 	runs = runs + 1
 	
-	if runs < 1000:
+	if runs < 200:
 		for a in get_tree().get_nodes_in_group("lines"):
 				a.queue_free()
 				
@@ -659,6 +661,7 @@ func _process(delta):
 				print("Rejected for out of bounds")
 				collisions = 0
 				clashCount = 0
+				unique_cultures_true = [0,0,0];
 				unique_cultures = [10000,10000,10000];
 				unique_factions.clear()
 				for a in get_tree().get_nodes_in_group("mapPlanets"):
@@ -677,7 +680,7 @@ func _process(delta):
 			asteroidm.add_to_group("mapPlanets")
 			
 		
-	if runs == 1000:
+	if runs == 200:
 		
 		
 		for p in places:
@@ -700,9 +703,10 @@ func _process(delta):
 						p.neighbors.erase(l.name)
 						l.neighbors.erase(p.name)
 	
-	if t.is_stopped() && !finish && !fullStop && runs > 999:
+	if t.is_stopped() && !finish && !fullStop && runs > 199:
 		unique_factions.clear()
 		unique_cultures = [0, 0, 0]
+		unique_cultures_true = [0,0,0];
 	#
 		t.start(.5)
 		clash()
@@ -721,14 +725,13 @@ func _process(delta):
 			
 			if !unique_factions.has(p.faction):
 				unique_factions.append(p.faction + " " + p.culture)
-				
 			
-			if p.culture == "A":
-				unique_cultures[0] = unique_cultures[0] + 1
-			if p.culture == "F":
-				unique_cultures[1] = unique_cultures[1] + 1
-			if p.culture == "E":
-				unique_cultures[2] = unique_cultures[2] + 1
+				if p.culture == "A":
+					unique_cultures[0] = unique_cultures[0] + 1
+				if p.culture == "F":
+					unique_cultures[1] = unique_cultures[1] + 1
+				if p.culture == "E":
+					unique_cultures[2] = unique_cultures[2] + 1
 
 			
 			var asteroidm = PlanetMarker.instance()
