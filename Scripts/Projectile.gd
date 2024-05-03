@@ -25,7 +25,7 @@ func _ready():
 	self.add_child(spawnDuration)
 	spawnDuration.one_shot = true
 	spawnDuration.start(4)
-	print(spawnDuration.time_left)
+#	print(spawnDuration.time_left)
 	set_process(true)
 
 	

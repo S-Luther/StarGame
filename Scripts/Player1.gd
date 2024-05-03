@@ -1,5 +1,5 @@
 extends KinematicBody2D
-
+class_name Player1
 
 export var ACCELERATION = 500
 export var MAX_SPEED = 120
@@ -27,6 +27,8 @@ var station = ""
 var workable = false
 var working = false
 var outfit = false
+
+var NPC = false
 
 onready var animationPlayer = $AnimationPlayer
 onready var animationTree = $AnimationTree
@@ -141,3 +143,8 @@ func _on_Player1_area_exited(area):
 		
 	workable = false
 
+func slice():
+	pass
+
+func hit():
+	pass

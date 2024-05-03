@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 
 export var ACCELERATION = 600
-export var MAX_SPEED = 1000
+export var MAX_SPEED = 800
 
 export var ROLL_SPEED = 10
 export var FRICTION = 1
@@ -30,7 +30,7 @@ onready var nav = $Engine/NavTerminal/
 onready var minimap = $Engine/NavTerminal/UI/
 onready var player1 = $Engine/Player1
 onready var engine = $Engine
-onready var timer = $Timer
+var timer = Timer.new()
 onready var animationPlayer = $Engine/Visible/AnimationPlayer
 
 const projectile = preload('res://Scenes/Shared/Projectile.tscn')
@@ -51,16 +51,43 @@ func _ready():
 	self.add_to_group("Player")
 	set_process(true)
 
+var toggle = true
 
 func _process(delta):
 	update()
+	
+	var overview;
+	var Player
+	for o in get_tree().get_nodes_in_group("OverView"):
+		overview = o
+	for p in get_tree().get_nodes_in_group("Player"):
+		Player = p
+	
+	if get_tree().get_nodes_in_group("SpacePortCamera").size() > 0:
+		if get_tree().get_nodes_in_group("SpacePortCamera")[0].current:
+			if toggle:
+				var life = get_tree().get_nodes_in_group("life")[0]
+				var new_life = life.hearts + .25;
+				life.set_hearts(new_life)
+				velocity2 = Vector2.ZERO
+				self.position = self.position + Vector2(1500,0)
+				toggle = false
+	if get_tree().get_nodes_in_group("cam")[0].current:
+		toggle = true
 	
 	if colCheckTimer.is_stopped():
 		if has_collided:
 			var life = get_tree().get_nodes_in_group("life")[0]
 			var new_life = life.hearts - .25;
 			life.set_hearts(new_life)
-			get_tree().get_nodes_in_group("cam")[0].apply_shake()
+			var mainCam = get_tree().get_nodes_in_group("cam")[0]
+			mainCam.apply_shake()
+			var cams = get_tree().get_nodes_in_group("OverViewCamera")
+			if cams[0].current:
+				overview.visible = !overview.visible
+				Player.visible = !Player.visible
+				cams[0].current = !cams[0].current
+				mainCam.current = !mainCam.current
 		has_collided = false;
 		colCheckTimer.start(.2)
 
@@ -104,7 +131,7 @@ func move_state(delta):
 		if Input.is_action_just_pressed("p1_fire"):
 			var p = projectile.instance()
 			p.position = engine.position
-			p.velocity = Vector2(10, 0).rotated(smooth_angle)
+			p.velocity = Vector2(15, 0).rotated(smooth_angle)
 			p.rotation = smooth_angle
 			p.z_index = 2
 			p.scale = Vector2(2,2)
@@ -158,11 +185,8 @@ func move_state(delta):
 			#state = ATTACK
 		
 		move()
-		var speed = int(sqrt(velocity2.x*velocity2.x + velocity2.y*velocity2.y))/2
-		speedLabel.text = var2str(speed) + "km/hrw"
-		var A = Vector2()
-		var B = Vector2(100, 100)
-		draw_line(A, B, Color(1,1,1), 3)
+
+#		draw_line(A, B, Color(1,1,1), 3)
 	else: 
 		state = ATTACK
 		working = false
@@ -179,13 +203,13 @@ func move():
 	##print(velocity2)
 
 	velocity2 = move_and_slide(velocity2)
-	collisions = collisions + 1
-	for i in get_slide_count():
-		var collision = get_slide_collision(i)
-		has_collided = true;
-		if collision.get_collider() is KinematicBody2D:
-			print("Collided with: ", collision.get_collider())
-			collision.get_collider().hit()
+#	collisions = collisions + 1
+#	for i in get_slide_count():
+#		var collision = get_slide_collision(i)
+#		has_collided = true;
+#		if collision.get_collider() is KinematicBody2D:
+##			print("Collided with: ", collision.get_collider())
+#			collision.get_collider().hit()
 #		print("Collided with: ", collisions)
 
 func slice():
@@ -195,8 +219,8 @@ func crash():
 	player1.crash()
 	nav.crash()
 	workable = false
-	working = false
-	state = ATTACK
+#	working = false
+#	state = ATTACK
 	#print("crash")
 
 func _on_Helm_area_entered(area):
@@ -237,3 +261,17 @@ func hit():
 #			velocity2 = Vector2(0,-689)
 #			move()
 #			crash()
+
+
+var hits = 0
+
+
+func _on_Area2D_body_entered(body):
+#	print(body) # Replace with function body.
+	if body is KinematicBody2D:
+		if hits < 2:
+			hits = hits + 1
+		else:
+			has_collided = true;
+#			print("Collided with: ", collision.get_collider())
+		body.hit()

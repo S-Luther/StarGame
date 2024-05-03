@@ -85,7 +85,7 @@ func _on_Up_pressed():
 func _on_Left_pressed():
 	var ev = InputEventKey.new()
 	ev = current_ev
-	print(ev)
+#	print(ev)
 
 	if InputMap.has_action("p1_left"):
 		InputMap.erase_action("p1_left")
@@ -96,7 +96,7 @@ func _on_Left_pressed():
 func _on_Primary_pressed():
 	var ev = InputEventKey.new()
 	ev = current_ev
-	print(ev)
+#	print(ev)
 	if InputMap.has_action("p1_swing"):
 		InputMap.erase_action("p1_swing")
 	InputMap.add_action("p1_swing")
@@ -106,7 +106,7 @@ func _on_Primary_pressed():
 func _on_Seconday_pressed():
 	var ev = InputEventKey.new()
 	ev = current_ev
-	print(ev)
+#	print(ev)
 	if InputMap.has_action("p1_fire"):
 		InputMap.erase_action("p1_fire")
 	InputMap.add_action("p1_fire")
@@ -183,7 +183,7 @@ func _on_p2Primary_pressed():
 func _on_p2Secondary_pressed():
 	var ev = InputEventKey.new()
 	ev = current_ev
-	print(ev)
+#	print(ev)
 	if InputMap.has_action("p2_fire"):
 		InputMap.erase_action("p2_fire")
 	InputMap.add_action("p2_fire")

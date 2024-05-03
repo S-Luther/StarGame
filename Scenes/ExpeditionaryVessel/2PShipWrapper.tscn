@@ -4,7 +4,7 @@
 [ext_resource path="res://Scripts/2pDown.gd" type="Script" id=2]
 [ext_resource path="res://Scripts/2PCombiHelmShip.gd" type="Script" id=3]
 [ext_resource path="res://assets/unnamed-4.png" type="Texture" id=4]
-[ext_resource path="res://assets/2pship.png" type="Texture" id=5]
+[ext_resource path="res://assets/Expeditionary Vessel (1).png" type="Texture" id=5]
 [ext_resource path="res://assets/pulse1.png" type="Texture" id=6]
 [ext_resource path="res://Scenes/ExpeditionaryVessel/2PShip.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/ExpeditionaryVessel/2PNavTerminal.tscn" type="PackedScene" id=8]
@@ -62,7 +62,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( -360.164, 93.1027 ) ]
+"values": [ Vector2( -250.256, 153.103 ) ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -196,7 +196,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0.0664511 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( -358.849, -95.83 ) ]
+"values": [ Vector2( -250.849, -150.83 ) ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -291,7 +291,7 @@ z_index = 2
 script = ExtResource( 3 )
 
 [node name="Engine" type="Area2D" parent="."]
-position = Vector2( -1, 1 )
+position = Vector2( -1.33333, 162 )
 rotation = -1.5708
 z_index = -1
 
@@ -337,39 +337,37 @@ rotation = 1.5708
 script = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Engine/Helm"]
-position = Vector2( -1, -110 )
+position = Vector2( 4, -105.333 )
 rotation = 1.5708
 shape = SubResource( 1 )
 
 [node name="Player1" parent="Engine" instance=ExtResource( 9 )]
-position = Vector2( -88.0004, 101 )
+position = Vector2( -75.6667, 16.3331 )
 rotation = 1.5708
 scale = Vector2( 0.75, 0.75 )
 
-[node name="NavTerm" parent="Engine" instance=ExtResource( 8 )]
+[node name="NavTerminal" parent="Engine" instance=ExtResource( 8 )]
 position = Vector2( 0.999996, 1 )
 rotation = 1.5708
 
-[node name="KinematicBody2D2" parent="Engine" instance=ExtResource( 7 )]
-position = Vector2( -2.33335, 4.33332 )
+[node name="KinematicBody2D" parent="Engine" instance=ExtResource( 7 )]
+position = Vector2( -2.33335, 4.99999 )
 rotation = 1.5708
 
 [node name="Hitbox" type="KinematicBody2D" parent="Engine"]
 position = Vector2( 0.999996, 1 )
 rotation = 1.5708
+scale = Vector2( 1.2, 1.2 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Engine/Hitbox"]
-position = Vector2( 3.00001, -3.12798 )
-scale = Vector2( 1.22177, 1.12799 )
-polygon = PoolVector2Array( -8, -176, -145.963, 102.064, -149, 176, 147, 179, 141.052, 92.6082, 2, -179, 6, -175, 148.145, 83.7429, 152, 182, -155, 179, -155.784, 97.3363, -12, -180, 5.96046e-08, -180 )
-disabled = true
+polygon = PoolVector2Array( -58, 200.667, -10.6667, 219.333, 49.3333, 205.333, 139.333, 66, 205.333, 64, 206.667, -98.6667, 247.778, -196.667, 222.222, -232.778, 171.111, -246.667, 128.889, -232.222, 96.6667, -212.778, -110, -215, -148.889, -236.667, -195, -238.333, -222.778, -225.556, -243.889, -208.333, -252.667, -185.333, -204.667, -96, -200, 64, -126.667, 70.6667, -63.3333, 190.667, -52, 183.333, -224.444, -188.889, -211.111, -210.556, -157.222, -220.556, -126.111, -193.333, -116.667, -183.333, 109.444, -184.444, 162.778, -220.556, 196.667, -220, 216.667, -208.333, 223.333, -181.111, 43.3333, 194.667, -7.33333, 204, -50.6667, 192.667 )
 
 [node name="Gunner" type="Area2D" parent="Engine"]
 position = Vector2( 1.00001, -1.66666 )
 rotation = 1.5708
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Engine/Gunner"]
-position = Vector2( -2.66666, 118.667 )
+position = Vector2( 3.33333, 156 )
 rotation = 1.5708
 shape = SubResource( 8 )
 
@@ -382,12 +380,12 @@ __meta__ = {
 }
 
 [node name="GunDown" type="Sprite" parent="Engine/Down"]
-position = Vector2( 0, 1 )
+position = Vector2( 0.333298, 49 )
 rotation = 1.5708
 texture = ExtResource( 4 )
 
 [node name="Player2" parent="Engine" instance=ExtResource( 10 )]
-position = Vector2( -108, 94.9996 )
+position = Vector2( 112.333, 109 )
 rotation = 1.5708
 scale = Vector2( 0.75, 0.75 )
 

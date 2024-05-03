@@ -132,6 +132,8 @@ func _on_p2_area_entered(area):
 	##print(area.name)
 	workable = true
 
+func hit():
+	pass
 
 func _on_p2_area_exited(area):
 	if area.name == "Transporter":

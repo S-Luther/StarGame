@@ -1,0 +1,288 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Scenes/SpacePort/tileset x1.png" type="Texture" id=1]
+[ext_resource path="res://Scenes/SpacePort/World.gd" type="Script" id=2]
+[ext_resource path="res://assets/LargeSpace.png" type="Texture" id=3]
+[ext_resource path="res://Scenes/SpacePort/SpacePortCamera.gd" type="Script" id=4]
+[ext_resource path="res://assets/unnamed-6.png" type="Texture" id=5]
+[ext_resource path="res://assets/Portraits Packed with border.png" type="Texture" id=6]
+
+[sub_resource type="TileSet" id=1]
+0/name = "tileset x1.png 0"
+0/texture = ExtResource( 1 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 192, 224, 32, 32 )
+0/tile_mode = 1
+0/autotile/bitmask_mode = 0
+0/autotile/bitmask_flags = [  ]
+0/autotile/icon_coordinate = Vector2( 0, 0 )
+0/autotile/tile_size = Vector2( 32, 32 )
+0/autotile/spacing = 0
+0/autotile/occluder_map = [  ]
+0/autotile/navpoly_map = [  ]
+0/autotile/priority_map = [  ]
+0/autotile/z_index_map = [  ]
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+1/name = "tileset x1.png 1"
+1/texture = ExtResource( 1 )
+1/tex_offset = Vector2( 0, 0 )
+1/modulate = Color( 1, 1, 1, 1 )
+1/region = Rect2( 416, 192, 32, 32 )
+1/tile_mode = 1
+1/autotile/bitmask_mode = 0
+1/autotile/bitmask_flags = [  ]
+1/autotile/icon_coordinate = Vector2( 0, 0 )
+1/autotile/tile_size = Vector2( 32, 32 )
+1/autotile/spacing = 0
+1/autotile/occluder_map = [  ]
+1/autotile/navpoly_map = [  ]
+1/autotile/priority_map = [  ]
+1/autotile/z_index_map = [  ]
+1/occluder_offset = Vector2( 0, 0 )
+1/navigation_offset = Vector2( 0, 0 )
+1/shape_offset = Vector2( 0, 0 )
+1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+1/shape_one_way = false
+1/shape_one_way_margin = 0.0
+1/shapes = [  ]
+1/z_index = 0
+2/name = "tileset x1.png 2"
+2/texture = ExtResource( 1 )
+2/tex_offset = Vector2( 0, 0 )
+2/modulate = Color( 1, 1, 1, 1 )
+2/region = Rect2( 64, 96, 224, 160 )
+2/tile_mode = 1
+2/autotile/bitmask_mode = 0
+2/autotile/bitmask_flags = [  ]
+2/autotile/icon_coordinate = Vector2( 0, 0 )
+2/autotile/tile_size = Vector2( 32, 32 )
+2/autotile/spacing = 0
+2/autotile/occluder_map = [  ]
+2/autotile/navpoly_map = [  ]
+2/autotile/priority_map = [  ]
+2/autotile/z_index_map = [  ]
+2/occluder_offset = Vector2( 0, 0 )
+2/navigation_offset = Vector2( 0, 0 )
+2/shape_offset = Vector2( 0, 0 )
+2/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+2/shape_one_way = false
+2/shape_one_way_margin = 0.0
+2/shapes = [  ]
+2/z_index = 0
+3/name = "tileset x1.png 3"
+3/texture = ExtResource( 1 )
+3/tex_offset = Vector2( 0, 0 )
+3/modulate = Color( 1, 1, 1, 1 )
+3/region = Rect2( 416, 64, 32, 32 )
+3/tile_mode = 1
+3/autotile/bitmask_mode = 0
+3/autotile/bitmask_flags = [  ]
+3/autotile/icon_coordinate = Vector2( 0, 0 )
+3/autotile/tile_size = Vector2( 32, 32 )
+3/autotile/spacing = 0
+3/autotile/occluder_map = [  ]
+3/autotile/navpoly_map = [  ]
+3/autotile/priority_map = [  ]
+3/autotile/z_index_map = [  ]
+3/occluder_offset = Vector2( 0, 0 )
+3/navigation_offset = Vector2( 0, 0 )
+3/shape_offset = Vector2( 0, 0 )
+3/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+3/shape_one_way = false
+3/shape_one_way_margin = 0.0
+3/shapes = [  ]
+3/z_index = 0
+4/name = "tileset x1.png 4"
+4/texture = ExtResource( 1 )
+4/tex_offset = Vector2( 0, 0 )
+4/modulate = Color( 1, 1, 1, 1 )
+4/region = Rect2( 224, 256, 96, 32 )
+4/tile_mode = 1
+4/autotile/bitmask_mode = 0
+4/autotile/bitmask_flags = [  ]
+4/autotile/icon_coordinate = Vector2( 0, 0 )
+4/autotile/tile_size = Vector2( 32, 32 )
+4/autotile/spacing = 0
+4/autotile/occluder_map = [  ]
+4/autotile/navpoly_map = [  ]
+4/autotile/priority_map = [  ]
+4/autotile/z_index_map = [  ]
+4/occluder_offset = Vector2( 0, 0 )
+4/navigation_offset = Vector2( 0, 0 )
+4/shape_offset = Vector2( 0, 0 )
+4/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+4/shape_one_way = false
+4/shape_one_way_margin = 0.0
+4/shapes = [  ]
+4/z_index = 0
+5/name = "tileset x1.png 5"
+5/texture = ExtResource( 1 )
+5/tex_offset = Vector2( 0, 0 )
+5/modulate = Color( 1, 1, 1, 1 )
+5/region = Rect2( 32, 256, 96, 32 )
+5/tile_mode = 1
+5/autotile/bitmask_mode = 0
+5/autotile/bitmask_flags = [  ]
+5/autotile/icon_coordinate = Vector2( 0, 0 )
+5/autotile/tile_size = Vector2( 32, 32 )
+5/autotile/spacing = 0
+5/autotile/occluder_map = [  ]
+5/autotile/navpoly_map = [  ]
+5/autotile/priority_map = [  ]
+5/autotile/z_index_map = [  ]
+5/occluder_offset = Vector2( 0, 0 )
+5/navigation_offset = Vector2( 0, 0 )
+5/shape_offset = Vector2( 0, 0 )
+5/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+5/shape_one_way = false
+5/shape_one_way_margin = 0.0
+5/shapes = [  ]
+5/z_index = 0
+6/name = "tileset x1.png 6"
+6/texture = ExtResource( 1 )
+6/tex_offset = Vector2( 0, 0 )
+6/modulate = Color( 1, 1, 1, 1 )
+6/region = Rect2( 32, 64, 96, 32 )
+6/tile_mode = 1
+6/autotile/bitmask_mode = 0
+6/autotile/bitmask_flags = [  ]
+6/autotile/icon_coordinate = Vector2( 0, 0 )
+6/autotile/tile_size = Vector2( 32, 32 )
+6/autotile/spacing = 0
+6/autotile/occluder_map = [  ]
+6/autotile/navpoly_map = [  ]
+6/autotile/priority_map = [  ]
+6/autotile/z_index_map = [  ]
+6/occluder_offset = Vector2( 0, 0 )
+6/navigation_offset = Vector2( 0, 0 )
+6/shape_offset = Vector2( 0, 0 )
+6/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+6/shape_one_way = false
+6/shape_one_way_margin = 0.0
+6/shapes = [  ]
+6/z_index = 0
+7/name = "tileset x1.png 7"
+7/texture = ExtResource( 1 )
+7/tex_offset = Vector2( 0, 0 )
+7/modulate = Color( 1, 1, 1, 1 )
+7/region = Rect2( 160, 32, 32, 64 )
+7/tile_mode = 1
+7/autotile/bitmask_mode = 0
+7/autotile/bitmask_flags = [  ]
+7/autotile/icon_coordinate = Vector2( 0, 0 )
+7/autotile/tile_size = Vector2( 32, 32 )
+7/autotile/spacing = 0
+7/autotile/occluder_map = [  ]
+7/autotile/navpoly_map = [  ]
+7/autotile/priority_map = [  ]
+7/autotile/z_index_map = [  ]
+7/occluder_offset = Vector2( 0, 0 )
+7/navigation_offset = Vector2( 0, 0 )
+7/shape_offset = Vector2( 0, 0 )
+7/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+7/shape_one_way = false
+7/shape_one_way_margin = 0.0
+7/shapes = [  ]
+7/z_index = 0
+8/name = "tileset x1.png 8"
+8/texture = ExtResource( 1 )
+8/tex_offset = Vector2( 0, 0 )
+8/modulate = Color( 1, 1, 1, 1 )
+8/region = Rect2( 224, 64, 96, 32 )
+8/tile_mode = 1
+8/autotile/bitmask_mode = 0
+8/autotile/bitmask_flags = [  ]
+8/autotile/icon_coordinate = Vector2( 0, 0 )
+8/autotile/tile_size = Vector2( 32, 32 )
+8/autotile/spacing = 0
+8/autotile/occluder_map = [  ]
+8/autotile/navpoly_map = [  ]
+8/autotile/priority_map = [  ]
+8/autotile/z_index_map = [  ]
+8/occluder_offset = Vector2( 0, 0 )
+8/navigation_offset = Vector2( 0, 0 )
+8/shape_offset = Vector2( 0, 0 )
+8/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+8/shape_one_way = false
+8/shape_one_way_margin = 0.0
+8/shapes = [  ]
+8/z_index = 0
+
+[node name="World" type="StaticBody2D"]
+z_index = 8
+script = ExtResource( 2 )
+
+[node name="TileMap" type="TileMap" parent="."]
+position = Vector2( 410, 328 )
+tile_set = SubResource( 1 )
+cell_size = Vector2( 32, 32 )
+format = 1
+
+[node name="SpacePort" type="Camera2D" parent="."]
+position = Vector2( 1086, 720 )
+z_index = 2
+zoom = Vector2( 0.5, 0.5 )
+script = ExtResource( 4 )
+
+[node name="Panel" type="Panel" parent="SpacePort"]
+visible = false
+margin_left = 506.0
+margin_top = -506.0
+margin_right = 784.0
+margin_bottom = 116.0
+
+[node name="Sprite" type="Sprite" parent="SpacePort/Panel"]
+position = Vector2( 139, 80 )
+scale = Vector2( 7.625, 7.6875 )
+texture = ExtResource( 6 )
+hframes = 8
+vframes = 6
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SpacePort/Panel"]
+margin_left = 38.0
+margin_top = 206.0
+margin_right = 238.0
+margin_bottom = 556.0
+
+[node name="Label" type="Label" parent="SpacePort/Panel/ScrollContainer"]
+margin_bottom = 14.0
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 410, 328 )
+z_index = -3
+texture = ExtResource( 3 )
+
+[node name="Sprite2" type="Sprite" parent="."]
+modulate = Color( 0.47451, 0.490196, 0.560784, 1 )
+position = Vector2( 1080, 705 )
+scale = Vector2( 67.5625, 43.75 )
+z_index = -3
+texture = ExtResource( 5 )
+
+[node name="Sprite3" type="Sprite" parent="."]
+position = Vector2( 1078, 692 )
+scale = Vector2( 2, 2 )
+z_index = 1
+texture = ExtResource( 1 )
+vframes = 2
+frame = 1
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2( 410, 328 )
+polygon = PoolVector2Array( -403, -289, -312, -290, -311, -168, -247, -167, -246, -181, -296, -183, -295, -295, -133, -292, -135, -186, -179, -184, -179, -170, -120, -169, -115, -294, -22, -292, -22, -171, 40, -166, 40, -185, -5, -186, -9, -292, 153, -292, 156, -189, 108, -187, 108, -169, 169, -168, 170, -293, 266, -293, 266, -169, 324, -167, 324, -182, 277, -183, 279, -291, 438, -291, 439, -184, 391, -183, 390, -168, 455, -167, 457, -293, 551, -293, 551, -168, 611, -168, 615, -182, 566, -184, 565, -294, 724, -292, 725, -186, 678, -184, 678, -168, 744, -170, 743, -293, 836, -291, 835, -171, 899, -168, 899, -182, 849, -187, 851, -294, 1011, -290, 1011, -189, 966, -184, 966, -167, 1028, -166, 1030, -294, 1121, -291, 1120, -169, 1186, -167, 1182, -184, 1134, -185, 1137, -294, 1298, -292, 1298, -185, 1251, -182, 1250, -166, 1312, -166, 1316, -293, 1410, -292, 1409, -166, 1470, -167, 1470, -182, 1421, -181, 1424, -295, 1584, -295, 1582, -185, 1537, -179, 1537, -163, 1601, -164, 1602, -295, 1740, -293, 1741, 1017, 1739, 1061, -406, 1065, -404, -277, -418, -277, -423, 1084, 1759, 1082, 1757, -360, -420, -354, -420, -288 )
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
+position = Vector2( 410, 328 )
+polygon = PoolVector2Array( -255, 900, -255, 887, -300, 886, -300, 771, -144, 772, -142, 880, -190, 880, -190, 898, -128, 898, -126, 769, -31, 770, -30, 898, 31, 898, 31, 886, -17, 885, -15, 769, 144, 772, 144, 884, 97, 887, 97, 902, 160, 900, 161, 771, 253, 773, 252, 899, 318, 899, 318, 885, 267, 885, 268, 773, 428, 773, 429, 882, 380, 883, 380, 901, 445, 900, 445, 772, 539, 773, 539, 898, 605, 899, 604, 883, 554, 883, 556, 771, 715, 773, 717, 881, 668, 883, 668, 896, 732, 898, 732, 773, 827, 774, 827, 899, 889, 900, 889, 885, 840, 884, 841, 773, 1003, 773, 1003, 882, 954, 884, 954, 899, 1017, 897, 1019, 773, 1113, 773, 1112, 898, 1175, 898, 1175, 884, 1126, 885, 1129, 773, 1289, 773, 1289, 880, 1240, 883, 1240, 898, 1303, 899, 1303, 757, -316, 754, -317, 899 )
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="."]
+position = Vector2( 410, 328 )
+polygon = PoolVector2Array( -308, 274, -247, 274, -247, 262, -298, 262, -295, 146, -134, 146, -136, 257, -183, 260, -184, 274, -121, 274, -120, 147, -24, 147, -25, 270, 39, 271, 39, 259, -11, 257, -10, 146, 150, 146, 151, 257, 103, 258, 102, 272, 167, 272, 168, 147, 260, 148, 262, 274, 326, 274, 326, 262, 276, 262, 276, 149, 438, 149, 437, 261, 388, 262, 388, 277, 453, 277, 453, 146, 547, 148, 546, 274, 612, 274, 612, 257, 563, 257, 563, 147, 722, 147, 722, 260, 673, 260, 672, 274, 737, 274, 739, 148, 834, 149, 832, 276, 894, 274, 894, 261, 844, 259, 848, 147, 1008, 147, 1008, 258, 959, 258, 958, 274, 1026, 272, 1025, 147, 1119, 148, 1120, 272, 1183, 271, 1184, 260, 1135, 259, 1134, 147, 1292, 147, 1294, 255, 1245, 258, 1245, 275, 1311, 275, 1308, 2, 1246, 2, 1245, 16, 1295, 16, 1293, 126, 1134, 126, 1133, 13, 1180, 15, 1180, 1, 1117, 1, 1118, 127, 1021, 127, 1022, -1, 957, -1, 957, 16, 1005, 17, 1006, 127, 847, 127, 847, 17, 893, 17, 894, -1, 827, -1, 829, 126, 735, 126, 735, 1, 669, 1, 669, 15, 719, 16, 720, 126, 562, 128, 560, 15, 609, 17, 609, 3, 543, 1, 544, 128, 450, 127, 450, 2, 383, 0, 384, 15, 432, 17, 432, 127, 273, 129, 275, 16, 321, 16, 321, 2, 256, 2, 258, 132, 164, 127, 164, 2, 99, -1, 98, 18, 147, 19, 147, 126, -12, 126, -16, 18, 33, 17, 35, 0, -29, 1, -26, 126, -120, 127, -120, 0, -189, 1, -184, 17, -139, 19, -139, 127, -296, 128, -294, 19, -246, 19, -247, 1, -314, 0, -316, 274 )

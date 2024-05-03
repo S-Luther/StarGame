@@ -19,6 +19,7 @@ enum {
 	SURROUND,
 	ATTACK,
 	HIT,
+	SLICE
 }
 var rng = RandomNumberGenerator.new()
 var state = SURROUND
@@ -81,6 +82,11 @@ func _physics_process(delta):
 			alive = false
 			velocity = Vector2.ZERO
 			animationPlayer.play("Hit")
+		SLICE:
+			alive = false
+			velocity = Vector2.ZERO
+			animationPlayer.play("Slice")
+		
 	
 
 func move(target, delta):
@@ -110,8 +116,9 @@ func hit():
 
 	
 func slice():
+	state = SLICE
 	velocity = Vector2.ZERO
-	animationPlayer.play("Slice")
+	
 
 	
 func get_circle_position(random):

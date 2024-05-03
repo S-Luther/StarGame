@@ -77,9 +77,9 @@ custom_fonts/font = ExtResource( 1 )
 text = "Test Extra"
 
 [node name="Sprite" type="Sprite" parent="Scene_configure"]
-position = Vector2( 792, 625 )
+position = Vector2( 794.324, 633.649 )
 rotation = 1.5708
-scale = Vector2( 34.5145, 51.6752 )
+scale = Vector2( 36.1559, 52.4265 )
 z_index = -1
 texture = ExtResource( 4 )
 hframes = 4
