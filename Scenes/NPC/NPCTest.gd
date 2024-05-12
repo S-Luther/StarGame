@@ -3,9 +3,13 @@ extends KinematicBody2D
 var rng = RandomNumberGenerator.new()
 var randomnum
 var target
-
+onready var ResidentName = $Area2D/Label
+onready var ChatIcon = $Area2D/Sprite2
+onready var ContentArea = $Area2D
 var changeTarget = Timer.new()
 var socialCooldown = Timer.new()
+
+onready var animationPlayer = $AnimationPlayer
 
 func _ready():
 	self.add_child(changeTarget)
@@ -16,6 +20,7 @@ func _ready():
 	socialCooldown.start(2)
 	randomnum = rng.randf()
 	target = get_circle_position()
+	
 	pass # Replace with function body.
 	
 
@@ -29,6 +34,7 @@ var SPEED = 4
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	ResidentName.text = details.name
 	if changeTarget.is_stopped():
 		changeTarget.start(randi()%50)
 		target = get_circle_position()
@@ -56,11 +62,13 @@ func move(target, delta):
 	velocity += steering
 
 	self.rotation = velocity.angle()
+	
+	ContentArea.rotation = -velocity.angle()
 	var collision = move_and_collide(velocity/10)
 
 func get_circle_position():
 	rng.randomize()
-	return Vector2(rng.randi()% 1800, rng.randi() % 2000)
+	return Vector2(rng.randi()% 1500, rng.randi() % 1700)
 
 
 
@@ -109,7 +117,7 @@ var enneagramNonCompat = [
 				  ];
 
 func interact(i,j):
-	print("interacting")
+	animationPlayer.play("Chat")
 	var iType = i.enneagram[randi()%3];
 	var jType = j.enneagram[randi()%3];
 	
