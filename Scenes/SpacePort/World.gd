@@ -31,6 +31,7 @@ func generate_level():
 	
 	player = Player.instance()
 	add_child(player)
+	player.add_to_group("SpacePortPlayer")
 	
 	player.position = Vector2(1800,1200)
 	print(get_tree().get_nodes_in_group("World")[0].residents.size())
@@ -42,13 +43,6 @@ func generate_level():
 
 		self.add_child(thing)
 		thing.add_to_group("people")
-		var label = Label.new();
-		
-		label.set_position(thing.position + Vector2(-20, -20))
-		label.rect_scale = Vector2(2,2)
-		label.text = r.name
-		self.add_child(label)
-		label.add_to_group("people")
 	
 	var exit = Exit.instance()
 	add_child(exit)

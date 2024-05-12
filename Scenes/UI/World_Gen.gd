@@ -79,6 +79,12 @@ func _process(delta):
 		totalPop = totalPop + n.residents.size()
 		if !unique_factions.has(n.faction):
 			unique_factions.append(n.faction)
+			if n.culture == "A":
+				galaxy.unique_cultures[0] = galaxy.unique_cultures[0] + 1
+			if n.culture == "F":
+				galaxy.unique_cultures[1] = galaxy.unique_cultures[1] + 1
+			if n.culture == "E":
+				galaxy.unique_cultures[2] = galaxy.unique_cultures[2] + 1
 	
 	text = "Total Pop: " + String(totalPop) + "\nNumber of Worlds: " + String(nodes.size()) + "\n\n"
 	
