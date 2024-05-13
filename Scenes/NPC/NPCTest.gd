@@ -68,7 +68,7 @@ func move(target, delta):
 
 func get_circle_position():
 	rng.randomize()
-	return Vector2(rng.randi()% 1500, rng.randi() % 1700)
+	return Vector2(rng.randi()% 2000, rng.randi() % 1500)
 
 
 

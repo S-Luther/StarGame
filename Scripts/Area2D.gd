@@ -15,7 +15,8 @@ func _ready():
 
 func _on_body_entered(other):
 	if other is KinematicBody2D:
-		other.slice()
+		if other.slice():
+			other.slice()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
