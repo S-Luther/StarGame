@@ -346,6 +346,7 @@ var index = 0
 var placeName
 var message = ""
 var residents = []
+var culture = "";
 
 func _process(delta):
 	
@@ -373,10 +374,11 @@ func _process(delta):
 	for n in nodes:
 		var pos = n.pos - Vector2(800, 500)
 		pos = pos * 1000
-		if Player.position.distance_to(pos) < 2000:
+		if Player.position.distance_to(pos) < 3000:
 			residents = n.residents
 			place = n.name
 			placeName = n.name
+			culture = n.culture
 			welcome.text = "Welcome to " +n.name
 			welcome.visible = true
 

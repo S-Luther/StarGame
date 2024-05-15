@@ -13,6 +13,11 @@ onready var interactPanel = $SpacePort/Panel
 onready var interactSprite = $SpacePort/Panel/Sprite
 onready var interactLabel = $SpacePort/Panel/ScrollContainer/Label
 
+onready var C1 = $ColorRect
+onready var C2 = $ColorRect2
+onready var C3 = $ColorRect3
+onready var C4 = $ColorRect4
+
 var player
 
 func _ready():
@@ -35,6 +40,23 @@ func generate_level():
 	
 	player.position = Vector2(1800,1200)
 	print(get_tree().get_nodes_in_group("World")[0].residents.size())
+	
+	if(get_tree().get_nodes_in_group("World")[0].culture == "A"):
+		C1.color = "#915a5a"
+		C2.color = "#915a5a"
+		C3.color = "#915a5a"
+		C4.color = "#915a5a"
+	elif(get_tree().get_nodes_in_group("World")[0].culture == "F"):
+		C1.color = "#517e6a"
+		C2.color = "#517e6a"
+		C3.color = "#517e6a"
+		C4.color = "#517e6a"
+	else:
+		C1.color = "#a58153"
+		C2.color = "#a58153"
+		C3.color = "#a58153"
+		C4.color = "#a58153"
+		
 	for r in get_tree().get_nodes_in_group("World")[0].residents:
 		var thing = NPC.instance()
 		thing.position = player.position + Vector2(-randi() % 1800, -randi() % 1100)
