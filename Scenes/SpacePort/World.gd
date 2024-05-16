@@ -18,6 +18,18 @@ onready var C2 = $ColorRect2
 onready var C3 = $ColorRect3
 onready var C4 = $ColorRect4
 
+onready var Mush = $Mushrooms
+onready var Mush1 = $Mushrooms/Sprite4
+onready var Mush2 = $Mushrooms/Sprite5
+
+onready var Exot = $Exotic
+onready var Exot1 = $Exotic/Sprite4
+onready var Exot2 = $Exotic/Sprite5
+
+onready var Bulbs = $Bulbs
+onready var Bulbs1 = $Bulbs/Sprite4
+onready var Bulbs2 = $Bulbs/Sprite5
+
 var player
 
 func _ready():
@@ -33,7 +45,9 @@ func getRandomColor():
 
 func generate_level():
 
-	
+	Bulbs.visible = false;
+	Exot.visible = false;
+	Mush.visible = false;
 	player = Player.instance()
 	add_child(player)
 	player.add_to_group("SpacePortPlayer")
@@ -46,16 +60,25 @@ func generate_level():
 		C2.color = "#915a5a"
 		C3.color = "#915a5a"
 		C4.color = "#915a5a"
+		Bulbs.visible = true;
+		Bulbs1.frame = randi() % 6
+		Bulbs2.frame = randi() % 6
 	elif(get_tree().get_nodes_in_group("World")[0].culture == "F"):
 		C1.color = "#517e6a"
 		C2.color = "#517e6a"
 		C3.color = "#517e6a"
 		C4.color = "#517e6a"
+		Exot.visible = true;
+		Exot1.frame = randi() % 6
+		Exot2.frame = randi() % 6
 	else:
 		C1.color = "#a58153"
 		C2.color = "#a58153"
 		C3.color = "#a58153"
 		C4.color = "#a58153"
+		Mush.visible = true;
+		Mush1.frame = randi() % 6
+		Mush1.frame = randi() % 6
 		
 	for r in get_tree().get_nodes_in_group("World")[0].residents:
 		var thing = NPC.instance()
