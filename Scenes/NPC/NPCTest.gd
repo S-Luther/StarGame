@@ -69,7 +69,7 @@ func move(target, delta):
 func get_circle_position():
 	rng.randomize()
 	if details.boredom > 150 || details.happiness < 10:
-		return Vector2(2000 + 10000, 1150 + 10000)
+		return Vector2( 2000 + 10000,  1200 + 10000)
 	return Vector2(rng.randi()% 2000 + 10000, rng.randi() % 1300 + 10000)
 
 
