@@ -13,6 +13,10 @@ onready var welcome = $Player/Engine/NavTerminal/UI/Welcome
 onready var Player = $Player
 
 const LancerDrone = preload('res://Scenes/NPCShips/LancerDrone.tscn')
+const FacsSapling = preload('res://Scenes/NPCShips/FacsSaplingNPC.tscn')
+const ShieldMaiden = preload('res://Scenes/NPCShips/ShieldMaidenNPC.tscn')
+const FacsLeaflet = preload('res://Scenes/NPCShips/FacsLeaflet.tscn')
+const Expeditionary = preload('res://Scenes/NPCShips/Expeditionary.tscn')
 
 const Planet = preload('res://Scenes/Props/Planet.tscn')
 const Planet2 = preload('res://Scenes/Props/Planet2.tscn')
@@ -179,9 +183,38 @@ func _ready():
 		self.add_child(asteroid)
 		asteroid.add_to_group("asteroids")
 #		asteroid.velocity = Vector2(rng.randi_range(10,-10), rng.randi_range(10,-10))
+##
+#	for i in 50:
+#		var drone = LancerDrone.instance()
+#		var rng = RandomNumberGenerator.new()
+#		rng.randomize()
 #
+#		drone.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
+#		drone.z_index = 0
+#		self.add_child(drone)
+#		drone.add_to_group("drones")
+#	for i in 50:
+#		var drone = ShieldMaiden.instance()
+#		var rng = RandomNumberGenerator.new()
+#		rng.randomize()
+#
+#		drone.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
+#		drone.z_index = 0
+#		self.add_child(drone)
+#		drone.add_to_group("drones")
+##
+#	for i in 50:
+#		var drone = FacsLeaflet.instance()
+#		var rng = RandomNumberGenerator.new()
+#		rng.randomize()
+#
+#		drone.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
+#		drone.z_index = 0
+#		self.add_child(drone)
+#		drone.add_to_group("drones")
+		
 	for i in 50:
-		var drone = LancerDrone.instance()
+		var drone = Expeditionary.instance()
 		var rng = RandomNumberGenerator.new()
 		rng.randomize()
 
@@ -189,6 +222,16 @@ func _ready():
 		drone.z_index = 0
 		self.add_child(drone)
 		drone.add_to_group("drones")
+		
+#	for i in 50:
+#		var drone = FacsSapling.instance()
+#		var rng = RandomNumberGenerator.new()
+#		rng.randomize()
+#
+#		drone.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
+#		drone.z_index = 0
+#		self.add_child(drone)
+#		drone.add_to_group("drones")
 #
 #
 	for i in 50:
