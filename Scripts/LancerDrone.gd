@@ -99,7 +99,8 @@ func move(target, delta):
 	self.rotation = velocity.angle()
 	var collision = move_and_collide(velocity/10)
 	if collision:
-		state = HIT
+		pass
+#		state = HIT
 
 		
 
@@ -111,13 +112,15 @@ func slice_animation_finished():
 	queue_free()
 	
 func hit():
-	state = HIT
-	velocity = Vector2.ZERO
+	pass
+#	state = HIT
+#	velocity = Vector2.ZERO
 
 	
 func slice():
-	state = SLICE
-	velocity = Vector2.ZERO
+	pass
+#	state = SLICE
+#	velocity = Vector2.ZERO
 	
 
 	

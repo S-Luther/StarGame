@@ -17,6 +17,12 @@ const FacsSapling = preload('res://Scenes/NPCShips/FacsSaplingNPC.tscn')
 const ShieldMaiden = preload('res://Scenes/NPCShips/ShieldMaidenNPC.tscn')
 const FacsLeaflet = preload('res://Scenes/NPCShips/FacsLeaflet.tscn')
 const Expeditionary = preload('res://Scenes/NPCShips/Expeditionary.tscn')
+const Broadside = preload('res://Scenes/NPCShips/Broadside.tscn')
+const Orb = preload('res://Scenes/NPCShips/Orb.tscn')
+const Platform = preload('res://Scenes/NPCShips/Platform.tscn')
+const FighterPlatform = preload('res://Scenes/NPCShips/FighterPlatform.tscn')
+const PirateRammer = preload('res://Scenes/NPCShips/PirateRammer.tscn')
+const Shuttle = preload('res://Scenes/NPCShips/Shuttle.tscn')
 
 const Planet = preload('res://Scenes/Props/Planet.tscn')
 const Planet2 = preload('res://Scenes/Props/Planet2.tscn')
@@ -193,27 +199,28 @@ func _ready():
 #		drone.z_index = 0
 #		self.add_child(drone)
 #		drone.add_to_group("drones")
-#	for i in 50:
-#		var drone = ShieldMaiden.instance()
-#		var rng = RandomNumberGenerator.new()
-#		rng.randomize()
-#
-#		drone.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
-#		drone.z_index = 0
-#		self.add_child(drone)
-#		drone.add_to_group("drones")
-##
-#	for i in 50:
-#		var drone = FacsLeaflet.instance()
-#		var rng = RandomNumberGenerator.new()
-#		rng.randomize()
-#
-#		drone.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
-#		drone.z_index = 0
-#		self.add_child(drone)
-#		drone.add_to_group("drones")
 		
-	for i in 50:
+	for i in 5:
+		var drone = ShieldMaiden.instance()
+		var rng = RandomNumberGenerator.new()
+		rng.randomize()
+
+		drone.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
+		drone.z_index = 0
+		self.add_child(drone)
+		drone.add_to_group("drones")
+
+	for i in 5:
+		var drone = FacsLeaflet.instance()
+		var rng = RandomNumberGenerator.new()
+		rng.randomize()
+
+		drone.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
+		drone.z_index = 0
+		self.add_child(drone)
+		drone.add_to_group("drones")
+		
+	for i in 5:
 		var drone = Expeditionary.instance()
 		var rng = RandomNumberGenerator.new()
 		rng.randomize()
@@ -223,15 +230,85 @@ func _ready():
 		self.add_child(drone)
 		drone.add_to_group("drones")
 		
-#	for i in 50:
-#		var drone = FacsSapling.instance()
-#		var rng = RandomNumberGenerator.new()
-#		rng.randomize()
-#
-#		drone.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
-#		drone.z_index = 0
-#		self.add_child(drone)
-#		drone.add_to_group("drones")
+	for i in 5:
+		var drone = FacsSapling.instance()
+		var rng = RandomNumberGenerator.new()
+		rng.randomize()
+
+		drone.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
+		drone.z_index = 0
+		self.add_child(drone)
+		drone.add_to_group("drones")
+
+	for i in 5:
+		var drone = ShieldMaiden.instance()
+		var rng = RandomNumberGenerator.new()
+		rng.randomize()
+
+		drone.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
+		drone.z_index = 0
+		self.add_child(drone)
+		drone.add_to_group("drones")
+##
+	for i in 5:
+		var drone = Broadside.instance()
+		var rng = RandomNumberGenerator.new()
+		rng.randomize()
+
+		drone.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
+		drone.z_index = 0
+		self.add_child(drone)
+		drone.add_to_group("drones")
+
+	for i in 5:
+		var drone = Platform.instance()
+		var rng = RandomNumberGenerator.new()
+		rng.randomize()
+
+		drone.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
+		drone.z_index = 0
+		self.add_child(drone)
+		drone.add_to_group("drones")
+
+	for i in 5:
+		var drone = FighterPlatform.instance()
+		var rng = RandomNumberGenerator.new()
+		rng.randomize()
+
+		drone.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
+		drone.z_index = 0
+		self.add_child(drone)
+		drone.add_to_group("drones")
+
+	for i in 5:
+		var drone = Orb.instance()
+		var rng = RandomNumberGenerator.new()
+		rng.randomize()
+
+		drone.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
+		drone.z_index = 0
+		self.add_child(drone)
+		drone.add_to_group("drones")
+
+	for i in 5:
+		var drone = Shuttle.instance()
+		var rng = RandomNumberGenerator.new()
+		rng.randomize()
+
+		drone.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
+		drone.z_index = 0
+		self.add_child(drone)
+		drone.add_to_group("drones")
+		
+	for i in 5:
+		var drone = PirateRammer.instance()
+		var rng = RandomNumberGenerator.new()
+		rng.randomize()
+
+		drone.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
+		drone.z_index = 0
+		self.add_child(drone)
+		drone.add_to_group("drones")
 #
 #
 	for i in 50:
