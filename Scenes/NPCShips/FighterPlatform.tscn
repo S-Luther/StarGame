@@ -7,7 +7,7 @@
 
 [sub_resource type="CapsuleShape2D" id=5]
 radius = 245.601
-height = 550.399
+height = 300.799
 
 [sub_resource type="Animation" id=2]
 resource_name = "Hit"
@@ -183,20 +183,20 @@ scale = Vector2( 5, 5 )
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -107, -3.79999 )
+position = Vector2( -40.6, -0.599976 )
 rotation = -1.5708
-scale = Vector2( 0.25, 0.25 )
+scale = Vector2( 0.24, 0.24 )
 shape = SubResource( 5 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
-position = Vector2( 99.8, 1 )
-scale = Vector2( 0.25, 0.25 )
+position = Vector2( 32.8, -1.6 )
+scale = Vector2( 0.24, 0.24 )
 shape = SubResource( 5 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( -21.6, -2.80002 )
 rotation = 1.5708
-scale = Vector2( 0.4, 0.4 )
+scale = Vector2( 0.24, 0.24 )
 texture = ExtResource( 1 )
 
 [node name="AttackTimer" type="Timer" parent="."]
