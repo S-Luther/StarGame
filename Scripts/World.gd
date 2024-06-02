@@ -52,6 +52,9 @@ var coeff = .25
 var sep = 40000
 var nodes = []
 var planet_choices = [Planet3, Planet32, Planet33, Planet34, Planet35, Planet36]
+
+var minerals = 0;
+var liquids = 0;
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	add_child(t)
@@ -68,6 +71,25 @@ func _ready():
 		var rng = RandomNumberGenerator.new()
 		rng.randomize()
 		var planet = planet_choices[rng.randi_range(0,5)].instance()
+		
+		var drone = Broadside.instance()
+		
+		rng.randomize()
+
+		drone.position = ((n.pos - Vector2(800, 500)) *1000)
+		drone.origin = ((n.pos - Vector2(800, 500)) *1000)
+		drone.z_index = 1
+
+		var shuttle = Shuttle.instance()
+		
+		rng.randomize()
+
+		shuttle.position = ((n.pos - Vector2(800, 500)) *1000)
+		shuttle.origin = ((n.pos - Vector2(800, 500)) *1000)
+		shuttle.z_index = 1
+		shuttle.pre_target = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
+		
+		self.add_child(shuttle)
 
 		
 		var pos = n.pos - Vector2(800, 500)
@@ -92,23 +114,42 @@ func _ready():
 			welcome.text = "Welcome to " +n.name
 			welcome.visible = true
 #			get_tree().get_nodes_in_group("Galaxy")[0].Place.add_to_group("current_location")
+	
+		var neighb = 0
+		if(n.neighbors.size() > 0):
+			neighb = rng.randi() % n.neighbors.size()
 		for i in nodes:
-			if (n.neighbors.has(i.name)):
+			if(n.neighbors.size() > 0):
+				if(i.name == n.neighbors[neighb]):
+					drone.pre_target = (i.pos - Vector2(800, 500))*1000
+					self.add_child(drone)
+			else:
+				drone.queue_free()
+			if (planet.position.distance_to(((i.pos - Vector2(800, 500)) * 1000)) < 50000):
 				var line = Line2D.new()
 				line.add_point(pos *1000)
 				line.add_point(((i.pos - Vector2(800, 500)) * 1000))
-				line.default_color = Color(i.color)
-				line.width = 10
+				var lineColor = Color(i.color)
+				lineColor.a = .05
+				line.default_color = lineColor
+
+				if planet.position.distance_to(((i.pos - Vector2(800, 500)) * 1000)) != 0:
+					line.width = 10000000 / planet.position.distance_to(((i.pos - Vector2(800, 500)) * 1000))
 				line.z_index = -1
 				self.add_child(line)
-			elif (planet.position.distance_to(((i.pos - Vector2(800, 500)) * 1000)) < 30000):
+			elif (n.neighbors.has(i.name)):
 				var line = Line2D.new()
 				line.add_point(pos *1000)
 				line.add_point(((i.pos - Vector2(800, 500)) * 1000))
-				line.default_color = Color(i.color)
-				line.width = 1
+				var lineColor = Color(i.color)
+				lineColor.a = .1
+				line.default_color = lineColor
+				if planet.position.distance_to(((i.pos - Vector2(800, 500)) * 1000)) != 0:
+					line.width = 10000000 / planet.position.distance_to(((i.pos - Vector2(800, 500)) * 1000))
+				
 				line.z_index = -1
 				self.add_child(line)
+
 		
 
 #	RightB.position.x = RightB.position.x - .5
@@ -317,15 +358,15 @@ func _ready():
 #		self.add_child(drone)
 #		drone.add_to_group("drones")
 #
-#	for i in 5:
-#		var drone = PirateRammer.instance()
-#		var rng = RandomNumberGenerator.new()
-#		rng.randomize()
-#
-#		drone.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
-#		drone.z_index = 0
-#		self.add_child(drone)
-#		drone.add_to_group("drones")
+	for i in 15:
+		var drone = PirateRammer.instance()
+		var rng = RandomNumberGenerator.new()
+		rng.randomize()
+
+		drone.position = Vector2(rng.randi_range(sep*10,-sep*10), rng.randi_range(sep*10,-sep*10))
+		drone.z_index = 0
+		self.add_child(drone)
+		drone.add_to_group("drones")
 #
 #
 	for i in 50:

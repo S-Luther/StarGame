@@ -28,6 +28,9 @@ var workable = false
 var working = false
 var outfit = false
 
+var minerals = 0
+var liquids = 0
+
 var NPC = false
 
 onready var animationPlayer = $AnimationPlayer

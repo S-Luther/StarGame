@@ -83,11 +83,12 @@ func _process(delta):
 			var mainCam = get_tree().get_nodes_in_group("cam")[0]
 			mainCam.apply_shake()
 			var cams = get_tree().get_nodes_in_group("OverViewCamera")
-			if cams[0].current:
-				overview.visible = !overview.visible
-				Player.visible = !Player.visible
-				cams[0].current = !cams[0].current
-				mainCam.current = !mainCam.current
+			if(cams.size() > 0):
+				if cams[0].current:
+					overview.visible = !overview.visible
+					Player.visible = !Player.visible
+					cams[0].current = !cams[0].current
+					mainCam.current = !mainCam.current
 		has_collided = false;
 		colCheckTimer.start(.2)
 

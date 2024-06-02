@@ -7,6 +7,12 @@ var pause_timer = Timer.new()
 const projectile = preload('res://Scenes/Shared/Projectile.tscn')
 onready var animationPlayer = $AnimationPlayer
 
+var health = 100;
+
+
+var pre_target = null
+var origin = null
+
 var velocity = Vector2.ZERO
 
 var player
@@ -65,35 +71,45 @@ func _physics_process(delta):
 		SURROUND:
 			move(get_circle_position(randomnum), delta)
 		ATTACK:
-			if alive:
-	#			print("boom")
-				var p = projectile.instance()
-				p.position = Vector2(self.position.x, self.position.y)
-				p.velocity = Vector2(20, 0).rotated(velocity.angle())
-				p.rotation = velocity.angle()
-				p.z_index = 2
-				p.scale = Vector2(1,1)
-				get_tree().get_root().add_child(p)
-				p.add_to_group("shots")
+#			pass
+#			if alive:
+#	#			print("boom")
+#				var p = projectile.instance()
+#				p.position = Vector2(self.position.x, self.position.y)
+#				p.velocity = Vector2(20, 0).rotated(velocity.angle())
+#				p.rotation = velocity.angle()
+#				p.z_index = 2
+#				p.scale = Vector2(1,1)
+#				get_tree().get_root().add_child(p)
+#				p.add_to_group("shots")
 			state = SURROUND
 
 
 		HIT:
-			alive = false
-			velocity = Vector2.ZERO
-			animationPlayer.play("Hit")
+			health = health - 1
+			if(health < 0):
+				alive = false
+				velocity = Vector2.ZERO
+				animationPlayer.play("Hit")
 		SLICE:
-			alive = false
-			velocity = Vector2.ZERO
-			animationPlayer.play("Slice")
+			health = health - 10
+			if(health < 0):
+				alive = false
+				velocity = Vector2.ZERO
+				animationPlayer.play("Slice")
 		
 	
 
 func move(target, delta):
 	
+	if(self.position.distance_to(target) < 500): 
+		var temp = pre_target
+		pre_target = origin
+		origin = temp
+	
 	var direction = (target - global_position).normalized() 
 	var desired_velocity =  direction * SPEED
-	var steering = (desired_velocity - velocity) * delta * .5
+	var steering = (desired_velocity - velocity) * delta * .1
 	velocity += steering
 
 	self.rotation = velocity.angle()
@@ -121,11 +137,15 @@ func slice():
 	pass
 #	state = SLICE
 #	velocity = Vector2.ZERO
-	
+#
 
 	
 func get_circle_position(random):
-	var kill_circle_centre = get_tree().get_nodes_in_group("player")[0].global_position
+	var kill_circle_centre = Vector2.ZERO
+	if pre_target == null:
+		kill_circle_centre = get_tree().get_nodes_in_group("player")[0].global_position
+	else:
+		kill_circle_centre = pre_target
 	var radius = 1000
 	 #Distance from center to circumference of circle
 	var angle = random * PI * 2;

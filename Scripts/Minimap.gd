@@ -77,11 +77,12 @@ func _process(delta):
 			if prefix!="" && Input.is_action_just_pressed(prefix+"_swing"):
 				navWorking = false
 				minimap.visible = false
-				if cams[0].current:
-					overview.visible = !overview.visible
-					Player.visible = !Player.visible
-					cams[0].current = !cams[0].current
-					mainCam.current = !mainCam.current
+				if cams.size() > 0:
+					if cams[0].current:
+						overview.visible = !overview.visible
+						Player.visible = !Player.visible
+						cams[0].current = !cams[0].current
+						mainCam.current = !mainCam.current
 			if prefix!="" && Input.is_action_just_pressed(prefix+"_down") && camera.zoom.x > .06 && camera.zoom.y > .4:
 				#print(camera.zoom.x)
 				#print(camera.zoom.y)

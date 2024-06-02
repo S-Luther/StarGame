@@ -36,7 +36,6 @@ tracks/0/keys = {
 }
 
 [node name="KinematicBody2D" type="RigidBody2D"]
-scale = Vector2( 10, 10 )
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -71,3 +70,28 @@ position = Vector2( 2, 1 )
 rotation = 1.5708
 polygon = PoolVector2Array( -180.001, -163.157, -111, -219, -46, -242, -8.8889, -246.667, 45, -242, 122, -211, 176.842, -160.001, 162.105, -145.264, 104, -203, 38, -224, -49, -220, -103, -193, -165.264, -151.578 )
 one_way_collision = true
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2( -6, -2 )
+emitting = false
+amount = 100
+lifetime = 500.0
+one_shot = true
+speed_scale = 9.69
+explosiveness = 1.0
+fract_delta = false
+local_coords = false
+emission_shape = 1
+emission_sphere_radius = 128.0
+direction = Vector2( -1, 0 )
+spread = 0.0
+gravity = Vector2( 0, 0 )
+initial_velocity_random = 1.0
+radial_accel = -100.0
+tangential_accel = 1.0
+angle = 720.0
+scale_amount = 15.0
+scale_amount_random = 0.45
+color = Color( 0, 0.0392157, 0.670588, 1 )
+hue_variation = 0.15
+hue_variation_random = 0.42
