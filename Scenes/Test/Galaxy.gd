@@ -574,7 +574,6 @@ func build():
 	print("Total Pop: ", totalPop, " Worlds: ", places.size())
 	print("A Pop: ", Apop, " F Pop: ", Fpop, " E Pop: ", Epop)
 	cultModifier = 10
-	add_child(t)
 	t.one_shot = true
 	t.start(2)
 	

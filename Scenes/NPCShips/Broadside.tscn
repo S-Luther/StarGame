@@ -256,7 +256,7 @@ tracks/4/keys = {
 }
 
 [sub_resource type="CircleShape2D" id=7]
-radius = 19.2354
+radius = 63.1535
 
 [node name="Node2D" type="KinematicBody2D"]
 scale = Vector2( 5, 5 )
@@ -279,19 +279,21 @@ position = Vector2( -253.4, -0.4 )
 scale = Vector2( 1.8473, 1.74474 )
 texture = ExtResource( 5 )
 vframes = 4
+frame = 1
 
 [node name="Sprite3" type="Sprite" parent="."]
 position = Vector2( -238.4, -33.2 )
 scale = Vector2( 1.428, -1.247 )
 texture = ExtResource( 5 )
 vframes = 4
-frame = 1
+frame = 2
 
 [node name="Sprite4" type="Sprite" parent="."]
 position = Vector2( -237.6, 30.2 )
 scale = Vector2( 1.39667, 1.24112 )
 texture = ExtResource( 5 )
 vframes = 4
+frame = 1
 
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 2.0

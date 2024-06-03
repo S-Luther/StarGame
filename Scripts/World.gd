@@ -43,6 +43,8 @@ const Planet34 = preload('res://Scenes/Props/Planet34.tscn')
 const Planet35 = preload('res://Scenes/Props/Planet35.tscn')
 const Planet36 = preload('res://Scenes/Props/Planet36.tscn')
 
+const Farm = preload('res://Scenes/Props/Farm.tscn')
+
 const Asteroid1 = preload('res://Scenes/Props/Asteroid1.tscn')
 const Asteroid2 = preload('res://Scenes/Props/Asteroid2.tscn')
 const Asteroid3 = preload('res://Scenes/Props/Asteroid3.tscn')
@@ -371,15 +373,15 @@ func _ready():
 #		self.add_child(drone)
 #		drone.add_to_group("drones")
 #
-	for i in 15:
-		var drone = PirateRammer.instance()
-		var rng = RandomNumberGenerator.new()
-		rng.randomize()
-
-		drone.position = Vector2(rng.randi_range(sep*10,-sep*10), rng.randi_range(sep*10,-sep*10))
-		drone.z_index = 0
-		self.add_child(drone)
-		drone.add_to_group("drones")
+#	for i in 15:
+#		var drone = PirateRammer.instance()
+#		var rng = RandomNumberGenerator.new()
+#		rng.randomize()
+#
+#		drone.position = Vector2(rng.randi_range(sep*10,-sep*10), rng.randi_range(sep*10,-sep*10))
+#		drone.z_index = 0
+#		self.add_child(drone)
+#		drone.add_to_group("drones")
 #
 #
 	for i in 50:
@@ -418,6 +420,17 @@ func _ready():
 		asteroid.rotate(rng.randi_range(0, 360))
 		self.add_child(asteroid)
 		asteroid.add_to_group("asteroids")
+	for i in 50:
+		var farm = Farm.instance()
+		var rng = RandomNumberGenerator.new()
+		rng.randomize()
+
+		farm.position = Vector2(rng.randi_range(sep*10,-sep*10), rng.randi_range(sep*10,-sep*10))
+		farm.z_index = 0
+
+		farm.add_to_group("planets")
+		self.add_child(farm)
+
 #	for i in 20:
 #		var asteroid = Asteroid5.instance()
 #		var rng = RandomNumberGenerator.new()

@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/Farm.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/placeHolder.gd" type="Script" id=2]
+
+[node name="Node2D" type="KinematicBody2D"]
+scale = Vector2( 2.5, 2.5 )
+script = ExtResource( 2 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -8.4, -5.6, 232, -53, 300.8, -235.2, 162.8, -370, 86.4, -399.6, 34.4, -380.8, -58, -368.4, -165.6, -368.4, -263, -322, -329, -207, -262.4, -52.8, -182, 41.2, -116.8, 54, -73.2, 16 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )

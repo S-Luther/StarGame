@@ -132,9 +132,9 @@ func move(target, delta):
 
 			if collision_timer.is_stopped():
 				swp = !swp
-				collision_timer.start(4)
+				collision_timer.start(2)
 #				if swp:
-				angle = PI * randf()
+				angle = angle + PI * randf()
 #				else:
 #					angle = -PI * randf()
 #				print(angle)
