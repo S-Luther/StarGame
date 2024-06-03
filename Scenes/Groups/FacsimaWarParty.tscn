@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scenes/NPCShips/FacsSaplingNPC.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/NPCShips/FacsLeaflet.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scripts/FacsimaWarParty.gd" type="Script" id=3]
+
+[node name="Node2D" type="Node2D"]
+position = Vector2( -317, 318 )
+script = ExtResource( 3 )
+
+[node name="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 317, 188 )
+
+[node name="Node2D3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 319, -1300 )
+
+[node name="Node2D4" parent="." instance=ExtResource( 2 )]
+position = Vector2( -1172, -1666 )
+
+[node name="Node2D5" parent="." instance=ExtResource( 2 )]
+position = Vector2( -1269, 705 )
+
+[node name="Node2D6" parent="." instance=ExtResource( 1 )]
+position = Vector2( -307, 773 )
+
+[node name="Node2D7" parent="." instance=ExtResource( 1 )]
+position = Vector2( -80, -1939 )
+
+[node name="Node2D8" parent="." instance=ExtResource( 2 )]
+position = Vector2( -595, -452 )
+
+[node name="Node2D9" parent="." instance=ExtResource( 1 )]
+position = Vector2( 557, -521 )

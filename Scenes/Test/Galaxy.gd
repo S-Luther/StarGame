@@ -29,6 +29,8 @@ var Apop = 0;
 var Fpop = 0;
 var Epop = 0;
 
+var conflicts = []
+
 static func pickRandom(list):
 	return list[randi() % list.size()]
 
@@ -740,8 +742,8 @@ func _process(delta):
 			asteroidm.add_to_group("mapPlanets")
 		logs = "Astrae:" + String(unique_cultures[0]) + ", Facsima:" + String(unique_cultures[1]) + ", Eccles:" + String(unique_cultures[2]) + "\n"+ logs
 		print(unique_cultures[0], ", ", unique_cultures[1], ", ",unique_cultures[2])
-#	for a in get_tree().get_nodes_in_group("lines"):
-#		a.queue_free()
+	for a in get_tree().get_nodes_in_group("lines"):
+		conflicts.append(a)
 	if unique_cultures.has(2) || unique_cultures.has(1) || unique_cultures.has(0) || collisions > 10:
 		if collisions > 10 && collisions < 1000:
 			logs =  "Rejected for collisions." + "\n" + logs
@@ -782,7 +784,8 @@ func _process(delta):
 				for i in range(places.size()):
 					labels[i].text = "  "+places[i].name+" " + String(places[i].residents.size()) + " " + places[i].culture
 					labels[i].visible = false
-#				for a in get_tree().get_nodes_in_group("lines"):
+				for a in get_tree().get_nodes_in_group("lines"):
+					conflicts.append(a)
 #					a.queue_free()
 			else:
 				for a in get_tree().get_nodes_in_group("mapPlayer"):

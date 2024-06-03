@@ -4,6 +4,8 @@ var SPEED = 50
 
 var attack_timer = Timer.new()
 var pause_timer = Timer.new()
+var move_timer = Timer.new()
+var collision_timer = Timer.new()
 const projectile = preload('res://Scenes/Shared/Projectile.tscn')
 onready var animationPlayer = $AnimationPlayer
 
@@ -20,6 +22,7 @@ var player
 var alive = true
 
 var randomnum
+var swp = false
 
 enum {
 	SURROUND,
@@ -29,6 +32,7 @@ enum {
 }
 var rng = RandomNumberGenerator.new()
 var state = SURROUND
+var angle = 1.5
 
 func _ready():
 	self.add_to_group("baddies")
@@ -39,6 +43,11 @@ func _ready():
 	attack_timer.start(2)
 	self.add_child(pause_timer)
 	pause_timer.one_shot = true
+	self.add_child(move_timer)
+	move_timer.one_shot = true
+	self.add_child(collision_timer)
+	collision_timer.one_shot = true
+	collision_timer.start(2)
 	
 	
 
@@ -101,21 +110,58 @@ func _physics_process(delta):
 	
 
 func move(target, delta):
-	
-	if(self.position.distance_to(target) < 500): 
-		var temp = pre_target
-		pre_target = origin
-		origin = temp
-	
-	var direction = (target - global_position).normalized() 
-	var desired_velocity =  direction * SPEED
-	var steering = (desired_velocity - velocity) * delta * .1
-	velocity += steering
+	if move_timer.is_stopped():
+		
+		if(self.position.distance_to(target) < 1000): 
+			var temp = pre_target
+			pre_target = origin
+			origin = temp
+			
+		
+		
+		var direction = (target - global_position).normalized() 
+		var desired_velocity =  direction * SPEED
+		var steering = (desired_velocity - velocity) * delta * .1
+		velocity += steering
 
-	self.rotation = velocity.angle()
-	var collision = move_and_collide(velocity/10)
-	if collision:
-		pass
+		self.rotation = velocity.angle()
+		var collision = move_and_collide(velocity/10)
+		
+		if collision:
+#			print(collision.collider)
+
+			if collision_timer.is_stopped():
+				swp = !swp
+				collision_timer.start(4)
+#				if swp:
+				angle = PI * randf()
+#				else:
+#					angle = -PI * randf()
+#				print(angle)
+#				print("tripped")
+				move_timer.start(2)
+				
+	else:
+#		print("turning")
+		if(self.position.distance_to(target) < 1000): 
+			var temp = pre_target
+			pre_target = origin
+			origin = temp
+			
+		
+		
+		var direction = (target - global_position).normalized() 
+		
+		direction = direction.rotated(angle)
+		
+		var desired_velocity =  direction * SPEED
+		
+		var steering = (desired_velocity - velocity) * delta * .1
+		velocity += steering
+
+
+		self.rotation = velocity.angle()
+		var collision = move_and_collide(velocity/10)
 #		state = HIT
 
 		
@@ -158,3 +204,13 @@ func get_circle_position(random):
 func _on_AttackTimer_timeout():
 	rng.randomize()
 	state = ATTACK
+
+
+func _on_Area2D_area_entered(area):
+	if collision_timer.is_stopped():
+		collision_timer.start(4)
+		angle = 1.5 + randf()
+#		print(angle)
+#		print("special")
+#				print("tripped")
+		move_timer.start(2)

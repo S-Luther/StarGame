@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scenes/NPCShips/Shuttle.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/NPCShips/Expeditionary.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scripts/FacsimaWarParty.gd" type="Script" id=3]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 47, -879 )
+
+[node name="Node2D2" parent="." instance=ExtResource( 2 )]
+position = Vector2( -217, 599 )
+
+[node name="Node2D3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 193, 42 )
+
+[node name="Node2D4" parent="." instance=ExtResource( 1 )]
+position = Vector2( 618, -529 )
+
+[node name="Node2D5" parent="." instance=ExtResource( 2 )]
+position = Vector2( 981, 13 )
+
+[node name="Node2D6" parent="." instance=ExtResource( 1 )]
+position = Vector2( 646, 924 )
+
+[node name="Node2D7" parent="." instance=ExtResource( 1 )]
+position = Vector2( -812, -237 )
+
+[node name="Node2D8" parent="." instance=ExtResource( 1 )]
+position = Vector2( -906, -907 )
+
+[node name="Node2D9" parent="." instance=ExtResource( 1 )]
+position = Vector2( -1204, 721 )

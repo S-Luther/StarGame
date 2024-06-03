@@ -31,6 +31,8 @@ var outfit = false
 var minerals = 0
 var liquids = 0
 
+var rumors = []
+
 var NPC = false
 
 onready var animationPlayer = $AnimationPlayer

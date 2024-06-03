@@ -1,18 +1,18 @@
-extends StaticBody2D
+extends KinematicBody2D
 
-
+var hasHappened = false
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
 
-var hasHappened = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
-
+	
 func slice():
 	pass
-
+	
 func hit():
 	
 	if !get_tree().get_nodes_in_group("World")[0].paused:
@@ -24,7 +24,7 @@ func hit():
 			pass
 	#	get_tree().get_root().
 		get_tree().get_nodes_in_group("SpacePortCamera")[0].current = true
-		
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

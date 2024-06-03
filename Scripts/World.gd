@@ -24,6 +24,11 @@ const FighterPlatform = preload('res://Scenes/NPCShips/FighterPlatform.tscn')
 const PirateRammer = preload('res://Scenes/NPCShips/PirateRammer.tscn')
 const Shuttle = preload('res://Scenes/NPCShips/Shuttle.tscn')
 
+const FacsimaWarParty = preload('res://Scenes/Groups/FacsimaWarParty.tscn')
+const CivilianWarParty = preload('res://Scenes/Groups/CivilianWarParty.tscn')
+const AstraeWarParty = preload('res://Scenes/Groups/AstraeWarParty.tscn')
+const LucianWarParty = preload('res://Scenes/Groups/LucianWarParty.tscn')
+
 const Planet = preload('res://Scenes/Props/Planet.tscn')
 const Planet2 = preload('res://Scenes/Props/Planet2.tscn')
 const Planet3 = preload('res://Scenes/Props/Planet3.tscn')
@@ -45,6 +50,9 @@ const Asteroid4 = preload('res://Scenes/Props/Asteroid4.tscn')
 
 var t = Timer.new()
 
+var lastpos;
+var checked = []
+
 #const Asteroid5 = preload('res://Scenes/Props/Asteroid5.tscn')
 #const Asteroid6 = preload('res://Scenes/Props/Asteroid6.tscn')
 #const Asteroid7 = preload('res://Scenes/Props/Asteroid7.tscn')
@@ -60,6 +68,8 @@ func _ready():
 	add_child(t)
 	t.one_shot = true
 	t.start(2)
+	
+	lastpos = Player.position
 	
 	self.add_to_group("World")
 	for g in get_tree().get_nodes_in_group("Galaxy"):
@@ -127,7 +137,10 @@ func _ready():
 				drone.queue_free()
 			if (planet.position.distance_to(((i.pos - Vector2(800, 500)) * 1000)) < 50000):
 				var line = Line2D.new()
+			
+
 				line.add_point(pos *1000)
+			
 				line.add_point(((i.pos - Vector2(800, 500)) * 1000))
 				var lineColor = Color(i.color)
 				lineColor.a = .05
@@ -527,7 +540,62 @@ var residents = []
 var culture = "";
 
 func _process(delta):
-	
+	var i = -1
+	if !paused:
+		for a in get_tree().get_nodes_in_group("lines"):
+			if checked.size() < get_tree().get_nodes_in_group("lines").size():
+				checked.append(false)
+			else:
+				i = i + 1
+			if(Geometry.segment_intersects_segment_2d(((a.points[0] - Vector2(800, 500))*1000), ((a.points[1] - Vector2(800, 500))*1000), lastpos, Player.position) != null) && !checked[i] && ((a.points[0] - Vector2(800, 500))*1000).distance_to(Player.position) > 40000 && ((a.points[1] - Vector2(800, 500))*1000).distance_to(Player.position) > 40000:
+				if t.is_stopped():
+					t.start(20)
+					for n in nodes:
+						var pos = n.pos - Vector2(800, 500)
+						pos = pos * 1000
+						if ((a.points[0] - Vector2(800, 500))*1000).distance_to(pos) < 1000:
+							print("spawing " , n.culture)
+							var Party = CivilianWarParty.instance()
+							if n.culture == "F":
+								Party = FacsimaWarParty.instance()
+							elif n.culture == "A":
+								Party = AstraeWarParty.instance()
+							elif n.culture == "E":
+								Party = LucianWarParty.instance()
+							
+							checked[i] = true
+							print(Player.position)
+							var intersect = Geometry.segment_intersects_segment_2d(((a.points[0] - Vector2(800, 500))*1000), ((a.points[1] - Vector2(800, 500))*1000), lastpos, Player.position)
+							print(intersect)
+
+							Party.position = ((a.points[0] - Vector2(800, 500))*1000)
+							Party.origin = ((a.points[0] - Vector2(800, 500))*1000)
+							Party.destination = ((a.points[1] - Vector2(800, 500))*1000)
+							Party.z_index = 1
+
+							self.add_child(Party)
+						if ((a.points[1] - Vector2(800, 500))*1000).distance_to(pos) < 1000:
+							print("spawing " , n.culture)
+							var Party = CivilianWarParty.instance()
+							if n.culture == "F":
+								Party = FacsimaWarParty.instance()
+							elif n.culture == "A":
+								Party = AstraeWarParty.instance()
+							elif n.culture == "E":
+								Party = LucianWarParty.instance()
+							
+							checked[i] = true
+							print(Player.position)
+							var intersect = Geometry.segment_intersects_segment_2d(((a.points[0] - Vector2(800, 500))*1000), ((a.points[1] - Vector2(800, 500))*1000), lastpos, Player.position)
+							print(intersect)
+
+							Party.position = ((a.points[1] - Vector2(800, 500))*1000)
+							Party.destination = ((a.points[0] - Vector2(800, 500))*1000)
+							Party.origin = ((a.points[1] - Vector2(800, 500))*1000)
+							Party.z_index = 1
+
+							self.add_child(Party)
+
 	var place = ""
 	
 #	if t.is_stopped():
@@ -574,4 +642,5 @@ func _process(delta):
 		#	LeftB.position.x = LeftB.position.x + .55
 		#	TopB.position.y = TopB.position.y + .55
 		#	BottomB.position.y = BottomB.position.y - .55
+	lastpos = Player.position
 

@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://assets/1422408676 (2).png" type="Texture" id=1]
 [ext_resource path="res://assets/New Piskel (2).png" type="Texture" id=2]
 [ext_resource path="res://assets/New Piskel (3).png" type="Texture" id=3]
 [ext_resource path="res://Scenes/Props/SpaceStation.gd" type="Script" id=4]
+[ext_resource path="res://Scripts/placeHolder.gd" type="Script" id=5]
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -36,6 +37,7 @@ tracks/0/keys = {
 }
 
 [node name="KinematicBody2D" type="StaticBody2D"]
+script = ExtResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 1, 0 )
@@ -60,7 +62,7 @@ polygon = PoolVector2Array( 79, -23, 78, -23, 78, -41, 82, -43, 89, -44, 98, -43
 [node name="KinematicBody2D" type="KinematicBody2D" parent="."]
 position = Vector2( -70, 35 )
 scale = Vector2( 2, 2 )
-script = ExtResource( 4 )
+script = ExtResource( 5 )
 
 [node name="Sprite" type="Sprite" parent="KinematicBody2D"]
 position = Vector2( 90, -32 )
