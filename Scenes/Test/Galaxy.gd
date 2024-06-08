@@ -3,7 +3,7 @@ extends Node2D
 const PlanetMarker = preload('res://Scenes/Props/PlanetMarker.tscn')
 const AsteroidMarker = preload('res://Scenes/Props/AsteroidMarker.tscn')
 const ShotMarker = preload('res://Scenes/Props/ShotMarker.tscn')
-var dynamic_font = DynamicFont.new()
+
 
 var logs = "";
 
@@ -30,6 +30,7 @@ var Fpop = 0;
 var Epop = 0;
 
 var conflicts = []
+var positions = []
 
 static func pickRandom(list):
 	return list[randi() % list.size()]
@@ -43,7 +44,7 @@ var extensions = [
 	"peak"
 ]
 
-var cultures = ["A", "F", "E", "A"]
+var cultures = ["A", "F", "E", "A","A", "F", "E", "A", "C"]
 
 var endings = [
 	"Cave",
@@ -497,6 +498,8 @@ func applyForces(Nodes):
 
 var clashCount = 0
 
+
+
 func clash():
 	clashCount = clashCount + 1
 	for a in get_tree().get_nodes_in_group("lines"):
@@ -540,7 +543,7 @@ func clash():
 					places[index].culture = e.culture;
 
 		   
-var t = Timer.new()
+#var t = Timer.new()
 
 var size = 5000;
 
@@ -574,8 +577,8 @@ func build():
 	print("Total Pop: ", totalPop, " Worlds: ", places.size())
 	print("A Pop: ", Apop, " F Pop: ", Fpop, " E Pop: ", Epop)
 	cultModifier = 10
-	t.one_shot = true
-	t.start(2)
+#	t.one_shot = true
+#	t.start(2)
 	
 
 
@@ -635,7 +638,7 @@ func _process(delta):
 	
 	if runs < 1000:
 		for a in get_tree().get_nodes_in_group("lines"):
-				a.queue_free()
+			a.queue_free()
 				
 #		for con in nodeCon:
 #			var node1 = con[0]
@@ -654,7 +657,6 @@ func _process(delta):
 		for a in get_tree().get_nodes_in_group("mapPlanets"):
 			a.queue_free()
 		for p in nodes:
-			
 			if is_nan(p.pos.x) || p.pos.x > 1600 || p.pos.x < 0 || p.pos.y > 1000 || p.pos.y < 0:
 				logs =  "Rejected for out of bounds" + "\n"+ logs
 				print("Rejected for out of bounds")
@@ -701,11 +703,11 @@ func _process(delta):
 						p.neighbors.erase(l.name)
 						l.neighbors.erase(p.name)
 	
-	if t.is_stopped() && !finish && !fullStop && runs > 999:
+	if !finish && !fullStop && runs > 999:
 		unique_factions.clear()
 		unique_cultures = [0, 0, 0]
 	#
-		t.start(.5)
+#		t.start(.5)
 		clash()
 		cleanSim(50)
 
@@ -750,7 +752,7 @@ func _process(delta):
 		finish = true
 		
 		
-		if clashCount < 5 || unique_cultures.has(0):
+		if clashCount < 1 || unique_cultures.has(0):
 			logs =  "Rejected for low culture diversity." + "\n"+ logs
 			print("Rejected for low culture diversity.")
 			collisions = 0
@@ -787,6 +789,9 @@ func _process(delta):
 					conflicts.append(a)
 #					a.queue_free()
 			else:
+				for a in get_tree().get_nodes_in_group("mapPlanets"):
+					positions.append(a.position)
+
 				for a in get_tree().get_nodes_in_group("mapPlayer"):
 					a.queue_free()
 				var Player

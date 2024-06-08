@@ -12,11 +12,14 @@ var config = ConfigFile.new()
 var mode = ""
 var current_ev = 0
 
+var ev = InputEventKey.new()
+
 var setup = true
 
 func _ready():
+
 	var configl = ConfigFile.new()
-	
+
 	var err = configl.load("user://inputs.cfg")
 	
 	if err != OK:
@@ -24,7 +27,6 @@ func _ready():
 	
 	for input in configl.get_sections():
 		InputMap.add_action(configl.get_value(input, "action")) 
-		var ev = InputEventKey.new()
 		ev = configl.get_value(input, "ev")
 		InputMap.action_add_event(configl.get_value(input, "action"), ev)
 
@@ -51,7 +53,7 @@ func _unhandled_input(event):
 
 
 func _on_Right_pressed():
-	var ev = InputEventKey.new()
+
 	ev = current_ev
 
 	if InputMap.has_action("p1_right"):
@@ -62,7 +64,7 @@ func _on_Right_pressed():
 
 
 func _on_Down_pressed():
-	var ev = InputEventKey.new()
+
 	ev = current_ev
 
 	if InputMap.has_action("p1_down"):
@@ -73,7 +75,7 @@ func _on_Down_pressed():
 
 
 func _on_Up_pressed():
-	var ev = InputEventKey.new()
+
 	ev = current_ev
 	if InputMap.has_action("p1_up"):
 		InputMap.erase_action("p1_up")
@@ -83,7 +85,7 @@ func _on_Up_pressed():
 	saveInputs("p1_up", ev)
 
 func _on_Left_pressed():
-	var ev = InputEventKey.new()
+
 	ev = current_ev
 #	print(ev)
 
@@ -94,7 +96,7 @@ func _on_Left_pressed():
 	saveInputs("p1_left", current_ev)
 
 func _on_Primary_pressed():
-	var ev = InputEventKey.new()
+
 	ev = current_ev
 #	print(ev)
 	if InputMap.has_action("p1_swing"):
@@ -104,7 +106,7 @@ func _on_Primary_pressed():
 	saveInputs("p1_swing", current_ev)
 
 func _on_Seconday_pressed():
-	var ev = InputEventKey.new()
+
 	ev = current_ev
 #	print(ev)
 	if InputMap.has_action("p1_fire"):
@@ -133,7 +135,7 @@ func _on_Map_pressed():
 	setup = false
 
 func _on_p2Right_pressed():
-	var ev = InputEventKey.new()
+
 	ev = current_ev
 	if InputMap.has_action("p2_right"):
 		InputMap.erase_action("p2_right")
@@ -142,7 +144,7 @@ func _on_p2Right_pressed():
 	saveInputs("p2_right", ev)
 
 func _on_p2Down_pressed():
-	var ev = InputEventKey.new()
+
 	ev = current_ev
 	if InputMap.has_action("p2_down"):
 		InputMap.erase_action("p2_down")
@@ -151,7 +153,7 @@ func _on_p2Down_pressed():
 	saveInputs("p2_down", ev)
 
 func _on_p2Up_pressed():
-	var ev = InputEventKey.new()
+
 	ev = current_ev
 	
 	if InputMap.has_action("p2_up"):
@@ -161,7 +163,7 @@ func _on_p2Up_pressed():
 	saveInputs("p2_up", ev)
 
 func _on_p2Left_pressed():
-	var ev = InputEventKey.new()
+
 	ev = current_ev
 	
 	if InputMap.has_action("p2_left"):
@@ -171,7 +173,7 @@ func _on_p2Left_pressed():
 	saveInputs("p2_left", ev)
 
 func _on_p2Primary_pressed():
-	var ev = InputEventKey.new()
+
 	ev = current_ev
 
 	if InputMap.has_action("p2_swing"):
@@ -181,7 +183,7 @@ func _on_p2Primary_pressed():
 	saveInputs("p2_swing", ev)
 
 func _on_p2Secondary_pressed():
-	var ev = InputEventKey.new()
+
 	ev = current_ev
 #	print(ev)
 	if InputMap.has_action("p2_fire"):
@@ -193,7 +195,7 @@ func _on_p2Secondary_pressed():
 
 
 func _on_p3Right_pressed():
-	var ev = InputEventKey.new()
+
 	ev = current_ev
 	
 	if InputMap.has_action("p3_right"):
@@ -203,7 +205,7 @@ func _on_p3Right_pressed():
 	saveInputs("p3_right", ev)
 
 func _on_p3Down_pressed():
-	var ev = InputEventKey.new()
+
 	ev = current_ev
 	if InputMap.has_action("p3_down"):
 		InputMap.erase_action("p3_down")
@@ -212,7 +214,7 @@ func _on_p3Down_pressed():
 	saveInputs("p3_down", ev)
 
 func _on_p3Up_pressed():
-	var ev = InputEventKey.new()
+
 	ev = current_ev
 	
 	if InputMap.has_action("p3_up"):
@@ -222,7 +224,7 @@ func _on_p3Up_pressed():
 	saveInputs("p3_up", ev)
 
 func _on_p3Left_pressed():
-	var ev = InputEventKey.new()
+
 	ev = current_ev
 	
 	if InputMap.has_action("p3_left"):
@@ -232,7 +234,7 @@ func _on_p3Left_pressed():
 	saveInputs("p3_left", ev)
 
 func _on_p3Primary_pressed():
-	var ev = InputEventKey.new()
+
 	ev = current_ev
 
 	if InputMap.has_action("p3_swing"):
@@ -246,7 +248,7 @@ func _on_p3Secondary_pressed():
 
 
 func _on_p4Right_pressed():
-	var ev = InputEventKey.new()
+
 	ev = current_ev
 	
 	if InputMap.has_action("p4_right"):
@@ -256,7 +258,7 @@ func _on_p4Right_pressed():
 	saveInputs("p4_right", ev)
 
 func _on_p4Down_pressed():
-	var ev = InputEventKey.new()
+
 	ev = current_ev
 	if InputMap.has_action("p4_down"):
 		InputMap.erase_action("p4_down")
@@ -265,7 +267,7 @@ func _on_p4Down_pressed():
 	saveInputs("p4_down", ev)
 
 func _on_p4Up_pressed():
-	var ev = InputEventKey.new()
+
 	ev = current_ev
 	
 	if InputMap.has_action("p4_up"):
@@ -275,7 +277,7 @@ func _on_p4Up_pressed():
 	saveInputs("p4_up", ev)
 
 func _on_p4Left_pressed():
-	var ev = InputEventKey.new()
+
 	ev = current_ev
 	
 	if InputMap.has_action("p4_left"):
@@ -285,7 +287,7 @@ func _on_p4Left_pressed():
 	saveInputs("p4_left", ev)
 
 func _on_p4Primary_pressed():
-	var ev = InputEventKey.new()
+
 	ev = current_ev
 	if InputMap.has_action("p4_swing"):
 		InputMap.erase_action("p4_swing")

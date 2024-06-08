@@ -14,6 +14,8 @@ var health = 100;
 
 var pre_target = null
 var origin = null
+var dest_index = 0
+var queue = []
 
 var velocity = Vector2.ZERO
 
@@ -48,6 +50,8 @@ func _ready():
 	self.add_child(collision_timer)
 	collision_timer.one_shot = true
 	collision_timer.start(2)
+	
+
 	
 	
 
@@ -110,12 +114,21 @@ func _physics_process(delta):
 	
 
 func move(target, delta):
+	
 	if move_timer.is_stopped():
 		
-		if(self.position.distance_to(target) < 1000): 
-			var temp = pre_target
-			pre_target = origin
-			origin = temp
+		if(self.position.distance_to(target) < 2000): 
+			if queue.size() > 0:
+				print(dest_index)
+				dest_index = dest_index + 1
+				if dest_index >= queue.size():
+					dest_index = 0
+				print(dest_index)
+				pre_target = queue[dest_index];
+			else:
+				var temp = pre_target
+				pre_target = origin
+				origin = temp
 			
 		
 		
@@ -125,9 +138,10 @@ func move(target, delta):
 		velocity += steering
 
 		self.rotation = velocity.angle()
-		var collision = move_and_collide(velocity/10)
+		move_and_slide(velocity*delta*1000)
+
 		
-		if collision:
+		if get_slide_count() > 0:
 #			print(collision.collider)
 
 			if collision_timer.is_stopped():
@@ -143,11 +157,19 @@ func move(target, delta):
 				
 	else:
 #		print("turning")
-		if(self.position.distance_to(target) < 1000): 
-			var temp = pre_target
-			pre_target = origin
-			origin = temp
-			
+		if(self.position.distance_to(target) < 2000): 
+			if queue.size() > 0:
+				print(dest_index)
+				dest_index = dest_index + 1
+				if dest_index >= queue.size():
+					dest_index = 0
+				print(dest_index)
+				pre_target = queue[dest_index];
+				
+			else:
+				var temp = pre_target
+				pre_target = origin
+				origin = temp
 		
 		
 		var direction = (target - global_position).normalized() 
@@ -161,7 +183,7 @@ func move(target, delta):
 
 
 		self.rotation = velocity.angle()
-		var collision = move_and_collide(velocity/10)
+		move_and_slide(velocity*delta*1000)
 #		state = HIT
 
 		
@@ -192,7 +214,7 @@ func get_circle_position(random):
 		kill_circle_centre = get_tree().get_nodes_in_group("player")[0].global_position
 	else:
 		kill_circle_centre = pre_target
-	var radius = 1000
+	var radius = 100
 	 #Distance from center to circumference of circle
 	var angle = random * PI * 2;
 	var x = kill_circle_centre.x + cos(angle) * radius;

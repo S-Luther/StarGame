@@ -20,8 +20,8 @@ var previousFactions = []
 var galaxy;
 var logsBack = ""
 #onready var randBu = $Button2
-var OnePlayerWorld = preload("res://Scenes/Shuttle/1pWorld.tscn").instance()
-var FacsWorld = preload("res://Scenes/Leaflet/FacsWorld.tscn").instance()
+var OnePlayerWorld = preload("res://Scenes/Shuttle/1pWorld.tscn")
+var FacsWorld = preload("res://Scenes/Leaflet/FacsWorld.tscn")
 var Galaxy
 var PlayerStats
 
@@ -144,9 +144,9 @@ func _on_Button2_pressed():
 
 func _on_Button3_pressed():
 	if ship == 0:
-		get_tree().get_root().add_child(OnePlayerWorld)
+		get_tree().get_root().add_child(OnePlayerWorld.instance())
 	elif ship == 1:
-		get_tree().get_root().add_child(FacsWorld)
+		get_tree().get_root().add_child(FacsWorld.instance())
 	self.visible = false
 
 
@@ -174,13 +174,13 @@ var ship = 0
 
 func _on_Left_pressed():
 	ship = ship - 1
-	if ship == -1:
+	if ship <= -1:
 		ship = 1
 	Ship.frame = ship
 
 
 func _on_Right_pressed():
 	ship = ship + 1
-	if ship == 2:
+	if ship >= 2:
 		ship = 0
 	Ship.frame = ship

@@ -6,6 +6,7 @@ var navWorking = false
 onready var camera = $Camera2D
 onready var healthUI = $UI/HealthUI
 onready var UI = $UI
+onready var Background = $Background
 onready var minimap = $UI/Minimap
 onready var mainCam = $Camera2D
 
@@ -84,14 +85,16 @@ func _process(delta):
 						cams[0].current = !cams[0].current
 						mainCam.current = !mainCam.current
 			if prefix!="" && Input.is_action_just_pressed(prefix+"_down") && camera.zoom.x > .06 && camera.zoom.y > .4:
-				#print(camera.zoom.x)
-				#print(camera.zoom.y)
 				UI.scale = Vector2(UI.scale.x - .2,UI.scale.y - .19)
+				for c in Background.get_children():
+					c.scale  = Vector2(c.scale.x - .14,c.scale.y - .13)
 				camera.zoom = Vector2(camera.zoom.x - .1, camera.zoom.y - .1)
 
 			if prefix!="" && Input.is_action_just_pressed(prefix+"_up")  && camera.zoom.x < 10.3 && camera.zoom.y < 200:
 				#print(camera.zoom.x)
 				#print(camera.zoom.y)
+				for c in Background.get_children():
+					c.scale  = Vector2(c.scale.x + .14,c.scale.y + .13)
 				UI.scale = Vector2(UI.scale.x + .2,UI.scale.y + .19)
 				camera.zoom = Vector2(camera.zoom.x + .1, camera.zoom.y + .1)
 

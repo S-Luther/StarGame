@@ -5,17 +5,17 @@ extends Node2D
 # var a = 2
 # var b = "text"
 
-var origin = Vector2.ZERO
-var destination = Vector2.ZERO
+var origin = null
+var destination = null
 var childs = self.get_children()
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	childs = self.get_children()
 
 func _process(delta):
 	childs = self.get_children()
-	for c in childs:
-		if c.origin != Vector2.ZERO:
+	if origin != null && childs[0].origin == null:
+		for c in childs:
 			c.origin = origin
 			c.pre_target = destination
 

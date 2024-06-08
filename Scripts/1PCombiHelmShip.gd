@@ -44,6 +44,7 @@ var prevelocity = Vector2()
 var has_collided = false;
 
 func _ready():
+	self.add_child(timer)
 	self.add_child(colCheckTimer)
 	colCheckTimer.one_shot = true
 	colCheckTimer.start(.2)

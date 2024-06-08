@@ -23,6 +23,7 @@ const Platform = preload('res://Scenes/NPCShips/Platform.tscn')
 const FighterPlatform = preload('res://Scenes/NPCShips/FighterPlatform.tscn')
 const PirateRammer = preload('res://Scenes/NPCShips/PirateRammer.tscn')
 const Shuttle = preload('res://Scenes/NPCShips/Shuttle.tscn')
+const Bus = preload('res://Scenes/NPCShips/Bus.tscn')
 
 const FacsimaWarParty = preload('res://Scenes/Groups/FacsimaWarParty.tscn')
 const CivilianWarParty = preload('res://Scenes/Groups/CivilianWarParty.tscn')
@@ -44,6 +45,7 @@ const Planet35 = preload('res://Scenes/Props/Planet35.tscn')
 const Planet36 = preload('res://Scenes/Props/Planet36.tscn')
 
 const Farm = preload('res://Scenes/Props/Farm.tscn')
+const PirateBay = preload('res://Scenes/Props/PirateBay.tscn')
 
 const Asteroid1 = preload('res://Scenes/Props/Asteroid1.tscn')
 const Asteroid2 = preload('res://Scenes/Props/Asteroid2.tscn')
@@ -66,21 +68,78 @@ var planet_choices = [Planet3, Planet32, Planet33, Planet34, Planet35, Planet36]
 var minerals = 0;
 var liquids = 0;
 # Called when the node enters the scene tree for the first time.
+
+var test = [Vector2(100,100),Vector2(200,200),Vector2(300,300),Vector2(100,200),Vector2(100,300)]
+
+func TSPNearestNeighbor(nodes):
+	var soln = []
+#	soln.append(nodes[0])
+	var matrix = [];
+	var matrix_width = nodes.size()
+	for i in matrix_width:
+		matrix.append([])
+		for j in nodes:
+			if nodes[i].distance_to(j) == 0:
+				matrix[i].append(99999999999)
+			else:
+				matrix[i].append(nodes[i].distance_to(j))
+	var temp = 0
+	var pre_temp = 0
+
+
+	for n in matrix_width:
+		pre_temp = temp
+#		print(matrix[temp].min())
+#		print(temp)
+		temp = matrix[temp].find(matrix[temp].min())
+		matrix[pre_temp][temp] = 99999999999
+		matrix[temp][pre_temp] = 99999999999
+		soln.append(nodes[temp])
+		for i in matrix_width:
+			matrix[i][temp] = 99999999999
+
+#	for n in matrix_width:
+#		print(matrix[n])
+
+	for i in (soln.size() - 4):
+		if((i+2)<soln.size()):
+			var a = soln[i]
+			var b = soln[i+1]
+			var c = soln[i+2]
+			
+			if a == c:
+				soln.remove(i)
+				print("removeddupe")
+	return soln
+	
+
+
 func _ready():
+	TSPNearestNeighbor(test)
 	add_child(t)
 	t.one_shot = true
 	t.start(2)
+	
+	var queue = []
+	var points = []
+	var cities = []
+	var bus_queue = []
+	for p in get_tree().get_nodes_in_group("mapPlanets"):
+		points.append((p.position - Vector2(800, 500))*1000)
+		cities.append((p.position - Vector2(800, 500))*1000)
+		
+	
 	
 	lastpos = Player.position
 	
 	self.add_to_group("World")
 	for g in get_tree().get_nodes_in_group("Galaxy"):
 		nodes = g.nodes
-	
+	var rng = RandomNumberGenerator.new()
 	for n in nodes:
 #		print(n.name)
 #		print(n.pos.x, " ", n.pos.y)
-		var rng = RandomNumberGenerator.new()
+
 		rng.randomize()
 		var planet = planet_choices[rng.randi_range(0,5)].instance()
 		
@@ -99,6 +158,7 @@ func _ready():
 		shuttle.position = ((n.pos - Vector2(800, 500)) *1000)
 		shuttle.origin = ((n.pos - Vector2(800, 500)) *1000)
 		shuttle.z_index = 1
+
 		shuttle.pre_target = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
 		
 		self.add_child(shuttle)
@@ -251,7 +311,7 @@ func _ready():
 #		planet.add_to_group("planets")
 	for i in 50:
 		var asteroid = Asteroid1.instance()
-		var rng = RandomNumberGenerator.new()
+
 		rng.randomize()
 
 		asteroid.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
@@ -386,7 +446,7 @@ func _ready():
 #
 	for i in 50:
 		var asteroid = Asteroid2.instance()
-		var rng = RandomNumberGenerator.new()
+
 		rng.randomize()
 
 		asteroid.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
@@ -398,7 +458,7 @@ func _ready():
 		asteroid.add_to_group("asteroids")
 	for i in 50:
 		var asteroid = Asteroid3.instance()
-		var rng = RandomNumberGenerator.new()
+
 		rng.randomize()
 
 		asteroid.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
@@ -410,7 +470,7 @@ func _ready():
 		asteroid.add_to_group("asteroids")
 	for i in 50:
 		var asteroid = Asteroid4.instance()
-		var rng = RandomNumberGenerator.new()
+
 		rng.randomize()
 
 		asteroid.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
@@ -420,17 +480,53 @@ func _ready():
 		asteroid.rotate(rng.randi_range(0, 360))
 		self.add_child(asteroid)
 		asteroid.add_to_group("asteroids")
-	for i in 50:
+	for i in 200:
 		var farm = Farm.instance()
-		var rng = RandomNumberGenerator.new()
+
 		rng.randomize()
 
-		farm.position = Vector2(rng.randi_range(sep*10,-sep*10), rng.randi_range(sep*10,-sep*10))
+		farm.position = Vector2(rng.randi_range(sep*7,-sep*7), rng.randi_range(sep*7,-sep*7))
 		farm.z_index = 0
 
+		points.append(farm.position)
 		farm.add_to_group("planets")
 		self.add_child(farm)
 
+	for i in 50:
+		var pirateBay = PirateBay.instance()
+
+		rng.randomize()
+
+		pirateBay.position = Vector2(rng.randi_range(sep*8,-sep*8), rng.randi_range(sep*8,-sep*8))
+		pirateBay.z_index = 0
+
+		pirateBay.add_to_group("planets")
+		self.add_child(pirateBay)
+	queue = TSPNearestNeighbor(points)
+	bus_queue = TSPNearestNeighbor(cities)
+	
+	for i in int(bus_queue.size()/3):
+		var bus = Bus.instance()
+
+		rng.randomize()
+		bus.position = (bus_queue[i*3])
+		bus.pre_target = bus_queue[(i*3) + 1]
+		bus.origin = (bus_queue[i*3])
+		bus.z_index = 1
+		bus.queue = bus_queue
+		if(i == int(bus_queue.size()/3)):
+			bus.dest_index = 0
+		else:
+			bus.dest_index = i*3+1
+
+		self.add_child(bus)
+		
+	var line = Line2D.new()
+	
+	for l in bus_queue:
+		line.add_point(l)
+	line.width = 5
+	self.add_child(line)
 #	for i in 20:
 #		var asteroid = Asteroid5.instance()
 #		var rng = RandomNumberGenerator.new()
@@ -555,12 +651,13 @@ var culture = "";
 func _process(delta):
 	var i = -1
 	if !paused:
+			
 		for a in get_tree().get_nodes_in_group("lines"):
 			if checked.size() < get_tree().get_nodes_in_group("lines").size():
 				checked.append(false)
 			else:
 				i = i + 1
-			if(Geometry.segment_intersects_segment_2d(((a.points[0] - Vector2(800, 500))*1000), ((a.points[1] - Vector2(800, 500))*1000), lastpos, Player.position) != null) && !checked[i] && ((a.points[0] - Vector2(800, 500))*1000).distance_to(Player.position) > 40000 && ((a.points[1] - Vector2(800, 500))*1000).distance_to(Player.position) > 40000:
+			if(Geometry.segment_intersects_segment_2d(((a.points[0] - Vector2(800, 500))*1000), ((a.points[1] - Vector2(800, 500))*1000), lastpos, Player.position) != null) && !checked[i] && ((a.points[0] - Vector2(800, 500))*1000).distance_to(Player.position) > 10000 && ((a.points[1] - Vector2(800, 500))*1000).distance_to(Player.position) > 10000:
 				if t.is_stopped():
 					t.start(20)
 					for n in nodes:
@@ -585,6 +682,9 @@ func _process(delta):
 							Party.origin = ((a.points[0] - Vector2(800, 500))*1000)
 							Party.destination = ((a.points[1] - Vector2(800, 500))*1000)
 							Party.z_index = 1
+							Party.modulate = n.color
+							Party.modulate.s = Party.modulate.s / 3
+							Party.modulate.v = 1
 
 							self.add_child(Party)
 						if ((a.points[1] - Vector2(800, 500))*1000).distance_to(pos) < 1000:
@@ -606,6 +706,9 @@ func _process(delta):
 							Party.destination = ((a.points[0] - Vector2(800, 500))*1000)
 							Party.origin = ((a.points[1] - Vector2(800, 500))*1000)
 							Party.z_index = 1
+							Party.modulate = n.color
+							Party.modulate.s = Party.modulate.s / 3
+							Party.modulate.v = 1
 
 							self.add_child(Party)
 
@@ -630,9 +733,11 @@ func _process(delta):
 			
 	if count < 100 && !paused:
 		addAsteroids()
+
 	for n in nodes:
 		var pos = n.pos - Vector2(800, 500)
 		pos = pos * 1000
+		
 		if Player.position.distance_to(pos) < 3000:
 			residents = n.residents
 			place = n.name
@@ -643,6 +748,7 @@ func _process(delta):
 
 #		else:
 #			print("none")
+
 	
 	if place == "":
 		message = ""

@@ -48,6 +48,8 @@ func _ready():
 	add_child(t)
 	t.one_shot = true
 	t.start(2)
+	var rng = RandomNumberGenerator.new()
+
 	
 	self.add_to_group("Player")
 	for g in get_tree().get_nodes_in_group("Galaxy"):
@@ -56,7 +58,7 @@ func _ready():
 	for n in nodes:
 #		print(n.name)
 #		print(n.pos.x, " ", n.pos.y)
-		var rng = RandomNumberGenerator.new()
+
 		rng.randomize()
 		var planet = planet_choices[rng.randi_range(0,5)].instance()
 
@@ -169,7 +171,6 @@ func _ready():
 #		planet.add_to_group("planets")
 	for i in 50:
 		var asteroid = Asteroid1.instance()
-		var rng = RandomNumberGenerator.new()
 		rng.randomize()
 
 		asteroid.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
@@ -183,7 +184,6 @@ func _ready():
 #
 	for i in 50:
 		var drone = LancerDrone.instance()
-		var rng = RandomNumberGenerator.new()
 		rng.randomize()
 
 		drone.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
@@ -194,7 +194,6 @@ func _ready():
 #
 	for i in 50:
 		var asteroid = Asteroid2.instance()
-		var rng = RandomNumberGenerator.new()
 		rng.randomize()
 
 		asteroid.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
@@ -206,7 +205,6 @@ func _ready():
 		asteroid.add_to_group("asteroids")
 	for i in 50:
 		var asteroid = Asteroid3.instance()
-		var rng = RandomNumberGenerator.new()
 		rng.randomize()
 
 		asteroid.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
@@ -218,7 +216,6 @@ func _ready():
 		asteroid.add_to_group("asteroids")
 	for i in 50:
 		var asteroid = Asteroid4.instance()
-		var rng = RandomNumberGenerator.new()
 		rng.randomize()
 
 		asteroid.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
@@ -265,9 +262,11 @@ func _ready():
 #		self.add_child(asteroid)
 #		asteroid.add_to_group("asteroids")	
 func addAsteroids():
+	var rng = RandomNumberGenerator.new()
+
 	for i in 50:
 		var asteroid = Asteroid2.instance()
-		var rng = RandomNumberGenerator.new()
+
 		rng.randomize()
 		
 		var x = rng.randi_range(sep,-sep)
@@ -283,7 +282,7 @@ func addAsteroids():
 			asteroid.add_to_group("asteroids")
 	for i in 50:
 		var asteroid = Asteroid3.instance()
-		var rng = RandomNumberGenerator.new()
+
 		rng.randomize()
 
 		var x = rng.randi_range(sep,-sep)
@@ -299,7 +298,7 @@ func addAsteroids():
 			asteroid.add_to_group("asteroids")
 	for i in 50:
 		var asteroid = Asteroid4.instance()
-		var rng = RandomNumberGenerator.new()
+
 		rng.randomize()
 
 		var x = rng.randi_range(sep,-sep)
@@ -315,7 +314,7 @@ func addAsteroids():
 			asteroid.add_to_group("asteroids")
 	for i in 50:
 		var asteroid = Asteroid1.instance()
-		var rng = RandomNumberGenerator.new()
+
 		rng.randomize()
 		var x = rng.randi_range(sep,-sep)
 		var y = rng.randi_range(sep,-sep)
