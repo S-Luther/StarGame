@@ -7,7 +7,7 @@
 [ext_resource path="res://assets/pulse1.png" type="Texture" id=5]
 
 [sub_resource type="CapsuleShape2D" id=5]
-radius = 82.0007
+radius = 184.0
 height = 263.999
 
 [sub_resource type="Animation" id=2]
@@ -240,14 +240,7 @@ scale = Vector2( 5, 5 )
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 14.8, -39.4999 )
-rotation = -1.5708
-scale = Vector2( 0.1, 0.1 )
-shape = SubResource( 5 )
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
-position = Vector2( 19.2, -0.0998459 )
-rotation = -1.5708
+position = Vector2( 25.8, -24.2 )
 scale = Vector2( 0.1, 0.1 )
 shape = SubResource( 5 )
 
@@ -303,12 +296,14 @@ position = Vector2( -35.3, -32.4998 )
 scale = Vector2( 1, -0.5 )
 texture = ExtResource( 5 )
 vframes = 4
+frame = 2
 
 [node name="Sprite3" type="Sprite" parent="."]
 position = Vector2( -35.3, -45.8998 )
 scale = Vector2( 1, 0.5 )
 texture = ExtResource( 5 )
 vframes = 4
+frame = 2
 
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 2.0

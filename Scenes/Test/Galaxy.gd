@@ -556,6 +556,47 @@ func getNodes() -> Array:
 
 var spacing = 100;
 
+func TSPNearestNeighbor(nodes):
+	var soln = []
+#	soln.append(nodes[0])
+	var matrix = [];
+	var matrix_width = nodes.size()
+	for i in matrix_width:
+		matrix.append([])
+		for j in nodes:
+			if nodes[i].distance_to(j) == 0:
+				matrix[i].append(99999999999)
+			else:
+				matrix[i].append(nodes[i].distance_to(j))
+	var temp = 0
+	var pre_temp = 0
+
+
+	for n in matrix_width:
+		pre_temp = temp
+#		print(matrix[temp].min())
+#		print(temp)
+		temp = matrix[temp].find(matrix[temp].min())
+		matrix[pre_temp][temp] = 99999999999
+		matrix[temp][pre_temp] = 99999999999
+		soln.append(nodes[temp])
+		for i in matrix_width:
+			matrix[i][temp] = 99999999999
+
+#	for n in matrix_width:
+#		print(matrix[n])
+
+	for i in (soln.size() - 4):
+		if((i+2)<soln.size()):
+			var a = soln[i]
+			var b = soln[i+1]
+			var c = soln[i+2]
+			
+			if a == c:
+				soln.remove(i)
+				print("removeddupe")
+	return soln
+
 func build():
 	names = names_backup.duplicate()
 	runs = 0
@@ -789,8 +830,6 @@ func _process(delta):
 					conflicts.append(a)
 #					a.queue_free()
 			else:
-				for a in get_tree().get_nodes_in_group("mapPlanets"):
-					positions.append(a.position)
 
 				for a in get_tree().get_nodes_in_group("mapPlayer"):
 					a.queue_free()

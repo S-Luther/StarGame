@@ -6,7 +6,7 @@
 [ext_resource path="res://assets/slice.png" type="Texture" id=4]
 
 [sub_resource type="CapsuleShape2D" id=5]
-radius = 245.601
+radius = 372.501
 height = 300.799
 
 [sub_resource type="Animation" id=2]
@@ -191,13 +191,8 @@ rotation = -1.5708
 scale = Vector2( 0.24, 0.24 )
 shape = SubResource( 5 )
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
-position = Vector2( 32.8, -1.6 )
-scale = Vector2( 0.24, 0.24 )
-shape = SubResource( 5 )
-
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( -21.6, -2.80002 )
+position = Vector2( -31, -3.8 )
 rotation = 1.5708
 scale = Vector2( 0.24, 0.24 )
 texture = ExtResource( 1 )
@@ -231,7 +226,6 @@ frame = 1
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
 position = Vector2( 395.6, -1.20001 )
 rotation = -1.5708
-scale = Vector2( 1, 1 )
 shape = SubResource( 6 )
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]

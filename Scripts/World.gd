@@ -24,6 +24,7 @@ const FighterPlatform = preload('res://Scenes/NPCShips/FighterPlatform.tscn')
 const PirateRammer = preload('res://Scenes/NPCShips/PirateRammer.tscn')
 const Shuttle = preload('res://Scenes/NPCShips/Shuttle.tscn')
 const Bus = preload('res://Scenes/NPCShips/Bus.tscn')
+const Tractor = preload('res://Scenes/NPCShips/Tractor.tscn')
 
 const FacsimaWarParty = preload('res://Scenes/Groups/FacsimaWarParty.tscn')
 const CivilianWarParty = preload('res://Scenes/Groups/CivilianWarParty.tscn')
@@ -480,7 +481,7 @@ func _ready():
 		asteroid.rotate(rng.randi_range(0, 360))
 		self.add_child(asteroid)
 		asteroid.add_to_group("asteroids")
-	for i in 200:
+	for i in 150:
 		var farm = Farm.instance()
 
 		rng.randomize()
@@ -502,8 +503,28 @@ func _ready():
 
 		pirateBay.add_to_group("planets")
 		self.add_child(pirateBay)
+		
+	points.shuffle()
+	cities.shuffle()
 	queue = TSPNearestNeighbor(points)
 	bus_queue = TSPNearestNeighbor(cities)
+	
+	for i in 15:
+		var tractor = Tractor.instance()
+
+		rng.randomize()
+		tractor.position = (queue[i*10])
+		tractor.pre_target = queue[(i*10) + 1]
+		tractor.origin = (queue[i*10])
+		tractor.z_index = 1
+		tractor.queue = queue
+		if(i == queue.size()):
+			tractor.dest_index = 0
+		else:
+			tractor.dest_index = (i*10)+1
+
+		self.add_child(tractor)
+		
 	
 	for i in int(bus_queue.size()/3):
 		var bus = Bus.instance()

@@ -215,7 +215,7 @@ tracks/4/keys = {
 scale = Vector2( 5, 5 )
 script = ExtResource( 2 )
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 19.2, 0.599998 )
 rotation = -1.5708
 scale = Vector2( 0.6, 0.6 )

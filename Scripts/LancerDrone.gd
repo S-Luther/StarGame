@@ -8,6 +8,7 @@ var move_timer = Timer.new()
 var collision_timer = Timer.new()
 const projectile = preload('res://Scenes/Shared/Projectile.tscn')
 onready var animationPlayer = $AnimationPlayer
+onready var collision = $CollisionShape2D
 
 var health = 100;
 
@@ -58,6 +59,14 @@ func _ready():
 	
 
 func _physics_process(delta):
+	
+	if(self.position.distance_to(get_tree().get_nodes_in_group("player")[0].global_position)>4000):
+		self.modulate.s = 100
+		collision.disabled = true
+	else:
+		self.modulate.s = 0
+		collision.disabled = false
+	
 #	print((self.velocity - get_tree().get_nodes_in_group("player")[0].global_position).angle(), " - ", self.velocity.angle())
 	var upper = abs(rad2deg(get_tree().get_nodes_in_group("player")[0].global_position.angle_to_point(self.global_position))) + 15
 	var lower = abs(rad2deg(get_tree().get_nodes_in_group("player")[0].global_position.angle_to_point(self.global_position)))  - 15
