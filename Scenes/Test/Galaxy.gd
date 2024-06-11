@@ -555,8 +555,12 @@ func getNodes() -> Array:
 	return nodes
 
 var spacing = 100;
+var price_count = 0
 
+var price = 999999
+var pre_price = 9999999999999
 func TSPNearestNeighbor(nodes):
+	price = 0
 	var soln = []
 #	soln.append(nodes[0])
 	var matrix = [];
@@ -577,6 +581,7 @@ func TSPNearestNeighbor(nodes):
 #		print(matrix[temp].min())
 #		print(temp)
 		temp = matrix[temp].find(matrix[temp].min())
+		price = price + matrix[temp].min()
 		matrix[pre_temp][temp] = 99999999999
 		matrix[temp][pre_temp] = 99999999999
 		soln.append(nodes[temp])
@@ -586,15 +591,6 @@ func TSPNearestNeighbor(nodes):
 #	for n in matrix_width:
 #		print(matrix[n])
 
-	for i in (soln.size() - 4):
-		if((i+2)<soln.size()):
-			var a = soln[i]
-			var b = soln[i+1]
-			var c = soln[i+2]
-			
-			if a == c:
-				soln.remove(i)
-				print("removeddupe")
 	return soln
 
 func build():
@@ -670,6 +666,14 @@ func rebuild():
 	build()
 
 var runs = 0;
+func array_unique(array: Array) -> Array:
+	var unique: Array = []
+
+	for item in array:
+		if not unique.has(item):
+			unique.append(item)
+
+	return unique
 
 func _process(delta):
 
@@ -831,6 +835,38 @@ func _process(delta):
 #					a.queue_free()
 			else:
 
+
+				var places = []
+				for a in get_tree().get_nodes_in_group("mapPlanets"):
+					places.append(a.position)
+				places.shuffle()
+				var route = TSPNearestNeighbor(places)
+				
+				var line = Line2D.new()
+
+				line.width = 4
+				
+				
+				var no_dupe_route = array_unique(route)
+
+				for r in no_dupe_route:
+					line.add_point(r)
+					
+				for p in line.points.size() - 1:
+					price = price + line.points[p].distance_to(line.points[p+1])
+				
+				price_count = price_count + 1
+				if price < pre_price:
+					print(price, " ", price_count)
+					pre_price = price
+					for a in get_tree().get_nodes_in_group("lines"):
+						a.queue_free()
+					
+					add_child(line)
+					line.add_to_group("lines")
+
+				else:
+					line.queue_free()
 				for a in get_tree().get_nodes_in_group("mapPlayer"):
 					a.queue_free()
 				var Player

@@ -13,6 +13,7 @@ onready var collision = $CollisionShape2D
 var health = 100;
 
 
+var trailer = false
 var pre_target = null
 var origin = null
 var dest_index = 0

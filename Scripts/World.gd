@@ -113,7 +113,14 @@ func TSPNearestNeighbor(nodes):
 				print("removeddupe")
 	return soln
 	
+func array_unique(array: Array) -> Array:
+	var unique: Array = []
 
+	for item in array:
+		if not unique.has(item):
+			unique.append(item)
+
+	return unique
 
 func _ready():
 	TSPNearestNeighbor(test)
@@ -506,8 +513,11 @@ func _ready():
 		
 	points.shuffle()
 	cities.shuffle()
-	queue = TSPNearestNeighbor(points)
-	bus_queue = TSPNearestNeighbor(cities)
+	var dupe_queue = TSPNearestNeighbor(points)
+	var duep_bus_queue = TSPNearestNeighbor(cities)
+	
+	queue = array_unique(dupe_queue)
+	bus_queue  = array_unique(duep_bus_queue )
 	
 	for i in 15:
 		var tractor = Tractor.instance()
@@ -526,19 +536,19 @@ func _ready():
 		self.add_child(tractor)
 		
 	
-	for i in int(bus_queue.size()/3):
+	for i in int(bus_queue.size()/2):
 		var bus = Bus.instance()
 
 		rng.randomize()
-		bus.position = (bus_queue[i*3])
-		bus.pre_target = bus_queue[(i*3) + 1]
-		bus.origin = (bus_queue[i*3])
+		bus.position = (bus_queue[i*2])
+		bus.pre_target = bus_queue[(i*2) + 1]
+		bus.origin = (bus_queue[i*2])
 		bus.z_index = 1
 		bus.queue = bus_queue
-		if(i == int(bus_queue.size()/3)):
+		if(i == int(bus_queue.size()/2)):
 			bus.dest_index = 0
 		else:
-			bus.dest_index = i*3+1
+			bus.dest_index = i*2+1
 
 		self.add_child(bus)
 		
