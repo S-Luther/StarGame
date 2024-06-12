@@ -19,9 +19,12 @@ var origin = null
 var dest_index = 0
 var queue = []
 
+var near_something = false
+
 var velocity = Vector2.ZERO
 
 var player
+var places = []
 
 var alive = true
 
@@ -58,24 +61,27 @@ func _ready():
 	
 
 	
+var runs = 0
 
 func _physics_process(delta):
-	
-	if(self.position.distance_to(get_tree().get_nodes_in_group("player")[0].global_position)>4000):
-		self.modulate.s = 100
-		collision.disabled = true
-	else:
-		self.modulate.s = 0
-		collision.disabled = false
+	runs = runs + 1
+	if runs % 10 == 0:
+		if(self.global_position.distance_to(get_tree().get_nodes_in_group("player")[0].global_position)>4000):
+#			self.modulate.s = 100
+			collision.disabled = true
+		else:
+#			self.modulate.s = 0
+			collision.disabled = false
 	
 #	print((self.velocity - get_tree().get_nodes_in_group("player")[0].global_position).angle(), " - ", self.velocity.angle())
-	var upper = abs(rad2deg(get_tree().get_nodes_in_group("player")[0].global_position.angle_to_point(self.global_position))) + 15
-	var lower = abs(rad2deg(get_tree().get_nodes_in_group("player")[0].global_position.angle_to_point(self.global_position)))  - 15
 
 
 #
 
 	if attack_timer.is_stopped():
+		var upper = abs(rad2deg(get_tree().get_nodes_in_group("player")[0].global_position.angle_to_point(self.global_position))) + 15
+		var lower = abs(rad2deg(get_tree().get_nodes_in_group("player")[0].global_position.angle_to_point(self.global_position)))  - 15
+
 		attack_timer.start(1)
 		rng.randomize()
 		randomnum = rng.randf()
@@ -125,22 +131,29 @@ func _physics_process(delta):
 
 func move(target, delta):
 	
+	
+	
 	if move_timer.is_stopped():
 		
 		if(self.position.distance_to(target) < 2000): 
+#			emit_signal("target reached")
+
 			if queue.size() > 0:
-				print(dest_index)
+#				print(dest_index)
 				dest_index = dest_index + 1
 				if dest_index >= queue.size():
 					dest_index = 0
-				print(dest_index)
+#				print(dest_index)
 				pre_target = queue[dest_index];
 			else:
 				var temp = pre_target
 				pre_target = origin
 				origin = temp
 			
-		
+		if(self.position.distance_to(target) < 3000):
+			near_something = true
+		else:
+			near_something = false
 		
 		var direction = (target - global_position).normalized() 
 		var desired_velocity =  direction * SPEED
@@ -168,6 +181,8 @@ func move(target, delta):
 	else:
 #		print("turning")
 		if(self.position.distance_to(target) < 2000): 
+
+#			emit_signal("target reached")
 			if queue.size() > 0:
 				print(dest_index)
 				dest_index = dest_index + 1
@@ -180,7 +195,10 @@ func move(target, delta):
 				var temp = pre_target
 				pre_target = origin
 				origin = temp
-		
+		if(self.position.distance_to(target) < 3000):
+			near_something = true
+		else:
+			near_something = false
 		
 		var direction = (target - global_position).normalized() 
 		

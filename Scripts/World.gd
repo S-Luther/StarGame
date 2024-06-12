@@ -31,14 +31,14 @@ const CivilianWarParty = preload('res://Scenes/Groups/CivilianWarParty.tscn')
 const AstraeWarParty = preload('res://Scenes/Groups/AstraeWarParty.tscn')
 const LucianWarParty = preload('res://Scenes/Groups/LucianWarParty.tscn')
 
-const Planet = preload('res://Scenes/Props/Planet.tscn')
-const Planet2 = preload('res://Scenes/Props/Planet2.tscn')
+#const Planet = preload('res://Scenes/Props/Planet.tscn')
+#const Planet2 = preload('res://Scenes/Props/Planet2.tscn')
 const Planet3 = preload('res://Scenes/Props/Planet3.tscn')
-const Planet4 = preload('res://Scenes/Props/Planet4.tscn')
-const Planet5 = preload('res://Scenes/Props/Planet5.tscn')
-const Planet6 = preload('res://Scenes/Props/Planet6.tscn')
-const Planet7 = preload('res://Scenes/Props/Planet7.tscn')
-const Planet8 = preload('res://Scenes/Props/Planet8.tscn')
+#const Planet4 = preload('res://Scenes/Props/Planet4.tscn')
+#const Planet5 = preload('res://Scenes/Props/Planet5.tscn')
+#const Planet6 = preload('res://Scenes/Props/Planet6.tscn')
+#const Planet7 = preload('res://Scenes/Props/Planet7.tscn')
+#const Planet8 = preload('res://Scenes/Props/Planet8.tscn')
 const Planet32 = preload('res://Scenes/Props/Planet32.tscn')
 const Planet33 = preload('res://Scenes/Props/Planet33.tscn')
 const Planet34 = preload('res://Scenes/Props/Planet34.tscn')
@@ -102,15 +102,15 @@ func TSPNearestNeighbor(nodes):
 #	for n in matrix_width:
 #		print(matrix[n])
 
-	for i in (soln.size() - 4):
-		if((i+2)<soln.size()):
-			var a = soln[i]
-			var b = soln[i+1]
-			var c = soln[i+2]
-			
-			if a == c:
-				soln.remove(i)
-				print("removeddupe")
+#	for i in (soln.size() - 4):
+#		if((i+2)<soln.size()):
+#			var a = soln[i]
+#			var b = soln[i+1]
+#			var c = soln[i+2]
+#
+#			if a == c:
+#				soln.remove(i)
+#				print("removeddupe")
 	return soln
 	
 func array_unique(array: Array) -> Array:
@@ -143,6 +143,8 @@ func _ready():
 	self.add_to_group("World")
 	for g in get_tree().get_nodes_in_group("Galaxy"):
 		nodes = g.nodes
+		bus_queue = g.queue
+	
 	var rng = RandomNumberGenerator.new()
 	for n in nodes:
 #		print(n.name)
@@ -158,6 +160,7 @@ func _ready():
 		drone.position = ((n.pos - Vector2(800, 500)) *1000)
 		drone.origin = ((n.pos - Vector2(800, 500)) *1000)
 		drone.z_index = 1
+		drone.places = nodes
 
 		var shuttle = Shuttle.instance()
 		
@@ -166,6 +169,7 @@ func _ready():
 		shuttle.position = ((n.pos - Vector2(800, 500)) *1000)
 		shuttle.origin = ((n.pos - Vector2(800, 500)) *1000)
 		shuttle.z_index = 1
+		shuttle.places = nodes
 
 		shuttle.pre_target = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
 		
@@ -514,10 +518,8 @@ func _ready():
 	points.shuffle()
 	cities.shuffle()
 	var dupe_queue = TSPNearestNeighbor(points)
-	var duep_bus_queue = TSPNearestNeighbor(cities)
 	
 	queue = array_unique(dupe_queue)
-	bus_queue  = array_unique(duep_bus_queue )
 	
 	for i in 15:
 		var tractor = Tractor.instance()
@@ -544,6 +546,7 @@ func _ready():
 		bus.pre_target = bus_queue[(i*2) + 1]
 		bus.origin = (bus_queue[i*2])
 		bus.z_index = 1
+		bus.places = nodes
 		bus.queue = bus_queue
 		if(i == int(bus_queue.size()/2)):
 			bus.dest_index = 0
@@ -678,9 +681,16 @@ var placeName
 var message = ""
 var residents = []
 var culture = "";
+var runs = 0
 
 func _process(delta):
+	runs = runs + 1
 	var i = -1
+	
+	if runs % 1000 == 0:
+		print("genstep()")
+		get_tree().get_nodes_in_group("Galaxy")[0].genStep(true)
+	
 	if !paused:
 			
 		for a in get_tree().get_nodes_in_group("lines"):
@@ -713,9 +723,7 @@ func _process(delta):
 							Party.origin = ((a.points[0] - Vector2(800, 500))*1000)
 							Party.destination = ((a.points[1] - Vector2(800, 500))*1000)
 							Party.z_index = 1
-							Party.modulate = n.color
-							Party.modulate.s = Party.modulate.s / 3
-							Party.modulate.v = 1
+			
 
 							self.add_child(Party)
 						if ((a.points[1] - Vector2(800, 500))*1000).distance_to(pos) < 1000:
@@ -737,9 +745,7 @@ func _process(delta):
 							Party.destination = ((a.points[0] - Vector2(800, 500))*1000)
 							Party.origin = ((a.points[1] - Vector2(800, 500))*1000)
 							Party.z_index = 1
-							Party.modulate = n.color
-							Party.modulate.s = Party.modulate.s / 3
-							Party.modulate.v = 1
+	
 
 							self.add_child(Party)
 
@@ -769,7 +775,7 @@ func _process(delta):
 		var pos = n.pos - Vector2(800, 500)
 		pos = pos * 1000
 		
-		if Player.position.distance_to(pos) < 3000:
+		if Player.position.distance_to(pos) < 4000:
 			residents = n.residents
 			place = n.name
 			placeName = n.name

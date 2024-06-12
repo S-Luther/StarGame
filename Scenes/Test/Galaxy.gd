@@ -280,7 +280,7 @@ func newBase(seedCharacter):
 		places[currentplace].pos = Vector2(800,500)
 		places[currentplace].first = true
 	var residents = 0
-	residents = randi() % 40 + 10
+	residents = randi() % 40 + 30
 	for i in range(residents):
 #		print("hi")
 		places[currentplace].residents.append(addRandomCharacter(places[currentplace].name, places[currentplace].culture));
@@ -355,17 +355,19 @@ func interact(i,j, c):
 	
 var stop = false;
 
-func genStep():
+
+func genStep(skipper = false):
 	for c in places[currentplace].residents:
 #		print(c.name)
 		interact(c, pickRandom(places[currentplace].residents), places[currentplace].culture);
-		if c.happiness<10:
-			stop = true;
-			nomad = c;
-#			print("here")
-		if c.boredom>500:
-			stop = true;
-			nomad = c;
+		if !skipper:
+			if c.happiness<10:
+				stop = true;
+				nomad = c;
+	#			print("here")
+			if c.boredom>500:
+				stop = true;
+				nomad = c;
 #		print(c.happiness, " ", c.boredom)
 	currentStep = currentStep + 1
 	
@@ -556,7 +558,7 @@ func getNodes() -> Array:
 
 var spacing = 100;
 var price_count = 0
-
+var queue = []
 var price = 999999
 var pre_price = 9999999999999
 func TSPNearestNeighbor(nodes):
@@ -651,6 +653,8 @@ var unique_factions = []
 var fullStop = false
 
 func rebuild():
+	price = 999999999999999
+	pre_price = 9999999999999999
 	collisions = 0
 	clashCount = 0
 	unique_cultures = [10000,10000,10000];
@@ -851,6 +855,7 @@ func _process(delta):
 
 				for r in no_dupe_route:
 					line.add_point(r)
+				line.add_point(no_dupe_route[0])
 					
 				for p in line.points.size() - 1:
 					price = price + line.points[p].distance_to(line.points[p+1])
@@ -864,6 +869,9 @@ func _process(delta):
 					
 					add_child(line)
 					line.add_to_group("lines")
+					queue = []
+					for l in line.points:
+						queue.append((l - Vector2(800, 500)) * 1000)
 
 				else:
 					line.queue_free()

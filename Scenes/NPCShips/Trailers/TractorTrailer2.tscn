@@ -2,7 +2,7 @@
 
 [ext_resource path="res://assets/Tractor.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/TractorTrailer.gd" type="Script" id=2]
-[ext_resource path="res://Scenes/NPCShips/TractorTrailer2.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/NPCShips/Trailers/TractorTrailer.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 22.0
@@ -26,5 +26,5 @@ shape = SubResource( 1 )
 disabled = true
 
 [node name="Node2D" parent="." instance=ExtResource( 3 )]
-position = Vector2( -233.333, 0 )
+position = Vector2( -226.667, 0 )
 scale = Vector2( 1, 1 )

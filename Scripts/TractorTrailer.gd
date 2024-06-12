@@ -22,7 +22,7 @@ func _process(delta):
 #	print(parent.rotation, " ",  rot_prev)
 	rot_delta =  parent.rotation - rot_prev
 	if(abs(rot_delta) > .5):
-		print(rot_delta)
+		pass
 	else:
 		if parent.trailer:
 			self.rotation = parent.rotation

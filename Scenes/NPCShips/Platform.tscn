@@ -331,7 +331,7 @@ scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 1 )
 
 [node name="Sprite2" type="Sprite" parent="."]
-modulate = Color( 1, 1, 1, 0.677224 )
+modulate = Color( 1, 1, 1, 0.739805 )
 position = Vector2( -113.4, -1.39996 )
 rotation = 1.5708
 scale = Vector2( 0.6, 0.6 )
@@ -340,7 +340,7 @@ vframes = 22
 frame = 14
 
 [node name="Sprite3" type="Sprite" parent="."]
-modulate = Color( 1, 1, 1, 0.0970342 )
+modulate = Color( 1, 1, 1, 0.365881 )
 position = Vector2( -123, -2.59998 )
 rotation = 1.5708
 scale = Vector2( 0.5, 0.4 )
@@ -349,7 +349,7 @@ vframes = 22
 frame = 14
 
 [node name="Sprite4" type="Sprite" parent="."]
-modulate = Color( 1, 1, 1, 0.189878 )
+modulate = Color( 1, 1, 1, 0.506796 )
 position = Vector2( -136.2, -3.39999 )
 rotation = 1.5708
 scale = Vector2( 0.4, 0.4 )
@@ -358,7 +358,7 @@ vframes = 22
 frame = 14
 
 [node name="Sprite5" type="Sprite" parent="."]
-modulate = Color( 1, 1, 1, 0.927224 )
+modulate = Color( 1, 1, 1, 0.573139 )
 position = Vector2( -148.2, -3.60001 )
 rotation = 1.5708
 scale = Vector2( 0.3, 0.4 )
