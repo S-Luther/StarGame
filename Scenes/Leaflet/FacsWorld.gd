@@ -13,6 +13,7 @@ onready var welcome = $Player/ShipBase/Nav/UI/Welcome
 onready var Player = $Player
 
 const LancerDrone = preload('res://Scenes/NPCShips/LancerDrone.tscn')
+const PirateRammer = preload('res://Scenes/NPCShips/PirateRammer.tscn')
 
 const Planet = preload('res://Scenes/Props/Planet.tscn')
 const Planet2 = preload('res://Scenes/Props/Planet2.tscn')
@@ -182,7 +183,16 @@ func _ready():
 		asteroid.add_to_group("asteroids")
 #		asteroid.velocity = Vector2(rng.randi_range(10,-10), rng.randi_range(10,-10))
 #
-	for i in 50:
+	for i in 15:
+		var drone = PirateRammer.instance()
+		rng = RandomNumberGenerator.new()
+		rng.randomize()
+
+		drone.position = Vector2(rng.randi_range(sep*10,-sep*10), rng.randi_range(sep*10,-sep*10))
+		drone.z_index = 0
+		self.add_child(drone)
+		drone.add_to_group("drones")
+	for i in 150:
 		var drone = LancerDrone.instance()
 		rng.randomize()
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Scenes/SpacePort/tileset x1.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/SpacePort/World.gd" type="Script" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://assets/Pot.png" type="Texture" id=8]
 [ext_resource path="res://assets/Exotic Trees (1).png" type="Texture" id=9]
 [ext_resource path="res://assets/Bulb Trees (1).png" type="Texture" id=10]
+[ext_resource path="res://assets/Dining Hall.png" type="Texture" id=11]
 
 [sub_resource type="TileSet" id=1]
 0/name = "tileset x1.png 0"
@@ -223,6 +224,61 @@
 [sub_resource type="CircleShape2D" id=2]
 radius = 58.0345
 
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite4:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite5:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "blinkin"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite4:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite5:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3, 4, 5, 6 ]
+}
+
 [node name="World" type="StaticBody2D"]
 position = Vector2( 10000, 10000 )
 z_index = 7
@@ -294,11 +350,13 @@ disabled = true
 position = Vector2( 407.996, 328 )
 scale = Vector2( 1.00111, 1 )
 polygon = PoolVector2Array( 834, 149, 832, 276, 894, 274, 894, 261, 846.065, 239, 852.058, 174, 927.974, 147, 1005.89, 169, 1004.89, 237, 959, 258, 958, 274, 1026, 272, 1025.87, 168, 1072.88, 147.509, 1119.76, 170, 1120, 272, 1183, 271, 1184, 260, 1137.74, 239, 1137.74, 167, 1216.16, 147, 1293.57, 165, 1291.57, 239, 1245, 258, 1245, 275, 1311, 275, 1308, 2, 1246, 2, 1245, 16, 1291.57, 33, 1291.57, 90, 1214.34, 114.069, 1134.74, 89, 1132.75, 28, 1180, 15, 1180, 1, 1117, 1, 1119.76, 87, 1069.1, 111.475, 1023.87, 88, 1022, -1, 957, -1, 957, 16, 1002.89, 41, 1001.89, 85, 927.63, 110.488, 849.062, 81, 846.065, 43, 893, 17, 894, -1, 827, -1, 830, 111 )
+disabled = true
 
 [node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="."]
 position = Vector2( -735, 329 )
 scale = Vector2( 1.00111, 1 )
 polygon = PoolVector2Array( 834, 149, 832, 276, 894, 274, 894, 261, 844.063, 232, 846.061, 169, 925.354, 147, 1002.89, 170, 1005.88, 239, 959, 258, 958, 274, 1026, 272, 1024.86, 168, 1073.36, 147.514, 1117.76, 164, 1120, 272, 1183, 271, 1184, 260, 1137.74, 235, 1133.74, 167, 1215.75, 147, 1291.57, 169, 1293.56, 231, 1245, 258, 1245, 275, 1311, 275, 1308, 2, 1246, 2, 1245, 16, 1293.56, 34, 1292.57, 91, 1214.97, 114.101, 1134.74, 86, 1131.74, 35, 1180, 15, 1180, 1, 1117, 1, 1114.76, 88, 1075.27, 111.539, 1021.87, 89, 1022, -1, 957, -1, 957, 16, 1002.89, 27, 1004.88, 84, 928.144, 110.479, 847.06, 92, 844.063, 39, 893, 17, 894, -1, 827, -1, 830, 111 )
+disabled = true
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 layer = -1
@@ -439,3 +497,25 @@ shape = SubResource( 2 )
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
 position = Vector2( 948, 1121 )
 shape = SubResource( 2 )
+
+[node name="Sprite4" type="Sprite" parent="."]
+position = Vector2( 1625, 442 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 11 )
+hframes = 3
+vframes = 3
+frame = 1
+
+[node name="Sprite5" type="Sprite" parent="."]
+position = Vector2( 481, 442 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 11 )
+hframes = 3
+vframes = 3
+frame = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "blinkin"
+playback_speed = 0.5
+anims/RESET = SubResource( 3 )
+anims/blinkin = SubResource( 4 )

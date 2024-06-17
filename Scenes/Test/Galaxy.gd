@@ -35,6 +35,94 @@ var positions = []
 static func pickRandom(list):
 	return list[randi() % list.size()]
 
+
+
+
+var baseServices = [
+					"🍲Food",
+					"💧Water",
+					"Fuel⛽",
+					"📚Data",
+					"🎟️Entertainment"
+			   ]
+var communityServices = [
+					"📽Mining",
+					"⛏️Mechanic",
+					"Cartography",
+					"⚙️ShipYard",  
+					"🔧Refinery",
+					"👚Distillery",
+					"Hospital",
+					"🗺University",
+				]
+
+var skills = [
+				"Solderer",
+				"Machiner",
+				"Lifter",
+				"Creator",
+				"Miner",
+				"Visionary",
+				"Taste Maker",
+				"Designer",
+				"Electrician",
+				"Engineer",
+				"Programmer",
+				"Hacker",
+				"Analyser",
+				"Data Miner",
+				"Charter",
+				"Pilot",
+				"Cartographer",
+				"Guide",
+				"Comedian",
+				"Conversationalist",
+				"Brewer",
+				"Clothier",
+				"Chemist",
+				"Cook",
+				"Furnace Operator",
+				"Crafter",
+				"Persuader",
+				"Negotiator",
+				"Judge of intent",
+				"Appraiser",
+				"Organizer",
+				"Record keeper",
+				"Liar",
+				"Intimidator",
+				"Flatterer",
+				"Consoler",
+				"Pacifier",
+				"Tracker",
+				"Student",
+				"Observer",
+				"Wordsmith",
+				"Writer",
+				"Poet",
+				"Speaker",
+				"Leader",
+				"Teacher",
+				"Fighter",
+				"Tactician",
+				"Musician",
+				"Dancer",
+				"Singer",
+				"Logician",
+				"Mathematician",
+				"Optics engineer",
+				"Schemer",
+				"Gunner",
+				"Shield Engineer",
+				"Mechanic",
+				"Stylist",
+				"Armorer",
+				"Weapons Specialist",
+
+			 ]
+
+
+
 var extensions = [
 	"ville",
 	"ton",
@@ -437,7 +525,7 @@ func getRandomColor():
 
 var noNodes = 100;
 var noConn = 50;
-var gravityConstant = 6.1;
+var gravityConstant = 5.1;
 var forceConstant = 30000;
 var physics = true;
 
@@ -678,6 +766,8 @@ func array_unique(array: Array) -> Array:
 			unique.append(item)
 
 	return unique
+	
+var TSPruns = 0
 
 func _process(delta):
 
@@ -839,42 +929,43 @@ func _process(delta):
 #					a.queue_free()
 			else:
 
-
-				var places = []
-				for a in get_tree().get_nodes_in_group("mapPlanets"):
-					places.append(a.position)
-				places.shuffle()
-				var route = TSPNearestNeighbor(places)
-				
-				var line = Line2D.new()
-
-				line.width = 4
-				
-				
-				var no_dupe_route = array_unique(route)
-
-				for r in no_dupe_route:
-					line.add_point(r)
-				line.add_point(no_dupe_route[0])
+				if TSPruns < 300:
+					var places = []
+					for a in get_tree().get_nodes_in_group("mapPlanets"):
+						places.append(a.position)
+					places.shuffle()
+					var route = TSPNearestNeighbor(places)
+					TSPruns = TSPruns + 1
 					
-				for p in line.points.size() - 1:
-					price = price + line.points[p].distance_to(line.points[p+1])
-				
-				price_count = price_count + 1
-				if price < pre_price:
-					print(price, " ", price_count)
-					pre_price = price
-					for a in get_tree().get_nodes_in_group("lines"):
-						a.queue_free()
-					
-					add_child(line)
-					line.add_to_group("lines")
-					queue = []
-					for l in line.points:
-						queue.append((l - Vector2(800, 500)) * 1000)
+					var line = Line2D.new()
 
-				else:
-					line.queue_free()
+					line.width = 4
+					
+					
+					var no_dupe_route = array_unique(route)
+
+					for r in no_dupe_route:
+						line.add_point(r)
+					line.add_point(no_dupe_route[0])
+						
+					for p in line.points.size() - 1:
+						price = price + line.points[p].distance_to(line.points[p+1])
+					
+					price_count = price_count + 1
+					if price < pre_price:
+						print(price, " ", price_count)
+						pre_price = price
+						for a in get_tree().get_nodes_in_group("lines"):
+							a.queue_free()
+						
+						add_child(line)
+						line.add_to_group("lines")
+						queue = []
+						for l in line.points:
+							queue.append((l - Vector2(800, 500)) * 1000)
+
+					else:
+						line.queue_free()
 				for a in get_tree().get_nodes_in_group("mapPlayer"):
 					a.queue_free()
 				var Player

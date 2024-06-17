@@ -84,19 +84,17 @@ func _process(delta):
 						Player.visible = !Player.visible
 						cams[0].current = !cams[0].current
 						mainCam.current = !mainCam.current
-			if prefix!="" && Input.is_action_just_pressed(prefix+"_down") && camera.zoom.x > .06 && camera.zoom.y > .4:
-				UI.scale = Vector2(UI.scale.x - .2,UI.scale.y - .19)
+			if prefix!="" && Input.is_action_pressed(prefix+"_down") && camera.zoom.x > .06 && camera.zoom.y > .4:
+				UI.scale = lerp(UI.scale, Vector2(UI.scale.x - .2,UI.scale.y - .19), .1)
 				for c in Background.get_children():
-					c.scale  = Vector2(c.scale.x - .14,c.scale.y - .13)
-				camera.zoom = Vector2(camera.zoom.x - .1, camera.zoom.y - .1)
+					c.scale  = lerp(c.scale,Vector2(c.scale.x - .14,c.scale.y - .13),.1)
+				camera.zoom = lerp(camera.zoom, Vector2(camera.zoom.x - .1, camera.zoom.y - .1), .1)
 
-			if prefix!="" && Input.is_action_just_pressed(prefix+"_up")  && camera.zoom.x < 10.3 && camera.zoom.y < 200:
-				#print(camera.zoom.x)
-				#print(camera.zoom.y)
+			if prefix!="" && Input.is_action_pressed(prefix+"_up")  && camera.zoom.x < 10.3 && camera.zoom.y < 200:
+				UI.scale = lerp(UI.scale, Vector2(UI.scale.x + .2,UI.scale.y + .19), .1)
 				for c in Background.get_children():
-					c.scale  = Vector2(c.scale.x + .14,c.scale.y + .13)
-				UI.scale = Vector2(UI.scale.x + .2,UI.scale.y + .19)
-				camera.zoom = Vector2(camera.zoom.x + .1, camera.zoom.y + .1)
+					c.scale  = lerp(c.scale,Vector2(c.scale.x + .14,c.scale.y + .13),.1)
+				camera.zoom = lerp(camera.zoom, Vector2(camera.zoom.x + .1, camera.zoom.y + .1), .1)
 
 		elif prefix!="" && Input.is_action_just_pressed(prefix+"_swing"):
 			navWorking = true

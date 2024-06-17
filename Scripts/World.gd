@@ -153,14 +153,17 @@ func _ready():
 		rng.randomize()
 		var planet = planet_choices[rng.randi_range(0,5)].instance()
 		
-		var drone = Broadside.instance()
+		var broadside = Broadside.instance()
 		
 		rng.randomize()
 
-		drone.position = ((n.pos - Vector2(800, 500)) *1000)
-		drone.origin = ((n.pos - Vector2(800, 500)) *1000)
-		drone.z_index = 1
-		drone.places = nodes
+		broadside.position = ((n.pos - Vector2(800, 500)) *1000)
+		broadside.origin = ((n.pos - Vector2(800, 500)) *1000)
+		broadside.z_index = 1
+		broadside.places = nodes
+		broadside.health = 15
+		broadside.MAX = 500
+		broadside.add_to_group("NPCs")
 
 		var shuttle = Shuttle.instance()
 		
@@ -170,6 +173,9 @@ func _ready():
 		shuttle.origin = ((n.pos - Vector2(800, 500)) *1000)
 		shuttle.z_index = 1
 		shuttle.places = nodes
+		shuttle.health = 10
+		shuttle.MAX = 1500
+		shuttle.add_to_group("NPCs")
 
 		shuttle.pre_target = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
 		
@@ -205,10 +211,10 @@ func _ready():
 		for i in nodes:
 			if(n.neighbors.size() > 0):
 				if(i.name == n.neighbors[neighb]):
-					drone.pre_target = (i.pos - Vector2(800, 500))*1000
-					self.add_child(drone)
+					broadside.pre_target = (i.pos - Vector2(800, 500))*1000
+					self.add_child(broadside)
 			else:
-				drone.queue_free()
+				broadside.queue_free()
 			if (planet.position.distance_to(((i.pos - Vector2(800, 500)) * 1000)) < 50000):
 				var line = Line2D.new()
 			
@@ -335,15 +341,16 @@ func _ready():
 		asteroid.add_to_group("asteroids")
 #		asteroid.velocity = Vector2(rng.randi_range(10,-10), rng.randi_range(10,-10))
 ##
-#	for i in 50:
-#		var drone = LancerDrone.instance()
-#		var rng = RandomNumberGenerator.new()
-#		rng.randomize()
-#
-#		drone.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
-#		drone.z_index = 0
-#		self.add_child(drone)
-#		drone.add_to_group("drones")
+	for i in 50:
+		var drone = LancerDrone.instance()
+		rng = RandomNumberGenerator.new()
+		rng.randomize()
+
+		drone.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
+		drone.z_index = 0
+		drone.attacker = true
+		self.add_child(drone)
+		drone.add_to_group("drones")
 		
 #	for i in 5:
 #		var drone = ShieldMaiden.instance()
@@ -530,6 +537,8 @@ func _ready():
 		tractor.origin = (queue[i*10])
 		tractor.z_index = 1
 		tractor.queue = queue
+		tractor.health = 15
+		tractor.add_to_group("NPCs")
 		if(i == queue.size()):
 			tractor.dest_index = 0
 		else:
@@ -548,6 +557,8 @@ func _ready():
 		bus.z_index = 1
 		bus.places = nodes
 		bus.queue = bus_queue
+		bus.health = 12
+		bus.add_to_group("NPCs")
 		if(i == int(bus_queue.size()/2)):
 			bus.dest_index = 0
 		else:
@@ -666,14 +677,16 @@ var paused = false
 func pause():
 	for a in get_tree().get_nodes_in_group("asteroids"):
 		a.queue_free()
-	for d in get_tree().get_nodes_in_group("drones"):
-		d.queue_free()
+	for d in get_tree().get_nodes_in_group("NPCs"):
+		d.paused = true
 	Player.crash()
 	paused = true
 
 func unpause():
 	paused = false
 	addAsteroids()
+	for d in get_tree().get_nodes_in_group("NPCs"):
+		d.paused = false
 
 
 var index = 0
@@ -689,7 +702,8 @@ func _process(delta):
 	
 	if runs % 1000 == 0:
 		print("genstep()")
-		get_tree().get_nodes_in_group("Galaxy")[0].genStep(true)
+		for g in get_tree().get_nodes_in_group("Galaxy"):
+			g.genStep(true)
 	
 	if !paused:
 			
@@ -780,8 +794,8 @@ func _process(delta):
 			place = n.name
 			placeName = n.name
 			culture = n.culture
-			welcome.text = "Welcome to " +n.name
-			welcome.visible = true
+#			welcome.text = "Welcome to " +n.name
+#			welcome.visible = true
 
 #		else:
 #			print("none")
@@ -791,7 +805,7 @@ func _process(delta):
 		message = ""
 		placeName = ""
 		index = 0
-		welcome.visible = false
+#		welcome.visible = false
 
 		#player.radar(player.get_position(),asteroids,planets,abs(LeftBD),abs(RightBD),abs(TopBD),abs(BottomBD))
 		#	RightB.position.x = RightB.position.x - .55
