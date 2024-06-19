@@ -2,9 +2,10 @@ extends Node2D
 
 const Player = preload("res://Scenes/Players/Player1.tscn")
 const Exit = preload("res://Scenes/SpacePort/ExitDoor.tscn")
-const NPC = preload("res://Scenes/NPC/NPCTest.tscn")
+const NPCT = preload("res://Scenes/NPC/NPCTest.tscn")
 
 var borders = Rect2(1, 1, 38, 21)
+var NPC = false
 
 onready var tileMap = $TileMap
 onready var spCam = $SpacePort
@@ -81,7 +82,7 @@ func generate_level():
 		Mush1.frame = randi() % 6
 		
 	for r in get_tree().get_nodes_in_group("World")[0].residents:
-		var thing = NPC.instance()
+		var thing = NPCT.instance()
 		thing.position = player.position + Vector2(-randi() % 1800, -randi() % 1100)
 		thing.modulate = getRandomColor()
 		thing.details = r
@@ -116,7 +117,7 @@ func interact(r):
 	interactLabel.text = "Name: " + String(r.name) + "\n" + "Age: " + String(r.age) + "\n" + "Culture: " + String(r.culture) + "\n"
 	interactLabel.text += "Boredom: " + String(r.boredom) + "\n" + "Happiness: " + String(r.happiness) + "\n" + "Knowledge: \n"
 	
-	for t in r.knowledge:
+	for t in r.skills:
 		interactLabel.text += "  " + t + "\n"
 		
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Scenes/SpacePort/tileset x1.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/SpacePort/World.gd" type="Script" id=2]
@@ -11,6 +11,17 @@
 [ext_resource path="res://assets/Exotic Trees (1).png" type="Texture" id=9]
 [ext_resource path="res://assets/Bulb Trees (1).png" type="Texture" id=10]
 [ext_resource path="res://assets/Dining Hall.png" type="Texture" id=11]
+[ext_resource path="res://assets/Distillary.png" type="Texture" id=12]
+[ext_resource path="res://assets/Furnace.png" type="Texture" id=13]
+[ext_resource path="res://assets/Data Center.png" type="Texture" id=14]
+[ext_resource path="res://assets/Ship Lot.png" type="Texture" id=15]
+[ext_resource path="res://assets/Hospital.png" type="Texture" id=16]
+[ext_resource path="res://assets/Theatre.png" type="Texture" id=17]
+[ext_resource path="res://assets/Bank.png" type="Texture" id=18]
+[ext_resource path="res://assets/Police.png" type="Texture" id=19]
+[ext_resource path="res://assets/Mechanic.png" type="Texture" id=20]
+[ext_resource path="res://assets/Shipping.png" type="Texture" id=21]
+[ext_resource path="res://assets/Miner.png" type="Texture" id=22]
 
 [sub_resource type="TileSet" id=1]
 0/name = "tileset x1.png 0"
@@ -227,7 +238,7 @@ radius = 58.0345
 [sub_resource type="Animation" id=3]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite4:frame")
+tracks/0/path = NodePath("Sprite12:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -239,12 +250,60 @@ tracks/0/keys = {
 "values": [ 1 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite5:frame")
+tracks/1/path = NodePath("Sprite8:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite11:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprite9:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Sprite13:frame")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1 ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Sprite15:frame")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
@@ -267,16 +326,125 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite5:frame")
+tracks/1/path = NodePath("Sprite6:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 1, 2, 3, 4, 5, 6 ]
+"values": [ 1, 2, 3, 4, 5, 6, 0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite7:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3, 4, 5, 6, 0, 1, 2, 3 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprite5:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3, 4, 5, 6, 0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Sprite12:frame")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 7, 0, 1, 2, 3, 4, 5, 6 ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Sprite8:frame")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3, 4, 5, 6, 7, 0 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Sprite11:frame")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3, 4, 5, 6, 7 ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Sprite9:frame")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3, 4, 5, 6, 0 ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Sprite13:frame")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3, 4, 5, 6, 7, 0 ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Sprite15:frame")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3, 4, 5, 6, 7 ]
+}
+
+[sub_resource type="ArrayMesh" id=5]
+surfaces/0 = {
+"aabb": AABB( -5000, -5000, 0, 10000, 10000, 0 ),
+"array_data": PoolByteArray( 0, 64, 156, 69, 0, 64, 156, 69, 0, 0, 128, 63, 0, 0, 128, 63, 0, 64, 156, 197, 0, 64, 156, 69, 0, 0, 0, 0, 0, 0, 128, 63, 0, 64, 156, 197, 0, 64, 156, 197, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 156, 69, 0, 64, 156, 197, 0, 0, 128, 63, 0, 0, 0, 0 ),
+"array_index_data": PoolByteArray( 3, 0, 0, 0, 1, 0, 1, 0, 2, 0, 3, 0 ),
+"blend_shape_data": [  ],
+"format": 262417,
+"index_count": 6,
+"primitive": 4,
+"skeleton_aabb": [  ],
+"vertex_count": 4
 }
 
 [node name="World" type="StaticBody2D"]
@@ -328,18 +496,20 @@ vframes = 2
 frame = 1
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-position = Vector2( 410, 328 )
+position = Vector2( 408, 328 )
 polygon = PoolVector2Array( -403, -289, -312, -290, -311, -168, -247, -167, -246, -181, -296, -183, -295, -295, -133, -292, -135, -186, -179, -184, -179, -170, -120, -169, -115, -294, -22, -292, -22, -171, 40, -166, 40, -185, -5, -186, -9, -292, 153, -292, 156, -189, 108, -187, 108, -169, 169, -168, 170, -293, 266, -293, 266, -169, 324, -167, 324, -182, 277, -183, 279, -291, 438, -291, 439, -184, 391, -183, 390, -168, 455, -167, 457, -293, 551, -293, 551, -168, 611, -168, 615, -182, 566, -184, 565, -294, 724, -292, 725, -186, 678, -184, 678, -168, 744, -170, 743, -293, 836, -291, 835, -171, 899, -168, 899, -182, 849, -187, 851, -294, 1011, -290, 1011, -189, 966, -184, 966, -167, 1028, -166, 1030, -294, 1121, -291, 1120, -169, 1186, -167, 1182, -184, 1134, -185, 1137, -294, 1298, -292, 1298, -185, 1251, -182, 1250, -166, 1312, -166, 1316, -293, 1410, -292, 1409, -166, 1470, -167, 1470, -182, 1421, -181, 1424, -295, 1584, -295, 1582, -185, 1537, -179, 1537, -163, 1601, -164, 1602, -295, 1740, -293, 1741, 1017, 1739, 1056, -405, 1054, -404, -277, -418, -277, -423, 1084, 1759, 1082, 1757, -360, -420, -354, -420, -288 )
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
 position = Vector2( 410, 328 )
 scale = Vector2( 1, 1.00491 )
 polygon = PoolVector2Array( 827, 774, 827, 899, 889, 900, 889, 885, 842, 866.744, 840, 798.081, 921.014, 773, 1000, 797.086, 998, 858.783, 954, 884, 954, 899, 1017, 897, 1019, 795.096, 1060.71, 773, 1110, 792.111, 1112, 898, 1175, 898, 1175, 884, 1131, 855.798, 1131, 791.116, 1218.33, 773, 1289, 795.096, 1286, 861.769, 1240, 883, 1240, 898, 1303, 899, 1301, 722, 827.2, 722.282 )
+disabled = true
 
 [node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="."]
 position = Vector2( 410, 328 )
 scale = Vector2( 1, 1.00491 )
 polygon = PoolVector2Array( -255, 900, -255, 887, -301, 858.783, -300, 797.086, -214.109, 771.551, -143, 793.106, -148, 854.803, -190, 880, -190, 898, -128, 898, -122, 792.111, -79.9161, 769.485, -35, 792.111, -30, 898, 31, 898, 31, 886, -15, 860.774, -17, 793.106, 62, 771.213, 143, 785.145, 140, 857.788, 97, 887, 97, 902, 160, 900, 161, 771, 158, 745.341, 156, 713.497, -316, 724, -317, 899 )
+disabled = true
 
 [node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="."]
 position = Vector2( 410, 328 )
@@ -360,15 +530,18 @@ disabled = true
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 layer = -1
+visible = false
 follow_viewport_enable = true
 follow_viewport_scale = 0.5
+scroll_base_scale = Vector2( 2, 2 )
 
 [node name="Sprite" type="Sprite" parent="ParallaxBackground"]
-visible = false
 position = Vector2( 410, 328 )
+scale = Vector2( 100, 100 )
 texture = ExtResource( 3 )
 
 [node name="ColorRect" type="ColorRect" parent="."]
+margin_top = 32.0
 margin_right = 833.0
 margin_bottom = 1399.0
 color = Color( 0.647059, 0.505882, 0.32549, 1 )
@@ -399,6 +572,13 @@ margin_left = 826.0
 margin_top = 463.0
 margin_right = 1067.0
 margin_bottom = 1033.0
+color = Color( 1, 1, 1, 0.223529 )
+
+[node name="ColorRect7" type="ColorRect" parent="."]
+margin_left = 220.0
+margin_top = -19.0
+margin_right = 461.0
+margin_bottom = 34.0
 color = Color( 1, 1, 1, 0.223529 )
 
 [node name="ColorRect6" type="ColorRect" parent="."]
@@ -499,23 +679,110 @@ position = Vector2( 948, 1121 )
 shape = SubResource( 2 )
 
 [node name="Sprite4" type="Sprite" parent="."]
-position = Vector2( 1625, 442 )
+position = Vector2( 1342, 427 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 11 )
+hframes = 3
+vframes = 3
+frame = 2
+
+[node name="Sprite5" type="Sprite" parent="."]
+position = Vector2( 1627, 428 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 18 )
+hframes = 3
+vframes = 3
+frame = 3
+
+[node name="Sprite11" type="Sprite" parent="."]
+position = Vector2( 1909, 430 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 17 )
 hframes = 3
 vframes = 3
 frame = 1
 
-[node name="Sprite5" type="Sprite" parent="."]
-position = Vector2( 481, 442 )
+[node name="Sprite8" type="Sprite" parent="."]
+position = Vector2( 338, 1146 )
 scale = Vector2( 2, 2 )
-texture = ExtResource( 11 )
+texture = ExtResource( 16 )
 hframes = 3
 vframes = 3
 frame = 1
+
+[node name="Sprite9" type="Sprite" parent="."]
+position = Vector2( 337, 820 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 14 )
+hframes = 3
+vframes = 3
+frame = 1
+
+[node name="Sprite10" type="Sprite" parent="."]
+position = Vector2( 1479, 1140 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 19 )
+
+[node name="Sprite12" type="Sprite" parent="."]
+position = Vector2( 1480, 809 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 15 )
+hframes = 3
+vframes = 3
+frame = 1
+
+[node name="Sprite6" type="Sprite" parent="."]
+position = Vector2( 486, 418 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 13 )
+hframes = 3
+vframes = 3
+frame = 3
+
+[node name="Sprite13" type="Sprite" parent="."]
+position = Vector2( 341, 66 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 20 )
+hframes = 3
+vframes = 3
+frame = 1
+
+[node name="Sprite14" type="Sprite" parent="."]
+position = Vector2( 915, 66 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 21 )
+
+[node name="Sprite15" type="Sprite" parent="."]
+position = Vector2( 1486, 40 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 22 )
+hframes = 3
+vframes = 3
+frame = 1
+
+[node name="Sprite7" type="Sprite" parent="."]
+position = Vector2( 195, 417 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 12 )
+hframes = 3
+vframes = 3
+frame = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "blinkin"
 playback_speed = 0.5
 anims/RESET = SubResource( 3 )
 anims/blinkin = SubResource( 4 )
+
+[node name="ParallaxBackground3" type="ParallaxBackground" parent="."]
+layer = -1
+follow_viewport_enable = true
+follow_viewport_scale = 0.1
+scroll_ignore_camera_zoom = true
+
+[node name="Sprite4" type="MeshInstance2D" parent="ParallaxBackground3"]
+position = Vector2( 9750, 10000 )
+scale = Vector2( 10, 10 )
+z_index = 4
+mesh = SubResource( 5 )
+texture = ExtResource( 3 )

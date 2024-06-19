@@ -593,6 +593,7 @@ shape = SubResource( 7 )
 disabled = true
 
 [node name="Node2D" parent="." instance=ExtResource( 6 )]
-position = Vector2( -2.6, 1.00001 )
+position = Vector2( 1.4, -0.200005 )
+z_index = -1
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]

@@ -9,11 +9,13 @@ var attack_timer = Timer.new()
 var pause_timer = Timer.new()
 var move_timer = Timer.new()
 var collision_timer = Timer.new()
+var regen_timer = Timer.new()
 const projectile = preload('res://Scenes/Shared/Projectile.tscn')
 onready var animationPlayer = $AnimationPlayer
 onready var collision = $CollisionShape2D
 
 var health = .5;
+var origin_health = 0
 
 
 var trailer = false
@@ -58,6 +60,10 @@ func _ready():
 	self.add_child(collision_timer)
 	collision_timer.one_shot = true
 	collision_timer.start(2)
+	self.add_child(regen_timer)
+	regen_timer.one_shot = true
+	regen_timer.start(15)
+	origin_health = health
 	
 
 	
@@ -67,6 +73,12 @@ func _ready():
 var runs = 0
 var paused = false
 func _physics_process(delta):
+	if regen_timer.is_stopped():
+		if health < origin_health:
+			print("regen: ", health)
+			health = health + .5
+		regen_timer.start(15)
+		
 	if !paused:
 		runs = runs + 1
 		if runs % 10 == 0:
@@ -139,7 +151,7 @@ func move(target, delta):
 	
 	if move_timer.is_stopped():
 		
-		if(self.position.distance_to(target) < 2000): 
+		if(self.position.distance_to(target) < 3000): 
 #			emit_signal("target reached")
 
 			if queue.size() > 0:
@@ -154,7 +166,7 @@ func move(target, delta):
 				pre_target = origin
 				origin = temp
 			
-		if(self.position.distance_to(target) < 3000):
+		if(self.position.distance_to(target) < 4000):
 			near_something = true
 		else:
 			near_something = false
@@ -217,7 +229,7 @@ func move(target, delta):
 
 		self.rotation = velocity.angle()
 		move_and_slide(velocity*delta*MAX)
-#		state = HIT
+		
 
 		
 

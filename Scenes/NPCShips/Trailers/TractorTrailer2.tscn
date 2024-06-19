@@ -26,5 +26,5 @@ shape = SubResource( 1 )
 disabled = true
 
 [node name="Node2D" parent="." instance=ExtResource( 3 )]
-position = Vector2( -226.667, 0 )
+position = Vector2( -223.333, 0 )
 scale = Vector2( 1, 1 )

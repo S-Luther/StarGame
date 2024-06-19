@@ -179,7 +179,7 @@ func _ready():
 
 		shuttle.pre_target = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
 		
-		self.add_child(shuttle)
+		add_child(shuttle)
 
 		
 		var pos = n.pos - Vector2(800, 500)
@@ -507,7 +507,7 @@ func _ready():
 		farm.position = Vector2(rng.randi_range(sep*7,-sep*7), rng.randi_range(sep*7,-sep*7))
 		farm.z_index = 0
 
-		points.append(farm.position)
+		points.append(farm.position + Vector2(200,200))
 		farm.add_to_group("planets")
 		self.add_child(farm)
 
@@ -537,7 +537,8 @@ func _ready():
 		tractor.origin = (queue[i*10])
 		tractor.z_index = 1
 		tractor.queue = queue
-		tractor.health = 15
+		tractor.health = 25
+		tractor.MAX = 2500
 		tractor.add_to_group("NPCs")
 		if(i == queue.size()):
 			tractor.dest_index = 0
@@ -557,7 +558,8 @@ func _ready():
 		bus.z_index = 1
 		bus.places = nodes
 		bus.queue = bus_queue
-		bus.health = 12
+		bus.health = 20
+		bus.MAX = 2000
 		bus.add_to_group("NPCs")
 		if(i == int(bus_queue.size()/2)):
 			bus.dest_index = 0
@@ -623,7 +625,7 @@ func addAsteroids():
 			var temp = rng.randi_range(35, 50)  * 20
 
 			asteroid.rotate(rng.randi_range(0, 360))
-			self.add_child(asteroid)
+			add_child(asteroid)
 			asteroid.add_to_group("asteroids")
 	for i in 50:
 		var asteroid = Asteroid3.instance()
@@ -794,10 +796,11 @@ func _process(delta):
 			place = n.name
 			placeName = n.name
 			culture = n.culture
-#			welcome.text = "Welcome to " +n.name
-#			welcome.visible = true
+			welcome.text = "Welcome to " +n.name
+			welcome.visible = true
 
-#		else:
+		else:
+			pass
 #			print("none")
 
 	
@@ -805,7 +808,7 @@ func _process(delta):
 		message = ""
 		placeName = ""
 		index = 0
-#		welcome.visible = false
+		welcome.visible = false
 
 		#player.radar(player.get_position(),asteroids,planets,abs(LeftBD),abs(RightBD),abs(TopBD),abs(BottomBD))
 		#	RightB.position.x = RightB.position.x - .55

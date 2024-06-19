@@ -4,17 +4,13 @@ const PlanetMarker = preload('res://Scenes/Props/PlanetMarker.tscn')
 const AsteroidMarker = preload('res://Scenes/Props/AsteroidMarker.tscn')
 const ShotMarker = preload('res://Scenes/Props/ShotMarker.tscn')
 
-
 var logs = "";
 
 var names;
 
 var Facs = [1,2,3,15,32,40,47,39,37,35,48]
-
 var Lucian = [6,7,8,9,10,14,21,22,23,24,25,45,46]
-
 var Astrae = [11,12,13,16,17,18,19,30,33,34,36,38]
-
 var Pirates = [26,27,28,29,43,44,4,41,42]
 
 var places = []
@@ -35,26 +31,54 @@ var positions = []
 static func pickRandom(list):
 	return list[randi() % list.size()]
 
-
-
-
-var baseServices = [
+var services = [
 					"🍲Food",
-					"💧Water",
-					"Fuel⛽",
 					"📚Data",
-					"🎟️Entertainment"
-			   ]
-var communityServices = [
 					"📽Mining",
 					"⛏️Mechanic",
-					"Cartography",
 					"⚙️ShipYard",  
-					"🔧Refinery",
+					"Furnace",
 					"👚Distillery",
 					"Hospital",
-					"🗺University",
+					"Police",
+					"Bank",
+					"Shipping",
+					"Theatre"
 				]
+var levels = [
+				"Novice",
+				"Adequite",
+				"Knowledgable",
+				"Master"
+			]
+			
+var skills_compat =   [
+						[3,4,18,21],
+						[10,11,12,12,14,16,30,31],
+						[2, 4, 51],
+						[0,1,8,9,57, 53, 60],
+						[6, 15, 26, 27,29,43, 58],
+						[2, 4, 24, 61, 22],
+						[22, 20, 52],
+						[22, 12, 35, 36, 39],
+						[26, 27, 28, 33, 37, 47, 54, 55],
+						[12, 32, 52, 54],
+						[2, 14, 15, 30, 31],
+						[40, 41,42,43, 48, 49, 50, 18],
+					]
+					
+var FoodSkills = [3,4,18,21]
+var DataSkills = [10,11,12,12,14,16,30,31]
+var MiningSkills = [2, 4, 51]
+var MechanicSkills = [0,1,8,9,57, 53, 60]
+var ShipYardSkills = [6, 15, 26, 27,29,43, 58]
+var FurnaceSkills = [2, 4, 24, 61, 22]
+var DistillarySkills = [22, 20, 52]
+var HospitalSkills = [22, 12, 35, 36, 39]
+var PoliceSkills = [26, 27, 28, 33, 37, 47, 54, 55]
+var BankSkills = [12, 32, 52, 54]
+var ShippingSkills = [2, 14, 15, 30, 31]
+var TheatreSkills = [40, 41,42,43, 48, 49, 50, 18]
 
 var skills = [
 				"Solderer",
@@ -118,7 +142,7 @@ var skills = [
 				"Stylist",
 				"Armorer",
 				"Weapons Specialist",
-
+				"Geologist"
 			 ]
 
 
@@ -242,24 +266,28 @@ class Place:
 	var color = ""
 	var culture = ""
 	
+	var service_ability = [0,0,0,0,0,0,0,0,0,0,0,0]
+	
 	var first = false
 	
 	var pos = Vector2.ZERO
 	var force = Vector2.ZERO
 	var mass = 0.0
 	
-	func _init(new_name, new_est, new_faction, new_color, new_culture):
+	func _init(new_name, new_est, new_faction, new_color, new_culture, new_services):
 		name = new_name
 		est = new_est
 		faction = new_faction
 		color = new_color
 		culture = new_culture
+		services = new_services
 		
 	func new_Node(new_pos):
 		if !first:
 			pos = new_pos
 		mass = (2 * PI * residents.size())/1.5
 		return self
+		
 	func update():
 		var vel = force / mass
 		pos = pos + vel
@@ -268,10 +296,21 @@ class Place:
 		else:
 			pass
 
-
+func getSkill(service_ability):
+	randomize()
+	var level = randi() % levels.size()
+	var skill = randi() % skills.size()
+	
+	for s in skills_compat.size():
+		if skills_compat[s].has(skill):
+			service_ability[s] = service_ability[s] + level + 1
+	
+	
+	return levels[level] + " " + skills[skill]
 
 class Person:
 	var name = "example1"
+	var service_ability = [0,0,0,0,0,0,0,0,0,0,0,0]
 	var age = 0
 	var memories = []
 	var thoughts = []
@@ -279,6 +318,7 @@ class Person:
 	var enemies = []
 	var family = []
 	var knowledge = []
+	var skills = []
 	var enneagram = [1,4,7]  
 	var home = "This Base"
 	var travels = []
@@ -288,7 +328,7 @@ class Person:
 	var culture = ""
 	var avatar = 0
 	
-	func _init(new_name,new_age,new_place, new_enneagram, new_culture):
+	func _init(new_name,new_age,new_place, new_enneagram, new_culture, new_skills, new_service_ability):
 		name = new_name
 		age = new_age
 		home = new_place
@@ -296,7 +336,10 @@ class Person:
 		knowledge.append("SpacePort " + new_place)
 		enneagram = new_enneagram
 		culture = new_culture
-		
+		skills = new_skills
+		service_ability = new_service_ability
+
+
 
 func difference(arr1, arr2):
 	var only_in_arr1 = []
@@ -317,7 +360,16 @@ func addRandomCharacter(place, pculture) -> Person:
 	var name = pickRandom(names)
 	names.pop_at(names.find(name))
 	
-	var person = Person.new(name,randi() % 90 + 15,place, pickRandom(enneagramCombos),pculture)
+	randomize()
+	var skill_num = randi() %  8 + 2
+	var skills = []
+	
+	var service_ability = [0,0,0,0,0,0,0,0,0,0,0,0]
+		
+	for i in skill_num:
+		skills.append(getSkill(service_ability))
+	
+	var person = Person.new(name,randi() % 90 + 15,place, pickRandom(enneagramCombos),pculture, skills,service_ability)
 	
 	if pculture == "F":
 		person.avatar = pickRandom(Facs)
@@ -340,12 +392,19 @@ func addRandomPlace():
 		faction = pickRandom(names) + "'s " + pickRandom(factions) 
 	else: 
 		faction = "The " + pickRandom(factions)+" of "+pickRandom(names)
-	places.append(Place.new(name, step, faction, getRandomColor(),pickRandom(cultures)))
+	randomize()
+	var service_num = randi() %  10 + 2
+	var new_services = []
+	var services_backup = services.duplicate()
+		
+	for i in service_num:
+		var add = pickRandom(services_backup)
+		new_services.erase(add)
+		new_services.append(add)
+	places.append(Place.new(name, step, faction, getRandomColor(),pickRandom(cultures),new_services))
 	currentplace = currentplace + 1
 
 func newBase(seedCharacter):
-	
-	
 	addRandomPlace()
 
 	if seedCharacter != null :
@@ -371,7 +430,10 @@ func newBase(seedCharacter):
 	residents = randi() % 40 + 30
 	for i in range(residents):
 #		print("hi")
-		places[currentplace].residents.append(addRandomCharacter(places[currentplace].name, places[currentplace].culture));
+		var p = addRandomCharacter(places[currentplace].name, places[currentplace].culture)
+		places[currentplace].residents.append(p);
+		for s in places[currentplace].service_ability.size():
+			places[currentplace].service_ability[s] = places[currentplace].service_ability[s] + p.service_ability[s]
 #		print(places[currentplace].residents[places[currentplace].residents.size()-1].name)
 
 var cultModifier = 1
@@ -929,7 +991,7 @@ func _process(delta):
 #					a.queue_free()
 			else:
 
-				if TSPruns < 300:
+				if TSPruns < 1000:
 					var places = []
 					for a in get_tree().get_nodes_in_group("mapPlanets"):
 						places.append(a.position)
