@@ -48,7 +48,9 @@ var services = [
 var levels = [
 				"Novice",
 				"Adequite",
+				"Skilled",
 				"Knowledgable",
+				"Professional",
 				"Master"
 			]
 			
@@ -266,6 +268,21 @@ class Place:
 	var color = ""
 	var culture = ""
 	
+	var services_reference = [
+					"Food",
+					"Data",
+					"Mining",
+					"Mechanic",
+					"Shipyard",  
+					"Furnace",
+					"Distillary",
+					"Hospital",
+					"Police",
+					"Bank",
+					"Shipping",
+					"Theatre"
+				]
+	
 	var service_ability = [0,0,0,0,0,0,0,0,0,0,0,0]
 	
 	var first = false
@@ -274,20 +291,28 @@ class Place:
 	var force = Vector2.ZERO
 	var mass = 0.0
 	
-	func _init(new_name, new_est, new_faction, new_color, new_culture, new_services):
+	func _init(new_name, new_est, new_faction, new_color, new_culture):
 		name = new_name
 		est = new_est
 		faction = new_faction
 		color = new_color
 		culture = new_culture
-		services = new_services
 		
 	func new_Node(new_pos):
 		if !first:
 			pos = new_pos
 		mass = (2 * PI * residents.size())/1.5
 		return self
-		
+	
+	func check_Services():
+		var ability_copy = service_ability.duplicate()
+		services = []
+		for i in 12:
+			if ability_copy.max() > 50:
+				services.append(services_reference[ability_copy.find(ability_copy.max())])
+				var n = ability_copy.find(ability_copy.max())
+				ability_copy[n] = ability_copy[n] - 100
+	
 	func update():
 		var vel = force / mass
 		pos = pos + vel
@@ -392,16 +417,9 @@ func addRandomPlace():
 		faction = pickRandom(names) + "'s " + pickRandom(factions) 
 	else: 
 		faction = "The " + pickRandom(factions)+" of "+pickRandom(names)
-	randomize()
-	var service_num = randi() %  10 + 2
-	var new_services = []
-	var services_backup = services.duplicate()
-		
-	for i in service_num:
-		var add = pickRandom(services_backup)
-		new_services.erase(add)
-		new_services.append(add)
-	places.append(Place.new(name, step, faction, getRandomColor(),pickRandom(cultures),new_services))
+
+
+	places.append(Place.new(name, step, faction, getRandomColor(),pickRandom(cultures)))
 	currentplace = currentplace + 1
 
 func newBase(seedCharacter):
@@ -528,6 +546,8 @@ func genSim(steps):
 		if(stop):
 			var index = places[currentplace].residents.find(nomad);
 			places[currentplace].residents.pop_at(index);
+			for i in places[currentplace].service_ability.size():
+				places[currentplace].service_ability[i] = places[currentplace].service_ability[i] - nomad.service_ability[i]
 			newBase(nomad);
 			stop = false;
 		else:
@@ -573,6 +593,10 @@ func cleanSim(steps):
 				places[findPlaceByName(newHome)].residents.append(nomad);
 				var index = p.residents.find(nomad);
 				p.residents.pop_at(index);
+				for n in p.service_ability.size():
+					p.service_ability[n] = p.service_ability[n] - nomad.service_ability[n]
+				for n in places[findPlaceByName(newHome)].service_ability.size():
+					places[findPlaceByName(newHome)].service_ability[n] = places[findPlaceByName(newHome)].service_ability[n] + nomad.service_ability[n]
 				stop = false;
 			
 			cleanStep(p.residents, p.culture)
@@ -772,6 +796,7 @@ func build():
 
 
 	for p in places:
+		p.check_Services()
 		var pos = Vector2(randi()%1600, randi()%1000)
 		nodes.append(p.new_Node(pos))
 		var neighb = p.neighbors
@@ -832,7 +857,7 @@ func array_unique(array: Array) -> Array:
 var TSPruns = 0
 
 func _process(delta):
-
+	
 	var labels = get_tree().get_nodes_in_group("labels")
 	
 	runs = runs + 1
