@@ -695,6 +695,7 @@ var index = 0
 var placeName
 var message = ""
 var residents = []
+var services = []
 var culture = "";
 var runs = 0
 
@@ -798,6 +799,9 @@ func _process(delta):
 			culture = n.culture
 			welcome.text = "Welcome to " +n.name
 			welcome.visible = true
+			n.check_Services()
+			services = n.services
+#			print(n.services)
 
 		else:
 			pass

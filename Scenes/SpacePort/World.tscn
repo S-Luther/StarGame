@@ -312,7 +312,6 @@ tracks/5/keys = {
 
 [sub_resource type="Animation" id=4]
 resource_name = "blinkin"
-loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite4:frame")
 tracks/0/interp = 1
@@ -497,7 +496,7 @@ frame = 1
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 position = Vector2( 408, 328 )
-polygon = PoolVector2Array( -403, -289, -312, -290, -311, -168, -247, -167, -246, -181, -296, -183, -295, -295, -133, -292, -135, -186, -179, -184, -179, -170, -120, -169, -115, -294, -22, -292, -22, -171, 40, -166, 40, -185, -5, -186, -9, -292, 153, -292, 156, -189, 108, -187, 108, -169, 169, -168, 170, -293, 266, -293, 266, -169, 324, -167, 324, -182, 277, -183, 279, -291, 438, -291, 439, -184, 391, -183, 390, -168, 455, -167, 457, -293, 551, -293, 551, -168, 611, -168, 615, -182, 566, -184, 565, -294, 724, -292, 725, -186, 678, -184, 678, -168, 744, -170, 743, -293, 836, -291, 835, -171, 899, -168, 899, -182, 849, -187, 851, -294, 1011, -290, 1011, -189, 966, -184, 966, -167, 1028, -166, 1030, -294, 1121, -291, 1120, -169, 1186, -167, 1182, -184, 1134, -185, 1137, -294, 1298, -292, 1298, -185, 1251, -182, 1250, -166, 1312, -166, 1316, -293, 1410, -292, 1409, -166, 1470, -167, 1470, -182, 1421, -181, 1424, -295, 1584, -295, 1582, -185, 1537, -179, 1537, -163, 1601, -164, 1602, -295, 1740, -293, 1741, 1017, 1739, 1056, -405, 1054, -404, -277, -418, -277, -423, 1084, 1759, 1082, 1757, -360, -420, -354, -420, -288 )
+polygon = PoolVector2Array( -403, -289, -312, -290, -295, -295, -133, -292, -115, -294, -22, -292, -9, -292, 153, -292, 170, -293, 266, -293, 279, -291, 438, -291, 457, -293, 551, -293, 565, -294, 724, -292, 743, -293, 836, -291, 851, -294, 1011, -290, 1030, -294, 1121, -291, 1137, -294, 1298, -292, 1316, -293, 1410, -292, 1409, -166, 1470, -167, 1470, -182, 1421, -181, 1424, -295, 1584, -295, 1582, -185, 1537, -179, 1537, -163, 1601, -164, 1602, -295, 1740, -293, 1741, 1017, 1739, 1056, -405, 1054, -404, -277, -418, -277, -423, 1084, 1759, 1082, 1757, -360, -420, -354, -420, -288 )
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
 position = Vector2( 410, 328 )
@@ -548,14 +547,14 @@ color = Color( 0.647059, 0.505882, 0.32549, 1 )
 
 [node name="ColorRect2" type="ColorRect" parent="."]
 margin_left = 1061.0
-margin_top = -5.0
+margin_top = 32.0
 margin_right = 2158.0
 margin_bottom = 1406.0
 color = Color( 0.647059, 0.505882, 0.32549, 1 )
 
 [node name="ColorRect3" type="ColorRect" parent="."]
 margin_left = 492.0
-margin_top = 22.0
+margin_top = 32.0
 margin_right = 1570.0
 margin_bottom = 473.0
 color = Color( 0.647059, 0.505882, 0.32549, 1 )
@@ -575,9 +574,9 @@ margin_bottom = 1033.0
 color = Color( 1, 1, 1, 0.223529 )
 
 [node name="ColorRect7" type="ColorRect" parent="."]
-margin_left = 220.0
+margin_left = 90.0
 margin_top = -19.0
-margin_right = 461.0
+margin_right = 1729.0
 margin_bottom = 34.0
 color = Color( 1, 1, 1, 0.223529 )
 
@@ -679,6 +678,7 @@ position = Vector2( 948, 1121 )
 shape = SubResource( 2 )
 
 [node name="Sprite4" type="Sprite" parent="."]
+visible = false
 position = Vector2( 1342, 427 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 11 )
@@ -687,6 +687,7 @@ vframes = 3
 frame = 6
 
 [node name="Sprite5" type="Sprite" parent="."]
+visible = false
 position = Vector2( 1627, 428 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 18 )
@@ -695,6 +696,7 @@ vframes = 3
 frame = 6
 
 [node name="Sprite11" type="Sprite" parent="."]
+visible = false
 position = Vector2( 1909, 430 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 17 )
@@ -703,6 +705,7 @@ vframes = 3
 frame = 1
 
 [node name="Sprite8" type="Sprite" parent="."]
+visible = false
 position = Vector2( 338, 1146 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 16 )
@@ -711,6 +714,7 @@ vframes = 3
 frame = 1
 
 [node name="Sprite9" type="Sprite" parent="."]
+visible = false
 position = Vector2( 337, 820 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 14 )
@@ -719,12 +723,14 @@ vframes = 3
 frame = 1
 
 [node name="Sprite10" type="Sprite" parent="."]
+visible = false
 position = Vector2( 1479, 1140 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 19 )
 
 [node name="Sprite12" type="Sprite" parent="."]
-position = Vector2( 1480, 809 )
+visible = false
+position = Vector2( 343, 363 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 15 )
 hframes = 3
@@ -732,13 +738,15 @@ vframes = 3
 frame = 1
 
 [node name="Sprite6" type="Sprite" parent="."]
-position = Vector2( 486, 418 )
+visible = false
+position = Vector2( 486, 430 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 13 )
 hframes = 3
 vframes = 3
 
 [node name="Sprite13" type="Sprite" parent="."]
+visible = false
 position = Vector2( 341, 66 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 20 )
@@ -747,12 +755,14 @@ vframes = 3
 frame = 1
 
 [node name="Sprite14" type="Sprite" parent="."]
+visible = false
 position = Vector2( 915, 66 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 21 )
 
 [node name="Sprite15" type="Sprite" parent="."]
-position = Vector2( 1486, 40 )
+visible = false
+position = Vector2( 1486, 66 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 22 )
 hframes = 3
@@ -760,14 +770,15 @@ vframes = 3
 frame = 1
 
 [node name="Sprite7" type="Sprite" parent="."]
-position = Vector2( 195, 417 )
+visible = false
+position = Vector2( 195, 430 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 12 )
 hframes = 3
 vframes = 3
+frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "blinkin"
 playback_speed = 0.5
 anims/RESET = SubResource( 3 )
 anims/blinkin = SubResource( 4 )

@@ -44,8 +44,8 @@ func _process(delta):
 		var collision = get_slide_collision(i)
 		has_collided = true;
 		if collision.get_collider() is KinematicBody2D && collision.get_collider().NPC != true:
-
-			get_parent().interact(details)
+			if collision.get_collider().Player:
+				get_parent().interact(details)
 		elif collision.get_collider() is KinematicBody2D && collision.get_collider().NPC:
 			if socialCooldown.is_stopped():
 				interact(details, collision.get_collider().details)

@@ -2,7 +2,7 @@ extends "res://Scripts/LancerDrone.gd"
 
 var passengers = []
 
-
+var currentIndex = 0
 
 class Passenger:
 	var destination = Vector2.ZERO
@@ -23,22 +23,38 @@ func process_location(place):
 			p.person.happiness = 50
 			p.person.boredom = 50
 			place.residents.append(p.person)
+			for s in place.service_ability.size():
+				place.service_ability[s] = place.service_ability[s] + p.person.service_ability[s]
 			passengers.erase(p)
+
 			
 	if passengers.size() < 24:
 		for r in residents:
-			if r.happiness<10 || r.boredom>100:
+			if r.happiness<0 || r.boredom>100:
 				if passengers.size() < 24:
-					var destination = places[randi()%places.size()]
+					randomize()
+#					print("CI: ", currentIndex)
+					var next_stop =  (currentIndex + 1 + (randi()%2)) % queue.size()
+#					print("Guess: ", next_stop)
+					var destination
+					for p in places:
+						var posi = p.pos - Vector2(800, 500)
+						posi = posi * 1000
+						if posi == queue[next_stop]:
+							destination = p
+#							print("found")
+
 					var dest_pos = destination.pos - Vector2(800, 500)
 					dest_pos = dest_pos * 1000
-					while dest_pos == pos:
-						randomize()
-						destination = places[randi()%places.size()]
-						dest_pos = destination.pos - Vector2(800, 500)
-						dest_pos = dest_pos * 1000
-					print("Picked up: ", r.name)
+#					while dest_pos == pos:
+#						randomize()
+#						destination = places[randi()%places.size()]
+#						dest_pos = destination.pos - Vector2(800, 500)
+#						dest_pos = dest_pos * 1000
+					print("Picked up: ", r.name, " from ", place.name)
 					place.residents.erase(r)
+					for s in place.service_ability.size():
+						place.service_ability[s] = place.service_ability[s] - r.service_ability[s]
 					passengers.append(Passenger.new(dest_pos, r))
 					
 	
@@ -48,6 +64,7 @@ func _process(delta):
 			var pos = p.pos - Vector2(800, 500)
 			pos = pos * 1000
 			if pos.distance_to(self.position) < 3000:
+				currentIndex = queue.find(pos)
 	#			print("Bus Stop Reached")
 				process_location(p)
 	if passengers.size() > 25:

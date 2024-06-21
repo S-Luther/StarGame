@@ -34,6 +34,7 @@ var liquids = 0
 var rumors = []
 
 var NPC = false
+var Player = true
 
 onready var animationPlayer = $AnimationPlayer
 onready var animationTree = $AnimationTree

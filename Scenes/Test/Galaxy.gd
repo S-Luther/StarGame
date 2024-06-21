@@ -71,16 +71,30 @@ var skills_compat =   [
 					
 var FoodSkills = [3,4,18,21]
 var DataSkills = [10,11,12,12,14,16,30,31]
-var MiningSkills = [2, 4, 51]
+var MiningSkills = [2, 4, 29, 61]
 var MechanicSkills = [0,1,8,9,57, 53, 60]
 var ShipYardSkills = [6, 15, 26, 27,29,43, 58]
 var FurnaceSkills = [2, 4, 24, 61, 22]
 var DistillarySkills = [22, 20, 52]
 var HospitalSkills = [22, 12, 35, 36, 39]
-var PoliceSkills = [26, 27, 28, 33, 37, 47, 54, 55]
+var PoliceSkills = [28, 62]
 var BankSkills = [12, 32, 52, 54]
 var ShippingSkills = [2, 14, 15, 30, 31]
 var TheatreSkills = [40, 41,42,43, 48, 49, 50, 18]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 var skills = [
 				"Solderer",
@@ -144,7 +158,8 @@ var skills = [
 				"Stylist",
 				"Armorer",
 				"Weapons Specialist",
-				"Geologist"
+				"Geologist",
+				"Enforcer"
 			 ]
 
 
