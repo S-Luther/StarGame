@@ -310,7 +310,7 @@ func interact(r):
 	if r.avatar:
 		interactSprite.frame = r.avatar
 	interactLabel.text = "Name: " + String(r.name) + "\n" + "Age: " + String(r.age) + "\n" + "Culture: " + String(r.culture) + "\n"
-	interactLabel.text += "Boredom: " + String(r.boredom) + "\n" + "Happiness: " + String(r.happiness) + "\n" + "Knowledge: \n"
+	interactLabel.text += "Boredom: " + String(r.boredom) + "\n" + "Happiness: " + String(r.happiness) + "\n" + "Wealth: " + String(r.wealth) + "\n" + "Criminality: " + String(r.criminality) + "\n" + "Owner: " + String(r.business_owner) + "\n" + "Knowledge: \n"
 	
 	for t in r.skills:
 		interactLabel.text += "  " + t + "\n"

@@ -274,7 +274,8 @@ class Place:
 	var est = 0
 	var residents = []
 	var services = []
-	var value = 1
+	var value = 10000
+	var initial_pop = 0
 	var neighbors = []
 	var popular = []
 	var unpopular = []
@@ -316,17 +317,32 @@ class Place:
 	func new_Node(new_pos):
 		if !first:
 			pos = new_pos
-		mass = (2 * PI * residents.size())/1.5
+		mass = 200
 		return self
 	
 	func check_Services():
 		var ability_copy = service_ability.duplicate()
 		services = []
+		
 		for i in 12:
 			if ability_copy.max() > 50:
 				services.append(services_reference[ability_copy.find(ability_copy.max())])
 				var n = ability_copy.find(ability_copy.max())
 				ability_copy[n] = ability_copy[n] - 100
+				
+		for p in residents:
+			p.business_owner = false
+		for s in services:
+			for r in services_reference.size():
+				var ability_max = 0
+				var person
+				if services_reference[r] == s:
+					for p in residents:
+						
+						if p.service_ability[r] > ability_max:
+							ability_max = p.service_ability[r]
+							person = p
+					person.business_owner = true
 	
 	func update():
 		var vel = force / mass
@@ -352,6 +368,8 @@ class Person:
 	var name = "example1"
 	var service_ability = [0,0,0,0,0,0,0,0,0,0,0,0]
 	var age = 0
+	var business_owner = false
+	var wealth = 5000
 	var memories = []
 	var thoughts = []
 	var friends = []
@@ -367,6 +385,8 @@ class Person:
 	var happiness = 50
 	var culture = ""
 	var avatar = 0
+	var criminality = 0
+	var faction_reputations = []
 	
 	func _init(new_name,new_age,new_place, new_enneagram, new_culture, new_skills, new_service_ability):
 		name = new_name
@@ -378,6 +398,76 @@ class Person:
 		culture = new_culture
 		skills = new_skills
 		service_ability = new_service_ability
+		
+	func survive(services):
+		self.wealth = self.wealth * .8
+		if(self.wealth < 0):
+			self.criminality = self.criminality + 1
+			self.happiness = self.happiness - 1
+			self.boredom = self.boredom - 1
+		if services.has("DiningHall"):
+			self.wealth = self.wealth - 10
+			self.happiness = self.happiness + 1
+		else:
+			self.wealth = self.wealth - 20
+			self.happiness = self.happiness - 1
+		if self.wealth > 400:
+			if services.has("Theatre"):
+				self.wealth = self.wealth - 50
+				self.happiness = self.happiness + 20
+				self.boredom = self.boredom - 40
+			else:
+				self.happiness = self.happiness - 1
+				self.boredom = self.boredom + 1
+			#Go to the theatre ^^
+		if self.wealth > 1000:
+			if services.has("Bank"):
+				self.wealth = self.wealth*1.03
+			else:
+				self.wealth = wealth*.98
+			
+
+	
+	func work(services, service_reference, fellows):
+		print(self.wealth)
+#		print(self.service_ability)
+#		print(services)
+#		print(self.wealth)
+		if business_owner:
+			self.wealth = self.wealth + (fellows * self.service_ability.max())
+		else:
+			for s in self.service_ability.size():
+				if self.service_ability[s] > 0:
+					if services.has(service_reference[s]):
+						self.wealth = self.wealth + (10 * self.service_ability[s])
+						
+						if self.service_ability[s] < 15:
+							self.happiness = self.happiness + 10
+							self.boredom = self.boredom - 10
+							self.service_ability[s] = self.service_ability[s] * 1.01
+						else:
+							self.happiness = self.happiness + 4
+							self.boredom = self.boredom - 5
+							for k in self.skills:
+								
+								if k.find("Novice") > -1:
+									k.erase(k.find("Novice"), "Novice".length())
+									k = "Master" + k
+								if k.find("Adequite") > -1:
+									k.erase(k.find("Adequite"), "Adequite".length())
+									k = "Master" + k
+								if k.find("Skilled") > -1:
+									k.erase(k.find("Skilled"), "Skilled".length())
+									k = "Master" + k
+								if k.find("Knowledgable") > -1:
+									k.erase(k.find("Knowledgable"), "Knowledgable".length())
+									k = "Master" + k
+				else:
+					self.happiness = self.happiness - 1
+					self.boredom = self.boredom + 1
+		pass
+		
+	
 
 
 
@@ -469,7 +559,7 @@ func newBase(seedCharacter):
 			places[currentplace].service_ability[s] = places[currentplace].service_ability[s] + p.service_ability[s]
 #		print(places[currentplace].residents[places[currentplace].residents.size()-1].name)
 
-var cultModifier = 1
+var cultModifier = 20
 
 func interact(i,j, c):
 	var iType = i.enneagram[randi()%3];
@@ -540,8 +630,11 @@ var stop = false;
 
 
 func genStep(skipper = false):
+	places[currentplace].check_Services()
 	for c in places[currentplace].residents:
 #		print(c.name)
+		c.survive(places[currentplace].services)
+		c.work(places[currentplace].services, places[currentplace].services_reference, places[currentplace].residents.size())
 		interact(c, pickRandom(places[currentplace].residents), places[currentplace].culture);
 		if !skipper:
 			if c.happiness<10:
@@ -563,6 +656,7 @@ func genSim(steps):
 			places[currentplace].residents.pop_at(index);
 			for i in places[currentplace].service_ability.size():
 				places[currentplace].service_ability[i] = places[currentplace].service_ability[i] - nomad.service_ability[i]
+			nomad.wealth = nomad.wealth - 100
 			newBase(nomad);
 			stop = false;
 		else:
@@ -579,9 +673,11 @@ func cleanStep(residents, cult):
 			interact(c, pickRandom(residents), cult);
 			if(c.happiness<30 or c.boredom>100):
 				nomad = c;
+				nomad.wealth = nomad.wealth - 100
 				stop = true;
 			elif(c.happiness>3000 or c.boredom<-3000):
 				nomad = c;
+				nomad.wealth = nomad.wealth - 100
 				stop = true;
 
 func cleanSim(steps):
@@ -603,6 +699,7 @@ func cleanSim(steps):
 						nomad.knowledge.append("SpacePort " + newHome)
 				nomad.boredom = 50;
 				nomad.happiness = 50;
+				nomad.wealth = nomad.wealth - 100
 				
 
 				places[findPlaceByName(newHome)].residents.append(nomad);
@@ -736,7 +833,7 @@ func clash():
 		   
 #var t = Timer.new()
 
-var size = 5000;
+var size = 180;
 
 var finish = false
 
@@ -877,6 +974,11 @@ func _process(delta):
 	
 	runs = runs + 1
 	
+	if nodes.size() < 5:
+		runs = 2000
+		
+	
+	
 	if runs < 1000:
 		for a in get_tree().get_nodes_in_group("lines"):
 			a.queue_free()
@@ -891,7 +993,7 @@ func _process(delta):
 #			line.width = 1
 #			add_child(line)
 #			line.add_to_group("lines")
-			
+		
 		applyForces(nodes)
 		
 

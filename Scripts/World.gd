@@ -225,6 +225,7 @@ func _ready():
 				var lineColor = Color(i.color)
 				lineColor.a = .05
 				line.default_color = lineColor
+				line.z_index = 0
 
 				if planet.position.distance_to(((i.pos - Vector2(800, 500)) * 1000)) != 0:
 					line.width = 10000000 / planet.position.distance_to(((i.pos - Vector2(800, 500)) * 1000))
@@ -341,7 +342,7 @@ func _ready():
 		asteroid.add_to_group("asteroids")
 #		asteroid.velocity = Vector2(rng.randi_range(10,-10), rng.randi_range(10,-10))
 ##
-	for i in 50:
+	for i in 10:
 		var drone = LancerDrone.instance()
 		rng = RandomNumberGenerator.new()
 		rng.randomize()
@@ -351,6 +352,7 @@ func _ready():
 		drone.attacker = true
 		self.add_child(drone)
 		drone.add_to_group("drones")
+		drone.add_to_group("NPCs")
 		
 #	for i in 5:
 #		var drone = ShieldMaiden.instance()

@@ -6,7 +6,7 @@
 [ext_resource path="res://Scenes/Test/Galaxy.tres" type="Theme" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 16.1245
+radius = 9.48683
 
 [sub_resource type="Animation" id=2]
 resource_name = "Chat"
