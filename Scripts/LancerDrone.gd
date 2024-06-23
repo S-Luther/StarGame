@@ -280,11 +280,3 @@ func _on_AttackTimer_timeout():
 	state = ATTACK
 
 
-func _on_Area2D_area_entered(area):
-	if collision_timer.is_stopped():
-		collision_timer.start(4)
-		angle = 1.5 + randf()
-#		print(angle)
-#		print("special")
-#				print("tripped")
-		move_timer.start(2)

@@ -16,6 +16,7 @@ const Police = preload("res://Scenes/SpacePort/Rooms/Police.tscn")
 const Shipping = preload("res://Scenes/SpacePort/Rooms/Shipping.tscn")
 const Shipyard = preload("res://Scenes/SpacePort/Rooms/ShipYard.tscn")
 const Theatre = preload("res://Scenes/SpacePort/Rooms/Theatre.tscn")
+const Pillar = preload("res://Scenes/SpacePort/Rooms/Pillar.tscn")
 
 var Tops = ["Mining", "Mechanic"]
 var TopSpots = [Vector2(1486, 66),Vector2(915, 66),Vector2(1486340, 66)]
@@ -208,24 +209,32 @@ func generate_level():
 			space.position = Vector2(343,363)
 			add_child(space)
 			services.erase("Shipyard")
+			VertSpotsCopy.pop_back()
+			VertSpotsCopy.pop_back()
 			
 		elif services.has("Police"):
 			var space = Police.instance()
 			space.position = Vector2(343,363)
 			add_child(space)
 			services.erase("Police")
+			VertSpotsCopy.pop_back()
+			VertSpotsCopy.pop_back()
 		
 		elif services.has("Hospital"):
 			var space = Hospital.instance()
 			space.position = Vector2(343,363)
 			add_child(space)
 			services.erase("Hospital")
+			VertSpotsCopy.pop_back()
+			VertSpotsCopy.pop_back()
 			
 		elif services.has("Data"):
 			var space = Data.instance()
 			space.position = Vector2(343,363)
 			add_child(space)
 			services.erase("Data")
+			VertSpotsCopy.pop_back()
+			VertSpotsCopy.pop_back()
 
 			
 		elif services.has("Shipping"):
@@ -233,14 +242,17 @@ func generate_level():
 			space.position = Vector2(343,363)
 			add_child(space)
 			services.erase("Shipping")
-
-
-
+			VertSpotsCopy.pop_back()
+			VertSpotsCopy.pop_back()
 			
+	if VertSpotsCopy.size() > 0:
+		for s in VertSpotsCopy:
+			var space = Pillar.instance()
+			space.position = s
+			add_child(space)
 
 
-			
-		
+
 	Bulbs.visible = false;
 	Exot.visible = false;
 	Mush.visible = false;

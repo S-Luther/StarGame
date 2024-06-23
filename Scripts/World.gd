@@ -705,9 +705,10 @@ func _process(delta):
 	runs = runs + 1
 	var i = -1
 	
-	if runs % 1000 == 0:
+	if runs % 100 == 0:
 		print("genstep()")
 		for g in get_tree().get_nodes_in_group("Galaxy"):
+			g.currentplace = runs % g.nodes.size()
 			g.genStep(true)
 	
 	if !paused:

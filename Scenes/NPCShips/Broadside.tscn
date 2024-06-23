@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://assets/Broadside Gunship External.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/LancerDrone.gd" type="Script" id=2]
@@ -554,9 +554,6 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 0.45, 0.45, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="CircleShape2D" id=7]
-radius = 63.1535
-
 [node name="Node2D" type="KinematicBody2D"]
 self_modulate = Color( 1, 0, 0.0166664, 1 )
 scale = Vector2( 5, 5 )
@@ -629,12 +626,3 @@ rotation = 1.5708
 texture = ExtResource( 4 )
 vframes = 2
 frame = 1
-
-[node name="Area2D" type="Area2D" parent="."]
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
-position = Vector2( 381, -0.6 )
-rotation = -1.5708
-shape = SubResource( 7 )
-
-[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]

@@ -314,10 +314,10 @@ class Place:
 		color = new_color
 		culture = new_culture
 		
-	func new_Node(new_pos):
+	func new_Node(new_pos, new_mass):
 		if !first:
 			pos = new_pos
-		mass = 200
+		mass = new_mass
 		return self
 	
 	func check_Services():
@@ -325,25 +325,29 @@ class Place:
 		services = []
 		
 		for i in 12:
-			if ability_copy.max() > 50:
+			var threshhold = 50
+			if (residents.size()*2) < 50:
+				threshhold = (residents.size()*2)
+			if ability_copy.max() >= threshhold:
 				services.append(services_reference[ability_copy.find(ability_copy.max())])
 				var n = ability_copy.find(ability_copy.max())
 				ability_copy[n] = ability_copy[n] - 100
 				
 		for p in residents:
 			p.business_owner = false
-		for s in services:
-			for r in services_reference.size():
-				var ability_max = 0
-				var person
-				if services_reference[r] == s:
-					for p in residents:
-						
-						if p.service_ability[r] > ability_max:
-							ability_max = p.service_ability[r]
-							person = p
-					person.business_owner = true
-	
+		if residents.size() > 0:
+			for s in services:
+				for r in services_reference.size():
+					var ability_max = 0
+					var person = residents[0]
+					if services_reference[r] == s:
+						for p in residents:
+							
+							if p.service_ability[r] > ability_max:
+								ability_max = p.service_ability[r]
+								person = p
+						person.business_owner = true
+		
 	func update():
 		var vel = force / mass
 		pos = pos + vel
@@ -409,8 +413,8 @@ class Person:
 			self.wealth = self.wealth - 10
 			self.happiness = self.happiness + 1
 		else:
-			self.wealth = self.wealth - 20
-			self.happiness = self.happiness - 1
+			self.wealth = self.wealth - 50
+			self.happiness = self.happiness - 5
 		if self.wealth > 400:
 			if services.has("Theatre"):
 				self.wealth = self.wealth - 50
@@ -429,7 +433,7 @@ class Person:
 
 	
 	func work(services, service_reference, fellows):
-		print(self.wealth)
+#		print(self.wealth)
 #		print(self.service_ability)
 #		print(services)
 #		print(self.wealth)
@@ -841,7 +845,7 @@ var collisions = 0;
 
 func getNodes() -> Array:
 	return nodes
-
+var mass = 200
 var spacing = 100;
 var price_count = 0
 var queue = []
@@ -910,7 +914,7 @@ func build():
 	for p in places:
 		p.check_Services()
 		var pos = Vector2(randi()%1600, randi()%1000)
-		nodes.append(p.new_Node(pos))
+		nodes.append(p.new_Node(pos, mass))
 		var neighb = p.neighbors
 		for l in places:
 			if neighb.has(l.name):
@@ -974,6 +978,31 @@ func _process(delta):
 	
 	runs = runs + 1
 	
+	if (runs % 1000) == 0:
+		for a in get_tree().get_nodes_in_group("labels"):
+			a.queue_free()
+		print("updated")
+		for p in nodes:
+			var label = Label.new()
+					
+			label.text = "      "+p.name+"   " + String(p.residents.size()) + "  " + p.culture
+	#		print((label.text.length()))
+			label.visible = false
+			label.set_position(p.pos + Vector2((label.text.length()) * -8,20))
+	#		label.set_position(p.pos)
+			
+			label.rect_scale = Vector2(3,3);
+	#		label.add_font_override("font", dynamic_font)
+			self.add_child(label)
+			label.add_to_group("labels")
+			var neighb = p.neighbors
+			for l in places:
+				if neighb.has(l.name):
+					if p.pos.distance_to(l.pos) > 200:
+						p.neighbors.erase(l.name)
+						l.neighbors.erase(p.name)
+	
+	
 	if nodes.size() < 5:
 		runs = 2000
 		
@@ -1023,28 +1052,28 @@ func _process(delta):
 			asteroidm.add_to_group("mapPlanets")
 			
 		
-	if runs == 1000:
-		
-		
-		for p in places:
-			var label = Label.new()
-					
-			label.text = "      "+p.name+"   " + String(p.residents.size()) + "  " + p.culture
-	#		print((label.text.length()))
-			label.visible = false
-			label.set_position(p.pos + Vector2((label.text.length()) * -8,20))
-	#		label.set_position(p.pos)
-			
-			label.rect_scale = Vector2(3,3);
-	#		label.add_font_override("font", dynamic_font)
-			self.add_child(label)
-			label.add_to_group("labels")
-			var neighb = p.neighbors
-			for l in places:
-				if neighb.has(l.name):
-					if p.pos.distance_to(l.pos) > 200:
-						p.neighbors.erase(l.name)
-						l.neighbors.erase(p.name)
+#	if runs == 1000:
+#
+#
+#		for p in places:
+#			var label = Label.new()
+#
+#			label.text = "      "+p.name+"   " + String(p.residents.size()) + "  " + p.culture
+#	#		print((label.text.length()))
+#			label.visible = false
+#			label.set_position(p.pos + Vector2((label.text.length()) * -8,20))
+#	#		label.set_position(p.pos)
+#
+#			label.rect_scale = Vector2(3,3);
+#	#		label.add_font_override("font", dynamic_font)
+#			self.add_child(label)
+#			label.add_to_group("labels")
+#			var neighb = p.neighbors
+#			for l in places:
+#				if neighb.has(l.name):
+#					if p.pos.distance_to(l.pos) > 200:
+#						p.neighbors.erase(l.name)
+#						l.neighbors.erase(p.name)
 	
 	if !finish && !fullStop && runs > 999:
 		unique_factions.clear()
@@ -1124,10 +1153,10 @@ func _process(delta):
 					asteroidm.z_index = -1
 					self.add_child(asteroidm)
 					asteroidm.add_to_group("mapPlanets")
-				labels = get_tree().get_nodes_in_group("labels")
-				for i in range(places.size()):
-					labels[i].text = "  "+places[i].name+" " + String(places[i].residents.size()) + " " + places[i].culture
-					labels[i].visible = false
+#				labels = get_tree().get_nodes_in_group("labels")
+#				for i in range(places.size()):
+#					labels[i].text = "  "+places[i].name+" " + String(places[i].residents.size()) + " " + places[i].culture
+#					labels[i].visible = false
 				for a in get_tree().get_nodes_in_group("lines"):
 					conflicts.append(a)
 #					a.queue_free()
