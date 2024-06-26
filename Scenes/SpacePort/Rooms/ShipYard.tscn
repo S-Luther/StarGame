@@ -58,7 +58,7 @@ frame = 1
 polygon = PoolVector2Array( -236, -28, -238, 95, -178, 96, -176, 86, -223, 85, -222, 43, -172, 32, -170, -31, -63, -31, 183, -32, 183, 27, 214, 25, 221, 33, 222, 78, 177, 79, 177, 95, 237, 95, 235, -48, -236, -53 )
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
-polygon = PoolVector2Array( -119, 81, -119, 95, 115, 95, 115, 81, 13, 81, 20, 43, 72, 4, 69, -8, 19, -18, -30, -17, -71, -10, -75, 3, -25, 42, -17.4719, 81 )
+polygon = PoolVector2Array( -119, 81, -119, 95, 115, 95, 115, 81, 13, 81, 20, 43, 31, 32, 40, 15, 20, 6, -26, 7, -43, 18, -34, 30, -25, 42, -17.4719, 81 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "blinkin"

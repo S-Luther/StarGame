@@ -40,7 +40,6 @@ tracks/0/keys = {
 radius = 23.7697
 
 [node name="Node2D" type="KinematicBody2D"]
-z_index = 2
 script = ExtResource( 2 )
 
 [node name="Sprite14" type="Sprite" parent="."]
@@ -65,6 +64,7 @@ polygon = PoolVector2Array( -236, -28, -238, 95, -178, 96, -176, 86, -223, 85, -
 polygon = PoolVector2Array( -119, 81, -119, 95, 115, 95, 115, 81 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "blinkin"
 anims/RESET = SubResource( 1 )
 anims/blinkin = SubResource( 2 )
 

@@ -9,6 +9,10 @@ onready var ContentArea = $Area2D
 var changeTarget = Timer.new()
 var socialCooldown = Timer.new()
 
+var service_ability = []
+
+var posting = null
+
 onready var animationPlayer = $AnimationPlayer
 
 func _ready():
@@ -61,16 +65,19 @@ func move(target, delta):
 	var steering = (desired_velocity - velocity) * delta * .5
 	velocity += steering
 
-	self.rotation = velocity.angle()
+#	self.rotation = velocity.angle()
 	
-	ContentArea.rotation = -velocity.angle()
+#	ContentArea.rotation = -velocity.angle()
 	var collision = move_and_collide(velocity/10)
 
 func get_circle_position():
-	rng.randomize()
-	if details.boredom > 150 || details.happiness < 10:
-		return Vector2( 2000 + 10000,  1200 + 10000)
-	return Vector2(rng.randi()% 2000 + 10000, rng.randi() % 1300 + 10000)
+	if posting != null: 
+		return posting
+	else:
+		rng.randomize()
+		if (details.boredom > 150 && details.wealth > 200) || (details.happiness < 10 && details.wealth > 200):
+			return Vector2( 2000 + 10000,  1200 + 10000)
+		return Vector2(rng.randi()% 2000 + 10000, rng.randi() % 1300 + 10000)
 
 
 

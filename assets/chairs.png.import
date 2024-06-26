@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Pillar.png-b9efba7b17b37dd26311eaf9cac97d51.stex"
+path="res://.import/chairs.png-41f25f4fbd4a757c97a92b080bfec0b2.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Pillar.png"
-dest_files=[ "res://.import/Pillar.png-b9efba7b17b37dd26311eaf9cac97d51.stex" ]
+source_file="res://assets/chairs.png"
+dest_files=[ "res://.import/chairs.png-41f25f4fbd4a757c97a92b080bfec0b2.stex" ]
 
 [params]
 

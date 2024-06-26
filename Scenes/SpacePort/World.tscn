@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://Scenes/SpacePort/tileset x1.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/SpacePort/World.gd" type="Script" id=2]
@@ -22,6 +22,9 @@
 [ext_resource path="res://assets/Mechanic.png" type="Texture" id=20]
 [ext_resource path="res://assets/Shipping.png" type="Texture" id=21]
 [ext_resource path="res://assets/Miner.png" type="Texture" id=22]
+[ext_resource path="res://assets/image.png" type="Texture" id=23]
+[ext_resource path="res://assets/Bus.png" type="Texture" id=24]
+[ext_resource path="res://assets/chairs.png" type="Texture" id=25]
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 58.0345
@@ -100,9 +103,23 @@ tracks/5/keys = {
 "update": 0,
 "values": [ 1 ]
 }
+tracks/6/type = "value"
+tracks/6/path = NodePath("Sprite16:frame")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1 ]
+}
 
 [sub_resource type="Animation" id=4]
 resource_name = "blinkin"
+length = 1.4
+loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite4:frame")
 tracks/0/interp = 1
@@ -223,6 +240,18 @@ tracks/9/keys = {
 "update": 1,
 "values": [ 1, 2, 3, 4, 5, 6, 7 ]
 }
+tracks/10/type = "value"
+tracks/10/path = NodePath("Sprite16:frame")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 ]
+}
 
 [sub_resource type="ArrayMesh" id=5]
 surfaces/0 = {
@@ -236,6 +265,9 @@ surfaces/0 = {
 "skeleton_aabb": [  ],
 "vertex_count": 4
 }
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 37, 35 )
 
 [node name="World" type="StaticBody2D"]
 position = Vector2( 10000, 10000 )
@@ -281,7 +313,7 @@ frame = 1
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 position = Vector2( 408, 328 )
-polygon = PoolVector2Array( -403, -289, -312, -290, -295, -295, -133, -292, -115, -294, -22, -292, -9, -292, 153, -292, 170, -293, 266, -293, 279, -291, 438, -291, 457, -293, 551, -293, 565, -294, 724, -292, 743, -293, 836, -291, 851, -294, 1011, -290, 1030, -294, 1121, -291, 1137, -294, 1298, -292, 1316, -293, 1410, -292, 1409, -166, 1470, -167, 1470, -182, 1421, -181, 1424, -295, 1584, -295, 1582, -185, 1537, -179, 1537, -163, 1601, -164, 1602, -295, 1740, -293, 1741, 1017, 1739, 1056, -405, 1054, -404, -277, -418, -277, -423, 1084, 1759, 1082, 1757, -360, -420, -354, -420, -288 )
+polygon = PoolVector2Array( -403, -289, -312, -290, -298, -303, 155, -305, 170, -293, 266, -293, 290, -305, 724, -299, 743, -293, 836, -291, 859, -307, 1289, -300, 1316, -293, 1410, -292, 1409, -166, 1470, -167, 1470, -182, 1421, -181, 1424, -295, 1584, -295, 1582, -185, 1537, -179, 1537, -163, 1601, -164, 1602, -295, 1740, -293, 1742, 699, 1696, 696, 1691, 635, 1608, 632, 1607, 649, 1678, 649, 1683, 715, 1742, 716, 1743, 989, 1679, 989, 1658, 959, 1540, 958, 1517, 1000, 1455, 1001, 1454, 848, 1440, 849, 1438, 1018, 1495, 1019, 1495.05, 1054.99, -405, 1054, -404, -277, -524, -285, -526, 1205, 1890, 1165, 1853, -460, -543, -477, -516, -296 )
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
 position = Vector2( 410, 328 )
@@ -296,6 +328,7 @@ polygon = PoolVector2Array( -255, 900, -255, 887, -301, 858.783, -300, 797.086, 
 disabled = true
 
 [node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="."]
+visible = false
 position = Vector2( 410, 328 )
 polygon = PoolVector2Array( -308, 274, -247, 274, -247, 262, -298, 262, -295, 146, -134, 146, -136, 257, -183, 260, -184, 274, -121, 274, -120, 147, -24, 147, -25, 270, 39, 271, 39, 259, -11, 257, -10, 146, 150, 146, 151, 257, 103, 258, 102, 272, 167, 272, 168, 147, 260, 148, 262, 274, 326, 274, 326, 262, 276, 262, 276, 149, 438, 149, 437, 261, 388, 262, 388, 277, 453, 277, 453, 146, 547, 148, 546, 274, 612, 274, 612, 257, 563, 257, 563, 147, 722, 147, 722, 260, 673, 260, 672, 274, 737, 274, 739, 148, 834, 149, 832, 276, 894, 274, 894, 261, 844, 259, 848, 147, 1008, 147, 1008, 258, 959, 258, 958, 274, 1026, 272, 1025, 147, 1119, 148, 1120, 272, 1183, 271, 1184, 260, 1135, 259, 1134, 147, 1292, 147, 1294, 255, 1245, 258, 1245, 275, 1311, 275, 1308, 2, 1246, 2, 1245, 16, 1295, 16, 1291, 118, 1135, 110, 1133, 13, 1180, 15, 1180, 1, 1117, 1, 1120, 112, 1023, 111, 1022, -1, 957, -1, 957, 16, 1005, 17, 1007, 109, 847, 112, 847, 17, 893, 17, 894, -1, 827, -1, 830, 111, 736, 111, 735, 1, 669, 1, 669, 15, 719, 16, 720, 110, 563, 111, 560, 15, 609, 17, 609, 3, 543, 1, 543, 112, 450, 115, 450, 2, 383, 0, 384, 15, 432, 17, 430, 114, 275, 113, 275, 16, 321, 16, 321, 2, 256, 2, 258, 114, 164, 112, 164, 2, 99, -1, 98, 18, 147, 19, 147, 113, -12, 114, -16, 18, 33, 17, 35, 0, -29, 1, -28, 113, -120, 112, -120, 0, -189, 1, -184, 17, -139, 19, -135, 111, -297, 112, -294, 19, -246, 19, -247, 1, -314, 0, -316, 274 )
 disabled = true
@@ -326,14 +359,14 @@ texture = ExtResource( 3 )
 
 [node name="ColorRect" type="ColorRect" parent="."]
 margin_top = 32.0
-margin_right = 833.0
+margin_right = 805.0
 margin_bottom = 1399.0
 color = Color( 0.647059, 0.505882, 0.32549, 1 )
 
 [node name="ColorRect2" type="ColorRect" parent="."]
-margin_left = 1061.0
+margin_left = 1021.0
 margin_top = 32.0
-margin_right = 2158.0
+margin_right = 2154.0
 margin_bottom = 1406.0
 color = Color( 0.647059, 0.505882, 0.32549, 1 )
 
@@ -352,9 +385,9 @@ margin_bottom = 1393.0
 color = Color( 0.647059, 0.505882, 0.32549, 1 )
 
 [node name="ColorRect5" type="ColorRect" parent="."]
-margin_left = 826.0
+margin_left = 795.0
 margin_top = 463.0
-margin_right = 1067.0
+margin_right = 1031.0
 margin_bottom = 1033.0
 color = Color( 1, 1, 1, 0.223529 )
 
@@ -366,6 +399,7 @@ margin_bottom = 34.0
 color = Color( 1, 1, 1, 0.223529 )
 
 [node name="ColorRect6" type="ColorRect" parent="."]
+visible = false
 margin_left = 1807.0
 margin_top = 980.0
 margin_right = 2078.0
@@ -383,23 +417,24 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "I'd Like To Leave"
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 1173.32, 1206.77 )
+position = Vector2( 1261, 1885 )
 scale = Vector2( 1.3453, 1.17048 )
 texture = ExtResource( 8 )
 offset = Vector2( -168.372, -678.31 )
 
 [node name="Sprite2" type="Sprite" parent="."]
-position = Vector2( 806.883, 887.618 )
+position = Vector2( 653, 848 )
 scale = Vector2( 1.33749, 1.26252 )
 texture = ExtResource( 8 )
 offset = Vector2( 105.883, 187.627 )
 
 [node name="Mushrooms" type="Node2D" parent="."]
 visible = false
+position = Vector2( -30, -17 )
 z_index = 4
 
 [node name="Sprite4" type="Sprite" parent="Mushrooms"]
-position = Vector2( 1233, 2235 )
+position = Vector2( 1093, 2213 )
 scale = Vector2( 1.6894, 1.76376 )
 texture = ExtResource( 7 )
 offset = Vector2( -168.372, -678.31 )
@@ -407,7 +442,7 @@ hframes = 6
 frame = 5
 
 [node name="Sprite5" type="Sprite" parent="Mushrooms"]
-position = Vector2( 1229, 1519 )
+position = Vector2( 1355, 2221 )
 scale = Vector2( 1.6894, 1.76376 )
 texture = ExtResource( 7 )
 offset = Vector2( -168.372, -678.31 )
@@ -418,7 +453,7 @@ frame = 5
 z_index = 3
 
 [node name="Sprite4" type="Sprite" parent="Exotic"]
-position = Vector2( 656, 2195 )
+position = Vector2( 507.471, 2159.2 )
 scale = Vector2( -1.689, 1.764 )
 texture = ExtResource( 9 )
 offset = Vector2( -168.372, -678.31 )
@@ -426,7 +461,7 @@ hframes = 3
 vframes = 2
 
 [node name="Sprite5" type="Sprite" parent="Exotic"]
-position = Vector2( 1238, 1486 )
+position = Vector2( 1311.47, 2168.2 )
 scale = Vector2( 1.6894, 1.76376 )
 texture = ExtResource( 9 )
 offset = Vector2( -168.372, -678.31 )
@@ -438,7 +473,7 @@ visible = false
 z_index = 2
 
 [node name="Sprite4" type="Sprite" parent="Bulbs"]
-position = Vector2( 663, 2248 )
+position = Vector2( 503.738, 2219.89 )
 scale = Vector2( -1.689, 1.764 )
 texture = ExtResource( 10 )
 offset = Vector2( -168.372, -678.31 )
@@ -446,7 +481,7 @@ hframes = 3
 vframes = 2
 
 [node name="Sprite5" type="Sprite" parent="Bulbs"]
-position = Vector2( 1234, 1531 )
+position = Vector2( 1319.74, 2214.89 )
 scale = Vector2( 1.6894, 1.76376 )
 texture = ExtResource( 10 )
 offset = Vector2( -168.372, -678.31 )
@@ -455,11 +490,11 @@ vframes = 2
 frame = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 947, 411 )
+position = Vector2( 1038, 1090 )
 shape = SubResource( 2 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
-position = Vector2( 948, 1121 )
+position = Vector2( 788, 1085 )
 shape = SubResource( 2 )
 
 [node name="Sprite4" type="Sprite" parent="."]
@@ -478,7 +513,6 @@ scale = Vector2( 2, 2 )
 texture = ExtResource( 18 )
 hframes = 3
 vframes = 3
-frame = 6
 
 [node name="Sprite11" type="Sprite" parent="."]
 visible = false
@@ -491,7 +525,7 @@ frame = 1
 
 [node name="Sprite8" type="Sprite" parent="."]
 visible = false
-position = Vector2( 338, 1146 )
+position = Vector2( 338, 1260 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 16 )
 hframes = 3
@@ -500,7 +534,7 @@ frame = 1
 
 [node name="Sprite9" type="Sprite" parent="."]
 visible = false
-position = Vector2( 337, 820 )
+position = Vector2( 337, 960 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 14 )
 hframes = 3
@@ -509,13 +543,13 @@ frame = 1
 
 [node name="Sprite10" type="Sprite" parent="."]
 visible = false
-position = Vector2( 1479, 1140 )
+position = Vector2( 343, 660 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 19 )
 
 [node name="Sprite12" type="Sprite" parent="."]
 visible = false
-position = Vector2( 343, 363 )
+position = Vector2( 342, 362 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 15 )
 hframes = 3
@@ -561,10 +595,11 @@ scale = Vector2( 2, 2 )
 texture = ExtResource( 12 )
 hframes = 3
 vframes = 3
-frame = 1
+frame = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-playback_speed = 0.5
+autoplay = "blinkin"
+playback_speed = 0.05
 anims/RESET = SubResource( 3 )
 anims/blinkin = SubResource( 4 )
 
@@ -580,3 +615,72 @@ scale = Vector2( 10, 10 )
 z_index = 4096
 mesh = SubResource( 5 )
 texture = ExtResource( 3 )
+
+[node name="Sprite16" type="Sprite" parent="."]
+position = Vector2( 1883, 1085 )
+scale = Vector2( 2, 2 )
+z_index = 1
+texture = ExtResource( 23 )
+hframes = 4
+vframes = 4
+frame = 1
+
+[node name="Sprite18" type="Sprite" parent="."]
+position = Vector2( 1884, 1096 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 25 )
+
+[node name="ColorRect11" type="ColorRect" parent="Sprite18"]
+show_behind_parent = true
+margin_left = -19.0
+margin_top = -64.0
+margin_right = 109.0
+margin_bottom = 134.0
+color = Color( 0.294118, 0.301961, 0.529412, 0.313726 )
+
+[node name="ColorRect13" type="ColorRect" parent="Sprite18"]
+show_behind_parent = true
+margin_left = -28.0
+margin_top = -533.0
+margin_right = 59.0
+margin_bottom = -469.0
+color = Color( 0.294118, 0.301961, 0.529412, 0.313726 )
+
+[node name="ColorRect12" type="ColorRect" parent="Sprite18"]
+show_behind_parent = true
+margin_left = 108.5
+margin_top = -48.0
+margin_right = 135.5
+margin_bottom = 135.0
+color = Color( 0.294118, 0.301961, 0.529412, 0.313726 )
+
+[node name="Sprite17" type="Sprite" parent="."]
+position = Vector2( 2314, 1205 )
+scale = Vector2( 2.5, 2.5 )
+z_index = 1
+texture = ExtResource( 24 )
+
+[node name="ColorRect8" type="ColorRect" parent="Sprite17"]
+margin_left = -60.0
+margin_top = -46.7998
+margin_right = -33.0
+margin_bottom = 9.2002
+color = Color( 0.227451, 0.596078, 0.819608, 0.501961 )
+
+[node name="ColorRect9" type="ColorRect" parent="Sprite17"]
+margin_left = -60.7998
+margin_top = -23.5996
+margin_right = -33.7998
+margin_bottom = 0.400391
+color = Color( 0.227451, 0.596078, 0.819608, 0.141176 )
+
+[node name="ColorRect10" type="ColorRect" parent="Sprite17"]
+margin_left = -60.7998
+margin_top = -16.5996
+margin_right = -33.7998
+margin_bottom = -8.59961
+color = Color( 0.227451, 0.596078, 0.819608, 0.168627 )
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="."]
+position = Vector2( 1886, 1001 )
+shape = SubResource( 6 )

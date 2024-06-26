@@ -157,7 +157,7 @@ func _ready():
 		
 		rng.randomize()
 
-		broadside.position = ((n.pos - Vector2(800, 500)) *1000)
+		broadside.position = ((n.pos - Vector2(800, 500)) *1000) + Vector2(3000,0)
 		broadside.origin = ((n.pos - Vector2(800, 500)) *1000)
 		broadside.z_index = 1
 		broadside.places = nodes
@@ -169,7 +169,7 @@ func _ready():
 		
 		rng.randomize()
 
-		shuttle.position = ((n.pos - Vector2(800, 500)) *1000)
+		shuttle.position = ((n.pos - Vector2(800, 500)) *1000) + Vector2(-3000,0)
 		shuttle.origin = ((n.pos - Vector2(800, 500)) *1000)
 		shuttle.z_index = 1
 		shuttle.places = nodes
@@ -706,9 +706,10 @@ func _process(delta):
 	var i = -1
 	
 	if runs % 100 == 0:
-		print("genstep()")
+		
 		for g in get_tree().get_nodes_in_group("Galaxy"):
-			g.currentplace = runs % g.nodes.size()
+			print("genstep( ", (runs/100) % g.nodes.size())
+			g.currentplace = (runs/100) % g.nodes.size()
 			g.genStep(true)
 	
 	if !paused:

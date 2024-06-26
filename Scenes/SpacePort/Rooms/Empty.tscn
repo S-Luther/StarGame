@@ -1,0 +1,62 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/Empty (1).png" type="Texture" id=1]
+[ext_resource path="res://assets/Empty.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/Bank.gd" type="Script" id=3]
+
+[sub_resource type="Animation" id=1]
+length = 0.7
+loop = true
+
+[sub_resource type="Animation" id=2]
+resource_name = "blinkin"
+length = 0.7
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite12:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3, 4, 5, 6, 7 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite13:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3, 4, 5, 6, 7 ]
+}
+
+[node name="Node2D" type="KinematicBody2D"]
+script = ExtResource( 3 )
+
+[node name="Sprite12" type="Sprite" parent="."]
+scale = Vector2( 2, 2 )
+z_index = 2
+texture = ExtResource( 1 )
+hframes = 3
+vframes = 3
+
+[node name="Sprite13" type="Sprite" parent="."]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+hframes = 3
+vframes = 3
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -236, -28, -238, 95, -176, 96, -177, 80, -219, 78, -221, 39, -173, 34, -150, -5, -70, -31, 21, -29, 37, 1, 69, -11, 92, -31, 139, -30, 218, 74, 177, 71, 178, 92, 235, 95, 234, -49, -236, -53 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+playback_speed = 0.5
+anims/RESET = SubResource( 1 )
+anims/blinkin = SubResource( 2 )

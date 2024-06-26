@@ -43,7 +43,7 @@ extents = Vector2( 41.5, 11 )
 script = ExtResource( 2 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PoolVector2Array( -35, 161, -35, 147, -77, 147, -80, -18, 81, -17, 82, 147, 32, 146, 31, 159, 97, 158, 95, -115, -95, -116, -95, 159 )
+polygon = PoolVector2Array( -35, 161, -35, 147, -77, 147, -80, -18, -37, -19, -41, 21, -28, -20, 81, -17, 82, 147, 32, 146, 31, 159, 97, 158, 95, -115, -95, -116, -95, 159 )
 
 [node name="Sprite7" type="Sprite" parent="."]
 scale = Vector2( 2, 2 )

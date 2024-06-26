@@ -321,7 +321,12 @@ class Place:
 		return self
 	
 	func check_Services():
-		var ability_copy = service_ability.duplicate()
+		self.service_ability = [0,0,0,0,0,0,0,0,0,0,0,0]
+		for r in residents:
+			for s in r.service_ability.size():
+				self.service_ability[s] = self.service_ability[s] + r.service_ability[s]
+		
+		var ability_copy = self.service_ability.duplicate()
 		services = []
 		
 		for i in 12:
@@ -367,17 +372,32 @@ func getSkill(service_ability):
 	
 	
 	return levels[level] + " " + skills[skill]
+	
+class Quest:
+	var title = ""
+	var locations_visited = []
+	var description = ""
+	var reward = 0
+	var targets = []
+	
+	func _init(new_title, locations, description, targets):
+		pass
 
 class Person:
 	var name = "example1"
 	var service_ability = [0,0,0,0,0,0,0,0,0,0,0,0]
 	var age = 0
+	var likability = 0
 	var business_owner = false
 	var wealth = 5000
 	var memories = []
 	var thoughts = []
+	var acquaintances = []
+	var annoyances = []
 	var friends = []
 	var enemies = []
+	var lovers = []
+	var foes = []
 	var family = []
 	var knowledge = []
 	var skills = []
@@ -391,6 +411,7 @@ class Person:
 	var avatar = 0
 	var criminality = 0
 	var faction_reputations = []
+	var quests = []
 	
 	func _init(new_name,new_age,new_place, new_enneagram, new_culture, new_skills, new_service_ability):
 		name = new_name
@@ -401,9 +422,65 @@ class Person:
 		enneagram = new_enneagram
 		culture = new_culture
 		skills = new_skills
-		service_ability = new_service_ability
 		
+		for s in skills:
+			
+			if s.find("Conversationalist") > -1:
+				likability = likability + 1
+			if s.find("Comedian") > -1:
+				likability = likability + 1
+			if s.find("Speaker") > -1:
+				likability = likability + 1
+			if s.find("Leader"):
+				likability = likability + 1
+			if s.find("Flatterer") > -1:
+				likability = likability + 1
+			if s.find("Liar") > -1:
+				likability = likability + 1
+			if s.find("Schemer") > -1:
+				likability = likability - 1
+			if s.find("Intimidator") > -1:
+				likability = likability - 1
+		service_ability = new_service_ability
+	
+	func generate_quest():
+		if travels.size() > 1:
+#			collect left behind items
+			pass
+			
+		if foes.size() > 0:
+#			capture a foe
+			pass
+			
+		if service_ability[5] > 5:
+#			collect minerals
+			pass
+			
+		if service_ability[6] > 5:
+#			collect liquids
+			pass
+			
+		if service_ability[2] > 5:
+#			collect liquids and minerals
+			pass
+			
+		if criminality > 5:
+#			delivery
+			pass
+			
+		if culture == "F":
+#			simple verification mission
+			pass
+			
+		if business_owner:
+#			work in that shop
+			pass
+	
 	func survive(services):
+		if (age * .000005) > randf():
+			self.is_queued_for_deletion()
+			print(name, " has died at ", age, " in ", home)
+		age = age + .25
 		self.wealth = self.wealth * .8
 		if(self.wealth < 0):
 			self.criminality = self.criminality + 1
@@ -565,7 +642,7 @@ func newBase(seedCharacter):
 
 var cultModifier = 20
 
-func interact(i,j, c):
+func interact(i,j, c, place):
 	var iType = i.enneagram[randi()%3];
 	var jType = j.enneagram[randi()%3];
 	
@@ -586,10 +663,35 @@ func interact(i,j, c):
 
 	if (enneagramCompat[iType-1].has(jType)):
 		if (firstTime):
+			i.acquaintances.append(j.name);
+			j.acquaintances.append(i.name);
+		
+		if randi() % 100 == 0 && i.acquaintances.has(j.name):
 			i.friends.append(j.name);
 			j.friends.append(i.name);
-		
+			
+		if randi() % 100 == 0 && i.friends.has(j.name):
+			i.lovers.append(j.name);
+			j.lovers.append(i.name);
+			
+		if randi() % 10 == 0 && i.lovers.has(j.name):
+#			print(place.residents.size())
+			var child = addRandomCharacter(i.home, i.culture)
+			print("A child named ",child.name," is born! in ",i.home)
+			child.age = 0;
+			child.family.append(j.name)
+			child.family.append(i.name)
+			i.family.append(child.name)
+			j.family.append(child.name)
+			place.residents.append(child)
+#			print(place.residents.size())
+			
+			
+			
+			
+			
 #        console.log(i.name + " is getting along with " + j.name)
+		i.likability = i.likability + 1
 		i.thoughts.append(i.name+" had a positive experience interacting with "+j.name);
 		j.thoughts.append(j.name+" had a positive experience interacting with "+i.name);
 		i.happiness = i.happiness + 2;
@@ -599,11 +701,21 @@ func interact(i,j, c):
 		j.boredom = j.boredom - 2;
 
 	elif (enneagramNonCompat[iType-1].has(jType)):
-		if(firstTime):
+		if (firstTime):
+			i.annoyances.append(j.name);
+		
+		if randi() % 10 == 0 && i.annoyances.has(j.name):
+			j.happiness = j.happiness - 5;
 			i.enemies.append(j.name);
-			j.enemies.append(i.name);
+			
+		if randi() % 10 == 0 && i.enemies.has(j.name):
+			j.happiness = j.happiness - 10;
+			i.foes.append(j.name);
+
+			
 		
 #		console.log(i.name + " is annoyed by " + j.name)
+		j.likability = j.likability - 1
 		i.thoughts.append(i.name+" had a negative experience interacting with "+j.name);
 		j.thoughts.append(j.name+" had a negative experience interacting with "+i.name);
 
@@ -639,7 +751,7 @@ func genStep(skipper = false):
 #		print(c.name)
 		c.survive(places[currentplace].services)
 		c.work(places[currentplace].services, places[currentplace].services_reference, places[currentplace].residents.size())
-		interact(c, pickRandom(places[currentplace].residents), places[currentplace].culture);
+		interact(c, pickRandom(places[currentplace].residents), places[currentplace].culture,places[currentplace]);
 		if !skipper:
 			if c.happiness<10:
 				stop = true;
@@ -671,10 +783,10 @@ func findPlaceByName(placeName):
 		if(places[i].name == placeName):
 			return i;
 		
-func cleanStep(residents, cult):
+func cleanStep(residents, cult, place):
 	for c in residents:
 		if(!stop):
-			interact(c, pickRandom(residents), cult);
+			interact(c, pickRandom(residents), cult, place);
 			if(c.happiness<30 or c.boredom>100):
 				nomad = c;
 				nomad.wealth = nomad.wealth - 100
@@ -715,7 +827,7 @@ func cleanSim(steps):
 					places[findPlaceByName(newHome)].service_ability[n] = places[findPlaceByName(newHome)].service_ability[n] + nomad.service_ability[n]
 				stop = false;
 			
-			cleanStep(p.residents, p.culture)
+			cleanStep(p.residents, p.culture, p)
 			
 func getRandomColor():
 	var letters = '0123456789ABCDEF';
@@ -826,6 +938,7 @@ func clash():
 				line.width = 4
 				add_child(line)
 				line.add_to_group("lines")
+				line.add_to_group("conflictlines")
 				
 				
 				
@@ -972,8 +1085,13 @@ func array_unique(array: Array) -> Array:
 	
 var TSPruns = 0
 
+var context = ""
+var personcontext = ""
+
 func _process(delta):
 	
+	var individual 
+
 	var labels = get_tree().get_nodes_in_group("labels")
 	
 	runs = runs + 1
@@ -1081,7 +1199,7 @@ func _process(delta):
 	#
 #		t.start(.5)
 		clash()
-		cleanSim(50)
+		cleanSim(5)
 
 
 		for a in get_tree().get_nodes_in_group("mapPlanets"):
@@ -1115,7 +1233,8 @@ func _process(delta):
 			asteroidm.add_to_group("mapPlanets")
 		logs = "Astrae:" + String(unique_cultures[0]) + ", Facsima:" + String(unique_cultures[1]) + ", Eccles:" + String(unique_cultures[2]) + "\n"+ logs
 		print(unique_cultures[0], ", ", unique_cultures[1], ", ",unique_cultures[2])
-	for a in get_tree().get_nodes_in_group("lines"):
+	conflicts.clear()
+	for a in get_tree().get_nodes_in_group("conflictlines"):
 		conflicts.append(a)
 	if unique_cultures.has(2) || unique_cultures.has(1) || unique_cultures.has(0) || collisions > 10:
 		if collisions > 10 && collisions < 1000:
@@ -1196,6 +1315,27 @@ func _process(delta):
 						queue = []
 						for l in line.points:
 							queue.append((l - Vector2(800, 500)) * 1000)
+							
+#						print("Some context on the universe: ")
+						
+						context = "Some context on the universe: "
+						
+						for n in nodes:
+							context = context + n.name+ " is a location with "+ String(n.residents.size()) + " residents. It has the following services: "+ String(n.services)+ "and is of the faction: "+ n.faction
+#							print(n.name, " is a location with ", n.residents.size(), " residents. It has the following services: ", n.services, "and is of the faction: ", n.faction)
+						
+						individual = nodes[randi()% nodes.size()].residents[0]
+						
+						personcontext = "You are " + individual.name + " from " + individual.home +" Answer as, " + individual.name + ", the assistant, only. "
+						personcontext = personcontext + "You are a "
+						for s in individual.skills:
+							personcontext = personcontext + s + ", "
+						personcontext = personcontext + "."
+						
+						personcontext = personcontext + "You know "
+						for k in individual.knowledge:
+							personcontext = personcontext + k + ", "
+						personcontext = personcontext + "."
 
 					else:
 						line.queue_free()

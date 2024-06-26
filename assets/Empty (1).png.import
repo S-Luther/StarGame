@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Pillar.png-b9efba7b17b37dd26311eaf9cac97d51.stex"
+path="res://.import/Empty (1).png-54a0d209477227987bbd92a5c979d36c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Pillar.png"
-dest_files=[ "res://.import/Pillar.png-b9efba7b17b37dd26311eaf9cac97d51.stex" ]
+source_file="res://assets/Empty (1).png"
+dest_files=[ "res://.import/Empty (1).png-54a0d209477227987bbd92a5c979d36c.stex" ]
 
 [params]
 
