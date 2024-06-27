@@ -37,7 +37,7 @@ var NPC = true
 var SPEED = 4
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _physics_process(delta):
 	ResidentName.text = details.name
 	if changeTarget.is_stopped():
 		changeTarget.start(randi()%50)

@@ -364,17 +364,18 @@ func reload_level():
 		p.queue_free()
 	get_tree().get_root().remove_child(self)
 	
-func _process(delta):
+func _physics_process(delta):
 	spCam.position = player.position
 	
 
 
 func interact(r):
-	print(r.name)
+	r.generate_quest()
+#	print(r.name)
 	interactPanel.visible = true
 	if r.avatar:
 		interactSprite.frame = r.avatar
-	interactLabel.text = "Name: " + String(r.name) + "\n" + "Age: " + String(r.age) + "\n" + "Culture: " + String(r.culture) + "\n"
+	interactLabel.text = "Name: " + String(r.name) + "\n" + "Age: " + String(r.age) + "\n" + "Culture: " + String(r.culture) + "\n" # + String(r.quests[0].locations_visited) + "\n" + String(r.quests[0].reward) + "\n"
 	interactLabel.text += "Boredom: " + String(r.boredom) + "\n" + "Happiness: " + String(r.happiness) + "\n" + "Wealth: " + String(r.wealth) + "\n" + "Criminality: " + String(r.criminality) + "\n" + "Owner: " + String(r.business_owner) + "\n" + "Knowledge: \n"
 	
 	for t in r.skills:

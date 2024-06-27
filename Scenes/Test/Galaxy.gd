@@ -159,7 +159,9 @@ var skills = [
 				"Armorer",
 				"Weapons Specialist",
 				"Geologist",
-				"Enforcer"
+				"Enforcer",
+				"Farmer",
+				"Theif"
 			 ]
 
 
@@ -225,6 +227,9 @@ var factions = [
 	"Freaks"
 ]
 
+var num_born = 0;
+var num_died = 0
+
 var enneagramCombos = [
 					[1,4,7],
 					[1,7,4],
@@ -275,6 +280,7 @@ class Place:
 	var residents = []
 	var services = []
 	var value = 10000
+	var tax_rate = 1.0
 	var initial_pop = 0
 	var neighbors = []
 	var popular = []
@@ -283,6 +289,7 @@ class Place:
 	var faction = ""
 	var color = ""
 	var culture = ""
+	var piracy_score = 0
 	
 	var services_reference = [
 					"Food",
@@ -313,6 +320,13 @@ class Place:
 		faction = new_faction
 		color = new_color
 		culture = new_culture
+		
+	func macro_economize():
+		value = value - (100 * piracy_score) + (100 * services.size()) - (10 * residents.size())
+		tax_rate = 10000 / value
+		
+		if value < 8000:
+			value = 9000
 		
 	func new_Node(new_pos, new_mass):
 		if !first:
@@ -375,13 +389,12 @@ func getSkill(service_ability):
 	
 class Quest:
 	var title = ""
+	var type = 0
 	var locations_visited = []
 	var description = ""
 	var reward = 0
 	var targets = []
-	
-	func _init(new_title, locations, description, targets):
-		pass
+
 
 class Person:
 	var name = "example1"
@@ -412,6 +425,8 @@ class Person:
 	var criminality = 0
 	var faction_reputations = []
 	var quests = []
+	var homestead_candidate = false
+	
 	
 	func _init(new_name,new_age,new_place, new_enneagram, new_culture, new_skills, new_service_ability):
 		name = new_name
@@ -441,11 +456,46 @@ class Person:
 				likability = likability - 1
 			if s.find("Intimidator") > -1:
 				likability = likability - 1
+			if s.find("Theif") > -1:
+				criminality = criminality + 10
+			if s.find("Farmer") > -1:
+				homestead_candidate = true
 		service_ability = new_service_ability
 	
 	func generate_quest():
+		quests = []
 		if travels.size() > 1:
+			var q = Quest.new()
+			
+			if wealth > 1000:
+				q.type = 1
+				q.title = Array(["Trail of Forgotten Items", "Settling In", "Retrieving Old Goods"])[randi()%3]
+				q.locations_visited.append(travels[travels.size()-2])
+				if travels.size() > 2:
+					q.locations_visited.append(travels[travels.size()-3])
+				if travels.size() > 3:
+					q.locations_visited.append(travels[travels.size()-4])
+				if travels.size() > 4:
+					q.locations_visited.append(travels[travels.size()-5])
+				q.locations_visited.append(travels[travels.size()-1])
+				q.reward = int(100 * q.locations_visited.size() * (wealth/1000))
+				q.description = "I've moved around alot due to disagreements with members of other SpacePorts, I think I'm enjoying " + home + " enough to settle down though. Could you return to the previous places I've lived and retrieve some items I had to leave behind?"
+			else:
+				q.type = 1
+				q.title = Array(["Trail of Forgotten Items", "Settling In", "Retrieving Old Goods"])[randi()%3]
+				q.locations_visited.append(travels[travels.size()-2])
+				if travels.size() > 2:
+					q.locations_visited.append(travels[travels.size()-3])
+				if travels.size() > 3:
+					q.locations_visited.append(travels[travels.size()-4])
+				if travels.size() > 4:
+					q.locations_visited.append(travels[travels.size()-5])
+				q.locations_visited.append(travels[travels.size()-1])
+				q.reward = int(50 * q.locations_visited.size())
+				q.description = "I've moved around alot looking for consistent work, but I think " + home + " has enough work for me to settle down. Unfortunately, I can't yet afford to retrace my travels and retrieve all the items I had to leave behind. Could you return to the previous places I've lived and retrieve some items I had to leave behind?"
 #			collect left behind items
+			quests.append(q)
+#			print("quest generated")
 			pass
 			
 		if foes.size() > 0:
@@ -476,16 +526,17 @@ class Person:
 #			work in that shop
 			pass
 	
-	func survive(services):
+	func survive(services, piracy_score, tax_rate):
 		if (age * .000005) > randf():
 			self.is_queued_for_deletion()
 			print(name, " has died at ", age, " in ", home)
 		age = age + .25
-		self.wealth = self.wealth * .8
+		self.wealth = self.wealth * tax_rate
 		if(self.wealth < 0):
 			self.criminality = self.criminality + 1
 			self.happiness = self.happiness - 1
 			self.boredom = self.boredom - 1
+			self.wealth = self.wealth + (10 * criminality) + (10 * piracy_score)
 		if services.has("DiningHall"):
 			self.wealth = self.wealth - 10
 			self.happiness = self.happiness + 1
@@ -674,11 +725,12 @@ func interact(i,j, c, place):
 			i.lovers.append(j.name);
 			j.lovers.append(i.name);
 			
-		if randi() % 10 == 0 && i.lovers.has(j.name):
+		if randi() % 100 == 0 && i.lovers.has(j.name):
 #			print(place.residents.size())
 			var child = addRandomCharacter(i.home, i.culture)
-			print("A child named ",child.name," is born! in ",i.home)
-			child.age = 0;
+			num_born = num_born + 1
+			print("A child named ",child.name," is born! in ",i.home, " ", num_born)
+			child.age = randi()%18;
 			child.family.append(j.name)
 			child.family.append(i.name)
 			i.family.append(child.name)
@@ -747,9 +799,10 @@ var stop = false;
 
 func genStep(skipper = false):
 	places[currentplace].check_Services()
+	places[currentplace].macro_economize()
 	for c in places[currentplace].residents:
 #		print(c.name)
-		c.survive(places[currentplace].services)
+		c.survive(places[currentplace].services, places[currentplace].piracy_score, places[currentplace].tax_rate)
 		c.work(places[currentplace].services, places[currentplace].services_reference, places[currentplace].residents.size())
 		interact(c, pickRandom(places[currentplace].residents), places[currentplace].culture,places[currentplace]);
 		if !skipper:
@@ -1096,7 +1149,7 @@ func _process(delta):
 	
 	runs = runs + 1
 	
-	if (runs % 1000) == 0:
+	if (runs % 5000) == 0:
 		for a in get_tree().get_nodes_in_group("labels"):
 			a.queue_free()
 		print("updated")

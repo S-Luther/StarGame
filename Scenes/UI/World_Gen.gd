@@ -44,7 +44,7 @@ func difference(arr1, arr2):
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _physics_process(delta):
 	var mousePos = get_global_mouse_position()
 	
 	
