@@ -82,20 +82,6 @@ var BankSkills = [12, 32, 52, 54]
 var ShippingSkills = [2, 14, 15, 30, 31]
 var TheatreSkills = [40, 41,42,43, 48, 49, 50, 18]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 var skills = [
 				"Solderer",
 				"Machiner",
@@ -163,8 +149,6 @@ var skills = [
 				"Farmer",
 				"Theif"
 			 ]
-
-
 
 var extensions = [
 	"ville",
@@ -394,6 +378,8 @@ class Quest:
 	var description = ""
 	var reward = 0
 	var targets = []
+	var shippable = false
+	
 
 
 class Person:
@@ -465,8 +451,9 @@ class Person:
 	func generate_quest():
 		quests = []
 		if travels.size() > 1:
+#			collect left behind items
 			var q = Quest.new()
-			
+		
 			if wealth > 1000:
 				q.type = 1
 				q.title = Array(["Trail of Forgotten Items", "Settling In", "Retrieving Old Goods"])[randi()%3]
@@ -493,14 +480,43 @@ class Person:
 				q.locations_visited.append(travels[travels.size()-1])
 				q.reward = int(50 * q.locations_visited.size())
 				q.description = "I've moved around alot looking for consistent work, but I think " + home + " has enough work for me to settle down. Unfortunately, I can't yet afford to retrace my travels and retrieve all the items I had to leave behind. Could you return to the previous places I've lived and retrieve some items I had to leave behind?"
-#			collect left behind items
+				
+			for s in q.locations_visited.size() - 1:
+				q.targets.append("Storage")
+			q.targets.append(self.name)
 			quests.append(q)
-#			print("quest generated")
+#			print(q.title, "\n", q.description, "\n", q.locations_visited, "\n", q.targets, "\n", q.reward)
 			pass
 			
 		if foes.size() > 0:
 #			capture a foe
-			pass
+			var q = Quest.new()
+			q.type = 2
+			q.title = Array(["Retrieving A Foe", "Take Justice Into Your Own Hands", "Revengeful Retrieval"])[randi()%3]
+			q.description = "The Police are useless and I need an old enemy to pay back some debts. Can you help me?"
+			q.reward = 1000
+			var foe = foes[randi()%foes.size()]
+			var place = ""
+			
+			
+			
+			for k in knowledge:
+				if k.find("SpacePort") > -1:
+					place = k
+					place = place.replace("SpacePort ", "")
+				if k == foe:
+					break
+					
+			q.description = q.description + " The last place I saw them was on " + place + "."
+
+			q.locations_visited.append(place)
+			q.locations_visited.append(home)
+			q.targets.append(foe)
+			q.targets.append(self.name)
+			
+			quests.append(q)
+			
+			print(q.title, "\n", q.description, "\n", q.locations_visited, "\n", q.targets, "\n", q.reward)
 			
 		if service_ability[5] > 5:
 #			collect minerals
@@ -796,7 +812,6 @@ func interact(i,j, c, place):
 	
 var stop = false;
 
-
 func genStep(skipper = false):
 	places[currentplace].check_Services()
 	places[currentplace].macro_economize()
@@ -1085,12 +1100,6 @@ func build():
 		for l in places:
 			if neighb.has(l.name):
 				nodeCon.append([l, p, spacing])
-
-				
-			
-	
-	
-
 	
 var names_backup
 
@@ -1101,10 +1110,6 @@ func _ready():
 	self.add_to_group("Galaxy")
 	build()
 
-
-		
-	
-	
 var unique_cultures = [10000,10000,10000];
 var unique_factions = []
 var fullStop = false
