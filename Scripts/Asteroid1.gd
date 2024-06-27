@@ -21,7 +21,7 @@ var velocity = Vector2()
 func ready():
 	pass
 		
-func _physics_process(delta):
+func _process(delta):
 	if mined:
 		
 		self.position = self.position.linear_interpolate(get_tree().get_nodes_in_group("player")[0].global_position, .08)

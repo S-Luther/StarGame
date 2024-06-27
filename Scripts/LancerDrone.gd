@@ -82,11 +82,13 @@ func _physics_process(delta):
 	if !paused:
 		runs = runs + 1
 		if runs % 10 == 0:
-			if(self.global_position.distance_to(get_tree().get_nodes_in_group("player")[0].global_position)>4000):
+			if(self.global_position.distance_to(get_tree().get_nodes_in_group("player")[0].global_position)>6000):
 	#			self.modulate.s = 100
 				collision.disabled = true
+				self.visible = false
 			else:
 	#			self.modulate.s = 0
+				self.visible = true
 				collision.disabled = false
 		
 	#	print((self.velocity - get_tree().get_nodes_in_group("player")[0].global_position).angle(), " - ", self.velocity.angle())

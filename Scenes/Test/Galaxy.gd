@@ -329,7 +329,7 @@ class Place:
 		
 		for i in 12:
 			var threshhold = 50
-			if (residents.size()*2) < 50:
+			if (residents.size()*2) < 50 && residents.size() > 4:
 				threshhold = (residents.size()*2)
 			if ability_copy.max() >= threshhold:
 				services.append(services_reference[ability_copy.find(ability_copy.max())])
@@ -423,9 +423,10 @@ class Person:
 		enneagram = new_enneagram
 		culture = new_culture
 		skills = new_skills
+		if culture == "F":
+			skills.append("Novice Farmer")
 		
 		for s in skills:
-			
 			if s.find("Conversationalist") > -1:
 				likability = likability + 1
 			if s.find("Comedian") > -1:
@@ -492,7 +493,7 @@ class Person:
 #			capture a foe
 			var q = Quest.new()
 			q.type = 2
-			q.title = Array(["Retrieving A Foe", "Take Justice Into Your Own Hands", "Revengeful Retrieval"])[randi()%3]
+			q.title = Array(["Retrieving A Foe", "Take Justice Into Your Own Hands", "Revengeful Retrieval", "Old Foe Hunting"])[randi()%4]
 			q.description = "The Police are useless and I need an old enemy to pay back some debts. Can you help me?"
 			q.reward = 1000
 			var foe = foes[randi()%foes.size()]
@@ -507,7 +508,7 @@ class Person:
 				if k == foe:
 					break
 					
-			q.description = q.description + " The last place I saw them was on " + place + "."
+			q.description = q.description + " The last place I saw " + foe + " was on " + place + "."
 
 			q.locations_visited.append(place)
 			q.locations_visited.append(home)

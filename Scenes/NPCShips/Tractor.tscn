@@ -520,7 +520,6 @@ scale = Vector2( 0.1, 0.1 )
 shape = SubResource( 5 )
 
 [node name="Sprite" type="Sprite" parent="."]
-modulate = Color( 1, 0.721362, 0.721362, 1 )
 position = Vector2( 30.8, -23.6998 )
 rotation = 1.5708
 scale = Vector2( 0.25, 0.25 )
@@ -581,4 +580,4 @@ frame = 1
 
 [node name="Node2D" parent="." instance=ExtResource( 6 )]
 position = Vector2( 1.4, -0.200005 )
-z_index = -1
+z_index = 1

@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends Area2D
 
 
 # Declare member variables here. Examples:
@@ -29,3 +29,14 @@ func hit():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+
+func _on_KinematicBody2D_area_entered(area):
+	if !get_tree().get_nodes_in_group("World")[0].paused:
+		hasHappened = true
+		
+		get_tree().get_root().add_child(SpacePort.instance())
+		for p in get_tree().get_nodes_in_group("World"):
+			p.pause()
+	#	get_tree().get_root().
+		get_tree().get_nodes_in_group("SpacePortCamera")[0].current = true

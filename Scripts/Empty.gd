@@ -5,25 +5,23 @@ extends Area2D
 # var a = 2
 # var b = "text"
 
-var active = false
+onready var anim = $AnimationPlayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	self.add_to_group("tail")
-#	connect("body_entered", self, "_on_body_entered")
-	
 	pass # Replace with function body.
 
-func _on_body_entered(other):
-	if active:
-		if other.slice():
-			other.slice()
-		
-func makeActive():
-	active = true
 
-func makeInactive():
-	active = false
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+
+func _on_Area2D_area_entered(area):
+	print(area.get_overlapping_bodies())
+	var p = area.get_overlapping_bodies()
+	for a in area.get_overlapping_bodies():
+		if !a.NPC:
+			anim.play("blinkin")
+			print("Entered into a spot")
+	pass # Replace with function body.

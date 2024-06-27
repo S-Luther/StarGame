@@ -131,6 +131,7 @@ func _ready():
 	var queue = []
 	var points = []
 	var cities = []
+	var finished_planets = []
 	var bus_queue = []
 	for p in get_tree().get_nodes_in_group("mapPlanets"):
 		points.append((p.position - Vector2(800, 500))*1000)
@@ -198,7 +199,8 @@ func _ready():
 		var temp = rng.randi_range(100, 150) * coeff
 		planet.scale = Vector2(temp,temp)
 
-		self.add_child(planet)
+#		self.add_child(planet)
+		finished_planets.append(planet)
 		planet.add_to_group("planets")
 		
 		if Player.position.distance_to(pos) < 2000:
@@ -529,11 +531,9 @@ func _ready():
 			for n in nodes:
 				if farmer == null:
 					for r in n.residents:
-						if farmer == null:
-							for s in r.skills:
-								if s.find("Farmer") > -1:
-									farmer = r
-									n.residents.erase(r)
+						if r.homestead_candidate:
+							farmer = r
+							n.residents.erase(r)
 				else:
 					break
 					
@@ -608,7 +608,7 @@ func _ready():
 			drone.position = pirateBay.position
 			drone.pre_target = raiding_queue[1]
 			drone.origin = pirateBay.position
-			drone.z_index = 0
+			drone.z_index = 2
 			drone.queue = raiding_queue
 			drone.health = 10
 			drone.MAX = 2500
@@ -685,6 +685,9 @@ func _ready():
 		line.add_point(l)
 	line.width = 5
 	self.add_child(line)
+	
+	for f in finished_planets:
+		self.add_child(f)
 #	for i in 20:
 #		var asteroid = Asteroid5.instance()
 #		var rng = RandomNumberGenerator.new()
