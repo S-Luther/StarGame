@@ -233,6 +233,7 @@ func _ready():
 				if planet.position.distance_to(((i.pos - Vector2(800, 500)) * 1000)) != 0:
 					line.width = 10000000 / planet.position.distance_to(((i.pos - Vector2(800, 500)) * 1000))
 				line.z_index = -1
+				line.add_to_group("NavLines")
 				self.add_child(line)
 			elif (n.neighbors.has(i.name)):
 				var line = Line2D.new()
@@ -245,6 +246,7 @@ func _ready():
 					line.width = 10000000 / planet.position.distance_to(((i.pos - Vector2(800, 500)) * 1000))
 				
 				line.z_index = -1
+				line.add_to_group("NavLines")
 				self.add_child(line)
 
 		
@@ -504,7 +506,7 @@ func _ready():
 		asteroid.rotate(rng.randi_range(0, 360))
 		self.add_child(asteroid)
 		asteroid.add_to_group("asteroids")
-	for i in 100:
+	for i in 200:
 		var farm = Farm.instance()
 
 		rng.randomize()
@@ -527,18 +529,31 @@ func _ready():
 			farm.queue_free()
 		else:
 			var farmer = null
-		
+			var family_members = []
+			var lovers = []
+			var family = []
 			for n in nodes:
 				if farmer == null:
+					
 					for r in n.residents:
-						if r.homestead_candidate:
+						if r.homestead_candidate && farmer == null:
+							family_members = r.family
+							lovers = r.lovers
 							farmer = r
+							family.append(farmer)
 							n.residents.erase(r)
+						for m in family_members:
+							if r.name == m:
+								family.append(r)
+							
+						for l in lovers:
+							if r.name == l:
+								family.append(r)
 				else:
 					break
 					
-			if farmer != null:
-				farm.residents.append(farmer)
+			if family.size() > 0:
+				farm.residents = family
 				farm.add_to_group("planets")
 				points.append(farm.position + Vector2(200,200))
 				self.add_child(farm)
@@ -622,6 +637,7 @@ func _ready():
 			raidingline.width = 15
 			raidingline.default_color = Color.gold
 			self.add_child(raidingline)
+			raidingline.add_to_group("NavLines")
 			self.add_child(pirateBay)
 		
 	points.shuffle()
@@ -637,6 +653,7 @@ func _ready():
 		tractorline.add_point(l)
 	tractorline.width = 10
 	tractorline.default_color = Color.crimson
+	tractorline.add_to_group("NavLines")
 	self.add_child(tractorline)
 	
 	for i in int(queue.size() / 5):
@@ -684,6 +701,7 @@ func _ready():
 	for l in bus_queue:
 		line.add_point(l)
 	line.width = 5
+	line.add_to_group("NavLines")
 	self.add_child(line)
 	
 	for f in finished_planets:

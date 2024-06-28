@@ -59,7 +59,7 @@ tracks/1/keys = {
 "values": [ -360.0, 360.0 ]
 }
 
-[node name="Node2D" type="KinematicBody2D"]
+[node name="Node2D" type="Area2D"]
 scale = Vector2( 2.5, 2.5 )
 script = ExtResource( 2 )
 
@@ -84,3 +84,5 @@ autoplay = "Spin"
 playback_speed = -0.1
 anims/RESET = SubResource( 1 )
 anims/Spin = SubResource( 2 )
+
+[connection signal="area_entered" from="." to="." method="_on_Node2D_area_entered"]

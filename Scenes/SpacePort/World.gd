@@ -75,6 +75,7 @@ var player
 func _ready():
 	randomize()
 	generate_level()
+#	self.position = Vector2(999999,999999)
 	
 func getRandomColor():
 	var letters = '0123456789ABCDEF';
@@ -358,6 +359,10 @@ func generate_level():
 
 
 func reload_level():
+	for p in get_tree().get_nodes_in_group("planets"):
+		p.visible = true
+	for p in get_tree().get_nodes_in_group("NavLines"):
+		p.visible = true
 	get_tree().get_nodes_in_group("cam")[0].current = true
 	get_tree().get_nodes_in_group("World")[0].unpause();
 	for p in get_tree().get_nodes_in_group("people"):

@@ -1377,24 +1377,24 @@ func _process(delta):
 							
 #						print("Some context on the universe: ")
 						
-						context = "Some context on the universe: "
-						
-						for n in nodes:
-							context = context + n.name+ " is a location with "+ String(n.residents.size()) + " residents. It has the following services: "+ String(n.services)+ "and is of the faction: "+ n.faction
-#							print(n.name, " is a location with ", n.residents.size(), " residents. It has the following services: ", n.services, "and is of the faction: ", n.faction)
-						
-						individual = nodes[randi()% nodes.size()].residents[0]
-						
-						personcontext = "You are " + individual.name + " from " + individual.home +" Answer as, " + individual.name + ", the assistant, only. "
-						personcontext = personcontext + "You are a "
-						for s in individual.skills:
-							personcontext = personcontext + s + ", "
-						personcontext = personcontext + "."
-						
-						personcontext = personcontext + "You know "
-						for k in individual.knowledge:
-							personcontext = personcontext + k + ", "
-						personcontext = personcontext + "."
+#						context = "Some context on the universe: "
+#
+#						for n in nodes:
+#							context = context + n.name+ " is a location with "+ String(n.residents.size()) + " residents. It has the following services: "+ String(n.services)+ "and is of the faction: "+ n.faction
+##							print(n.name, " is a location with ", n.residents.size(), " residents. It has the following services: ", n.services, "and is of the faction: ", n.faction)
+#
+##						individual = nodes[randi()% nodes.size()].residents[0]
+#
+#						personcontext = "You are " + individual.name + " from " + individual.home +" Answer as, " + individual.name + ", the assistant, only. "
+#						personcontext = personcontext + "You are a "
+#						for s in individual.skills:
+#							personcontext = personcontext + s + ", "
+#						personcontext = personcontext + "."
+#
+#						personcontext = personcontext + "You know "
+#						for k in individual.knowledge:
+#							personcontext = personcontext + k + ", "
+#						personcontext = personcontext + "."
 
 					else:
 						line.queue_free()

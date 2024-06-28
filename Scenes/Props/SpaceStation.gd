@@ -34,7 +34,10 @@ func hit():
 func _on_KinematicBody2D_area_entered(area):
 	if !get_tree().get_nodes_in_group("World")[0].paused:
 		hasHappened = true
-		
+		for p in get_tree().get_nodes_in_group("planets"):
+			p.visible = false
+		for p in get_tree().get_nodes_in_group("NavLines"):
+			p.visible = false
 		get_tree().get_root().add_child(SpacePort.instance())
 		for p in get_tree().get_nodes_in_group("World"):
 			p.pause()

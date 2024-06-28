@@ -63,6 +63,18 @@ func _process(delta):
 		overview = o
 	for p in get_tree().get_nodes_in_group("Player"):
 		Player = p
+		
+	if get_tree().get_nodes_in_group("FarmCam").size() > 0:
+		if get_tree().get_nodes_in_group("FarmCam")[0].current:
+			if toggle:
+				var life = get_tree().get_nodes_in_group("life")[0]
+				var new_life = life.hearts + .25;
+				life.set_hearts(new_life)
+				velocity2 = Vector2.ZERO
+				self.position = self.position + Vector2(1500,0)
+				toggle = false
+	if get_tree().get_nodes_in_group("cam")[0].current:
+		toggle = true
 	
 	if get_tree().get_nodes_in_group("SpacePortCamera").size() > 0:
 		if get_tree().get_nodes_in_group("SpacePortCamera")[0].current:

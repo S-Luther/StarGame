@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends Area2D
 
 class_name Farm
 
@@ -24,6 +24,9 @@ var levels = [
 			]
 			
 
+
+
+var SpacePort = preload("res://Scenes/SpacePort/Farm.tscn")
 
 func _ready():
 
@@ -63,3 +66,20 @@ func _process(delta):
 	if runs % 10 == 0:
 		produce = produce + (1 * productivity) + 1
 	
+
+
+func _on_Node2D_area_entered(area):
+	if !get_tree().get_nodes_in_group("World")[0].paused:
+		hasHappened = true
+		var sp = SpacePort.instance()
+		sp.z_index = 999999
+		sp.residents = residents
+		get_tree().get_root().add_child(sp)
+		for p in get_tree().get_nodes_in_group("World"):
+			p.pause()
+		for p in get_tree().get_nodes_in_group("planets"):
+			p.visible = false
+		for p in get_tree().get_nodes_in_group("NavLines"):
+			p.visible = false
+	#	get_tree().get_root().
+		get_tree().get_nodes_in_group("FarmCam")[0].current = true
