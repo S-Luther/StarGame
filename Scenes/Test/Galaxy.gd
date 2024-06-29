@@ -82,20 +82,6 @@ var BankSkills = [12, 32, 52, 54]
 var ShippingSkills = [2, 14, 15, 30, 31]
 var TheatreSkills = [40, 41,42,43, 48, 49, 50, 18]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 var skills = [
 				"Solderer",
 				"Machiner",
@@ -159,10 +145,10 @@ var skills = [
 				"Armorer",
 				"Weapons Specialist",
 				"Geologist",
-				"Enforcer"
+				"Enforcer",
+				"Farmer",
+				"Theif"
 			 ]
-
-
 
 var extensions = [
 	"ville",
@@ -225,6 +211,9 @@ var factions = [
 	"Freaks"
 ]
 
+var num_born = 0;
+var num_died = 0
+
 var enneagramCombos = [
 					[1,4,7],
 					[1,7,4],
@@ -274,7 +263,9 @@ class Place:
 	var est = 0
 	var residents = []
 	var services = []
-	var value = 1
+	var value = 10000
+	var tax_rate = 1.0
+	var initial_pop = 0
 	var neighbors = []
 	var popular = []
 	var unpopular = []
@@ -282,6 +273,7 @@ class Place:
 	var faction = ""
 	var color = ""
 	var culture = ""
+	var piracy_score = 0
 	
 	var services_reference = [
 					"Food",
@@ -313,21 +305,52 @@ class Place:
 		color = new_color
 		culture = new_culture
 		
-	func new_Node(new_pos):
+	func macro_economize():
+		value = value - (100 * piracy_score) + (100 * services.size()) - (10 * residents.size())
+		tax_rate = 10000 / value
+		
+		if value < 8000:
+			value = 9000
+		
+	func new_Node(new_pos, new_mass):
 		if !first:
 			pos = new_pos
-		mass = (2 * PI * residents.size())/1.5
+		mass = new_mass
 		return self
 	
 	func check_Services():
-		var ability_copy = service_ability.duplicate()
+		self.service_ability = [0,0,0,0,0,0,0,0,0,0,0,0]
+		for r in residents:
+			for s in r.service_ability.size():
+				self.service_ability[s] = self.service_ability[s] + r.service_ability[s]
+		
+		var ability_copy = self.service_ability.duplicate()
 		services = []
+		
 		for i in 12:
-			if ability_copy.max() > 50:
+			var threshhold = 50
+			if (residents.size()*2) < 50 && residents.size() > 4:
+				threshhold = (residents.size()*2)
+			if ability_copy.max() >= threshhold:
 				services.append(services_reference[ability_copy.find(ability_copy.max())])
 				var n = ability_copy.find(ability_copy.max())
 				ability_copy[n] = ability_copy[n] - 100
-	
+				
+		for p in residents:
+			p.business_owner = false
+		if residents.size() > 0:
+			for s in services:
+				for r in services_reference.size():
+					var ability_max = 0
+					var person = residents[0]
+					if services_reference[r] == s:
+						for p in residents:
+							
+							if p.service_ability[r] > ability_max:
+								ability_max = p.service_ability[r]
+								person = p
+						person.business_owner = true
+		
 	func update():
 		var vel = force / mass
 		pos = pos + vel
@@ -347,15 +370,33 @@ func getSkill(service_ability):
 	
 	
 	return levels[level] + " " + skills[skill]
+	
+class Quest:
+	var title = ""
+	var type = 0
+	var locations_visited = []
+	var description = ""
+	var reward = 0
+	var targets = []
+	var shippable = false
+	
+
 
 class Person:
 	var name = "example1"
 	var service_ability = [0,0,0,0,0,0,0,0,0,0,0,0]
 	var age = 0
+	var likability = 0
+	var business_owner = false
+	var wealth = 5000
 	var memories = []
 	var thoughts = []
+	var acquaintances = []
+	var annoyances = []
 	var friends = []
 	var enemies = []
+	var lovers = []
+	var foes = []
 	var family = []
 	var knowledge = []
 	var skills = []
@@ -367,6 +408,11 @@ class Person:
 	var happiness = 50
 	var culture = ""
 	var avatar = 0
+	var criminality = 0
+	var faction_reputations = []
+	var quests = []
+	var homestead_candidate = false
+	
 	
 	func _init(new_name,new_age,new_place, new_enneagram, new_culture, new_skills, new_service_ability):
 		name = new_name
@@ -377,7 +423,200 @@ class Person:
 		enneagram = new_enneagram
 		culture = new_culture
 		skills = new_skills
+		if culture == "F":
+			skills.append("Novice Farmer")
+		
+		for s in skills:
+			if s.find("Conversationalist") > -1:
+				likability = likability + 1
+			if s.find("Comedian") > -1:
+				likability = likability + 1
+			if s.find("Speaker") > -1:
+				likability = likability + 1
+			if s.find("Leader"):
+				likability = likability + 1
+			if s.find("Flatterer") > -1:
+				likability = likability + 1
+			if s.find("Liar") > -1:
+				likability = likability + 1
+			if s.find("Schemer") > -1:
+				likability = likability - 1
+			if s.find("Intimidator") > -1:
+				likability = likability - 1
+			if s.find("Theif") > -1:
+				criminality = criminality + 10
+			if s.find("Farmer") > -1:
+				homestead_candidate = true
 		service_ability = new_service_ability
+	
+	func generate_quest():
+		quests = []
+		if travels.size() > 1:
+#			collect left behind items
+			var q = Quest.new()
+		
+			if wealth > 1000:
+				q.type = 1
+				q.title = Array(["Trail of Forgotten Items", "Settling In", "Retrieving Old Goods"])[randi()%3]
+				q.locations_visited.append(travels[travels.size()-2])
+				if travels.size() > 2:
+					q.locations_visited.append(travels[travels.size()-3])
+				if travels.size() > 3:
+					q.locations_visited.append(travels[travels.size()-4])
+				if travels.size() > 4:
+					q.locations_visited.append(travels[travels.size()-5])
+				q.locations_visited.append(travels[travels.size()-1])
+				q.reward = int(100 * q.locations_visited.size() * (wealth/1000))
+				q.description = "I've moved around alot due to disagreements with members of other SpacePorts, I think I'm enjoying " + home + " enough to settle down though. Could you return to the previous places I've lived and retrieve some items I had to leave behind?"
+			else:
+				q.type = 1
+				q.title = Array(["Trail of Forgotten Items", "Settling In", "Retrieving Old Goods"])[randi()%3]
+				q.locations_visited.append(travels[travels.size()-2])
+				if travels.size() > 2:
+					q.locations_visited.append(travels[travels.size()-3])
+				if travels.size() > 3:
+					q.locations_visited.append(travels[travels.size()-4])
+				if travels.size() > 4:
+					q.locations_visited.append(travels[travels.size()-5])
+				q.locations_visited.append(travels[travels.size()-1])
+				q.reward = int(50 * q.locations_visited.size())
+				q.description = "I've moved around alot looking for consistent work, but I think " + home + " has enough work for me to settle down. Unfortunately, I can't yet afford to retrace my travels and retrieve all the items I had to leave behind. Could you return to the previous places I've lived and retrieve some items I had to leave behind?"
+				
+			for s in q.locations_visited.size() - 1:
+				q.targets.append("Storage")
+			q.targets.append(self.name)
+			quests.append(q)
+#			print(q.title, "\n", q.description, "\n", q.locations_visited, "\n", q.targets, "\n", q.reward)
+			pass
+			
+		if foes.size() > 0:
+#			capture a foe
+			var q = Quest.new()
+			q.type = 2
+			q.title = Array(["Retrieving A Foe", "Take Justice Into Your Own Hands", "Revengeful Retrieval", "Old Foe Hunting"])[randi()%4]
+			q.description = "The Police are useless and I need an old enemy to pay back some debts. Can you help me?"
+			q.reward = 1000
+			var foe = foes[randi()%foes.size()]
+			var place = ""
+			
+			
+			
+			for k in knowledge:
+				if k.find("SpacePort") > -1:
+					place = k
+					place = place.replace("SpacePort ", "")
+				if k == foe:
+					break
+					
+			q.description = q.description + " The last place I saw " + foe + " was on " + place + "."
+
+			q.locations_visited.append(place)
+			q.locations_visited.append(home)
+			q.targets.append(foe)
+			q.targets.append(self.name)
+			
+			quests.append(q)
+			
+			print(q.title, "\n", q.description, "\n", q.locations_visited, "\n", q.targets, "\n", q.reward)
+			
+		if service_ability[5] > 5:
+#			collect minerals
+			pass
+			
+		if service_ability[6] > 5:
+#			collect liquids
+			pass
+			
+		if service_ability[2] > 5:
+#			collect liquids and minerals
+			pass
+			
+		if criminality > 5:
+#			delivery
+			pass
+			
+		if culture == "F":
+#			simple verification mission
+			pass
+			
+		if business_owner:
+#			work in that shop
+			pass
+	
+	func survive(services, piracy_score, tax_rate):
+		if (age * .000005) > randf():
+			self.is_queued_for_deletion()
+			print(name, " has died at ", age, " in ", home)
+		age = age + .25
+		self.wealth = self.wealth * tax_rate
+		if(self.wealth < 0):
+			self.criminality = self.criminality + 1
+			self.happiness = self.happiness - 1
+			self.boredom = self.boredom - 1
+			self.wealth = self.wealth + (10 * criminality) + (10 * piracy_score)
+		if services.has("DiningHall"):
+			self.wealth = self.wealth - 10
+			self.happiness = self.happiness + 1
+		else:
+			self.wealth = self.wealth - 50
+			self.happiness = self.happiness - 5
+		if self.wealth > 400:
+			if services.has("Theatre"):
+				self.wealth = self.wealth - 50
+				self.happiness = self.happiness + 20
+				self.boredom = self.boredom - 40
+			else:
+				self.happiness = self.happiness - 1
+				self.boredom = self.boredom + 1
+			#Go to the theatre ^^
+		if self.wealth > 1000:
+			if services.has("Bank"):
+				self.wealth = self.wealth*1.03
+			else:
+				self.wealth = wealth*.98
+			
+
+	
+	func work(services, service_reference, fellows):
+#		print(self.wealth)
+#		print(self.service_ability)
+#		print(services)
+#		print(self.wealth)
+		if business_owner:
+			self.wealth = self.wealth + (fellows * self.service_ability.max())
+		else:
+			for s in self.service_ability.size():
+				if self.service_ability[s] > 0:
+					if services.has(service_reference[s]):
+						self.wealth = self.wealth + (10 * self.service_ability[s])
+						
+						if self.service_ability[s] < 15:
+							self.happiness = self.happiness + 10
+							self.boredom = self.boredom - 10
+							self.service_ability[s] = self.service_ability[s] * 1.01
+						else:
+							self.happiness = self.happiness + 4
+							self.boredom = self.boredom - 5
+							for k in self.skills:
+								
+								if k.find("Novice") > -1:
+									k.erase(k.find("Novice"), "Novice".length())
+									k = "Master" + k
+								if k.find("Adequite") > -1:
+									k.erase(k.find("Adequite"), "Adequite".length())
+									k = "Master" + k
+								if k.find("Skilled") > -1:
+									k.erase(k.find("Skilled"), "Skilled".length())
+									k = "Master" + k
+								if k.find("Knowledgable") > -1:
+									k.erase(k.find("Knowledgable"), "Knowledgable".length())
+									k = "Master" + k
+				else:
+					self.happiness = self.happiness - 1
+					self.boredom = self.boredom + 1
+		pass
+		
+	
 
 
 
@@ -469,9 +708,9 @@ func newBase(seedCharacter):
 			places[currentplace].service_ability[s] = places[currentplace].service_ability[s] + p.service_ability[s]
 #		print(places[currentplace].residents[places[currentplace].residents.size()-1].name)
 
-var cultModifier = 1
+var cultModifier = 20
 
-func interact(i,j, c):
+func interact(i,j, c, place):
 	var iType = i.enneagram[randi()%3];
 	var jType = j.enneagram[randi()%3];
 	
@@ -492,10 +731,36 @@ func interact(i,j, c):
 
 	if (enneagramCompat[iType-1].has(jType)):
 		if (firstTime):
+			i.acquaintances.append(j.name);
+			j.acquaintances.append(i.name);
+		
+		if randi() % 100 == 0 && i.acquaintances.has(j.name):
 			i.friends.append(j.name);
 			j.friends.append(i.name);
-		
+			
+		if randi() % 100 == 0 && i.friends.has(j.name):
+			i.lovers.append(j.name);
+			j.lovers.append(i.name);
+			
+		if randi() % 100 == 0 && i.lovers.has(j.name):
+#			print(place.residents.size())
+			var child = addRandomCharacter(i.home, i.culture)
+			num_born = num_born + 1
+			print("A child named ",child.name," is born! in ",i.home, " ", num_born)
+			child.age = randi()%18;
+			child.family.append(j.name)
+			child.family.append(i.name)
+			i.family.append(child.name)
+			j.family.append(child.name)
+			place.residents.append(child)
+#			print(place.residents.size())
+			
+			
+			
+			
+			
 #        console.log(i.name + " is getting along with " + j.name)
+		i.likability = i.likability + 1
 		i.thoughts.append(i.name+" had a positive experience interacting with "+j.name);
 		j.thoughts.append(j.name+" had a positive experience interacting with "+i.name);
 		i.happiness = i.happiness + 2;
@@ -505,11 +770,21 @@ func interact(i,j, c):
 		j.boredom = j.boredom - 2;
 
 	elif (enneagramNonCompat[iType-1].has(jType)):
-		if(firstTime):
+		if (firstTime):
+			i.annoyances.append(j.name);
+		
+		if randi() % 10 == 0 && i.annoyances.has(j.name):
+			j.happiness = j.happiness - 5;
 			i.enemies.append(j.name);
-			j.enemies.append(i.name);
+			
+		if randi() % 10 == 0 && i.enemies.has(j.name):
+			j.happiness = j.happiness - 10;
+			i.foes.append(j.name);
+
+			
 		
 #		console.log(i.name + " is annoyed by " + j.name)
+		j.likability = j.likability - 1
 		i.thoughts.append(i.name+" had a negative experience interacting with "+j.name);
 		j.thoughts.append(j.name+" had a negative experience interacting with "+i.name);
 
@@ -538,11 +813,14 @@ func interact(i,j, c):
 	
 var stop = false;
 
-
 func genStep(skipper = false):
+	places[currentplace].check_Services()
+	places[currentplace].macro_economize()
 	for c in places[currentplace].residents:
 #		print(c.name)
-		interact(c, pickRandom(places[currentplace].residents), places[currentplace].culture);
+		c.survive(places[currentplace].services, places[currentplace].piracy_score, places[currentplace].tax_rate)
+		c.work(places[currentplace].services, places[currentplace].services_reference, places[currentplace].residents.size())
+		interact(c, pickRandom(places[currentplace].residents), places[currentplace].culture,places[currentplace]);
 		if !skipper:
 			if c.happiness<10:
 				stop = true;
@@ -563,6 +841,7 @@ func genSim(steps):
 			places[currentplace].residents.pop_at(index);
 			for i in places[currentplace].service_ability.size():
 				places[currentplace].service_ability[i] = places[currentplace].service_ability[i] - nomad.service_ability[i]
+			nomad.wealth = nomad.wealth - 100
 			newBase(nomad);
 			stop = false;
 		else:
@@ -573,15 +852,17 @@ func findPlaceByName(placeName):
 		if(places[i].name == placeName):
 			return i;
 		
-func cleanStep(residents, cult):
+func cleanStep(residents, cult, place):
 	for c in residents:
 		if(!stop):
-			interact(c, pickRandom(residents), cult);
+			interact(c, pickRandom(residents), cult, place);
 			if(c.happiness<30 or c.boredom>100):
 				nomad = c;
+				nomad.wealth = nomad.wealth - 100
 				stop = true;
 			elif(c.happiness>3000 or c.boredom<-3000):
 				nomad = c;
+				nomad.wealth = nomad.wealth - 100
 				stop = true;
 
 func cleanSim(steps):
@@ -603,6 +884,7 @@ func cleanSim(steps):
 						nomad.knowledge.append("SpacePort " + newHome)
 				nomad.boredom = 50;
 				nomad.happiness = 50;
+				nomad.wealth = nomad.wealth - 100
 				
 
 				places[findPlaceByName(newHome)].residents.append(nomad);
@@ -614,7 +896,7 @@ func cleanSim(steps):
 					places[findPlaceByName(newHome)].service_ability[n] = places[findPlaceByName(newHome)].service_ability[n] + nomad.service_ability[n]
 				stop = false;
 			
-			cleanStep(p.residents, p.culture)
+			cleanStep(p.residents, p.culture, p)
 			
 func getRandomColor():
 	var letters = '0123456789ABCDEF';
@@ -725,6 +1007,7 @@ func clash():
 				line.width = 4
 				add_child(line)
 				line.add_to_group("lines")
+				line.add_to_group("conflictlines")
 				
 				
 				
@@ -736,7 +1019,7 @@ func clash():
 		   
 #var t = Timer.new()
 
-var size = 5000;
+var size = 180;
 
 var finish = false
 
@@ -744,7 +1027,7 @@ var collisions = 0;
 
 func getNodes() -> Array:
 	return nodes
-
+var mass = 200
 var spacing = 100;
 var price_count = 0
 var queue = []
@@ -813,17 +1096,11 @@ func build():
 	for p in places:
 		p.check_Services()
 		var pos = Vector2(randi()%1600, randi()%1000)
-		nodes.append(p.new_Node(pos))
+		nodes.append(p.new_Node(pos, mass))
 		var neighb = p.neighbors
 		for l in places:
 			if neighb.has(l.name):
 				nodeCon.append([l, p, spacing])
-
-				
-			
-	
-	
-
 	
 var names_backup
 
@@ -834,10 +1111,6 @@ func _ready():
 	self.add_to_group("Galaxy")
 	build()
 
-
-		
-	
-	
 var unique_cultures = [10000,10000,10000];
 var unique_factions = []
 var fullStop = false
@@ -871,11 +1144,46 @@ func array_unique(array: Array) -> Array:
 	
 var TSPruns = 0
 
+var context = ""
+var personcontext = ""
+
 func _process(delta):
 	
+	var individual 
+
 	var labels = get_tree().get_nodes_in_group("labels")
 	
 	runs = runs + 1
+	
+	if (runs % 5000) == 0:
+		for a in get_tree().get_nodes_in_group("labels"):
+			a.queue_free()
+		print("updated")
+		for p in nodes:
+			var label = Label.new()
+					
+			label.text = "      "+p.name+"   " + String(p.residents.size()) + "  " + p.culture
+	#		print((label.text.length()))
+			label.visible = false
+			label.set_position(p.pos + Vector2((label.text.length()) * -8,20))
+	#		label.set_position(p.pos)
+			
+			label.rect_scale = Vector2(3,3);
+	#		label.add_font_override("font", dynamic_font)
+			self.add_child(label)
+			label.add_to_group("labels")
+			var neighb = p.neighbors
+			for l in places:
+				if neighb.has(l.name):
+					if p.pos.distance_to(l.pos) > 200:
+						p.neighbors.erase(l.name)
+						l.neighbors.erase(p.name)
+	
+	
+	if nodes.size() < 5:
+		runs = 2000
+		
+	
 	
 	if runs < 1000:
 		for a in get_tree().get_nodes_in_group("lines"):
@@ -891,7 +1199,7 @@ func _process(delta):
 #			line.width = 1
 #			add_child(line)
 #			line.add_to_group("lines")
-			
+		
 		applyForces(nodes)
 		
 
@@ -921,28 +1229,28 @@ func _process(delta):
 			asteroidm.add_to_group("mapPlanets")
 			
 		
-	if runs == 1000:
-		
-		
-		for p in places:
-			var label = Label.new()
-					
-			label.text = "      "+p.name+"   " + String(p.residents.size()) + "  " + p.culture
-	#		print((label.text.length()))
-			label.visible = false
-			label.set_position(p.pos + Vector2((label.text.length()) * -8,20))
-	#		label.set_position(p.pos)
-			
-			label.rect_scale = Vector2(3,3);
-	#		label.add_font_override("font", dynamic_font)
-			self.add_child(label)
-			label.add_to_group("labels")
-			var neighb = p.neighbors
-			for l in places:
-				if neighb.has(l.name):
-					if p.pos.distance_to(l.pos) > 200:
-						p.neighbors.erase(l.name)
-						l.neighbors.erase(p.name)
+#	if runs == 1000:
+#
+#
+#		for p in places:
+#			var label = Label.new()
+#
+#			label.text = "      "+p.name+"   " + String(p.residents.size()) + "  " + p.culture
+#	#		print((label.text.length()))
+#			label.visible = false
+#			label.set_position(p.pos + Vector2((label.text.length()) * -8,20))
+#	#		label.set_position(p.pos)
+#
+#			label.rect_scale = Vector2(3,3);
+#	#		label.add_font_override("font", dynamic_font)
+#			self.add_child(label)
+#			label.add_to_group("labels")
+#			var neighb = p.neighbors
+#			for l in places:
+#				if neighb.has(l.name):
+#					if p.pos.distance_to(l.pos) > 200:
+#						p.neighbors.erase(l.name)
+#						l.neighbors.erase(p.name)
 	
 	if !finish && !fullStop && runs > 999:
 		unique_factions.clear()
@@ -950,7 +1258,7 @@ func _process(delta):
 	#
 #		t.start(.5)
 		clash()
-		cleanSim(50)
+		cleanSim(5)
 
 
 		for a in get_tree().get_nodes_in_group("mapPlanets"):
@@ -984,7 +1292,8 @@ func _process(delta):
 			asteroidm.add_to_group("mapPlanets")
 		logs = "Astrae:" + String(unique_cultures[0]) + ", Facsima:" + String(unique_cultures[1]) + ", Eccles:" + String(unique_cultures[2]) + "\n"+ logs
 		print(unique_cultures[0], ", ", unique_cultures[1], ", ",unique_cultures[2])
-	for a in get_tree().get_nodes_in_group("lines"):
+	conflicts.clear()
+	for a in get_tree().get_nodes_in_group("conflictlines"):
 		conflicts.append(a)
 	if unique_cultures.has(2) || unique_cultures.has(1) || unique_cultures.has(0) || collisions > 10:
 		if collisions > 10 && collisions < 1000:
@@ -1022,10 +1331,10 @@ func _process(delta):
 					asteroidm.z_index = -1
 					self.add_child(asteroidm)
 					asteroidm.add_to_group("mapPlanets")
-				labels = get_tree().get_nodes_in_group("labels")
-				for i in range(places.size()):
-					labels[i].text = "  "+places[i].name+" " + String(places[i].residents.size()) + " " + places[i].culture
-					labels[i].visible = false
+#				labels = get_tree().get_nodes_in_group("labels")
+#				for i in range(places.size()):
+#					labels[i].text = "  "+places[i].name+" " + String(places[i].residents.size()) + " " + places[i].culture
+#					labels[i].visible = false
 				for a in get_tree().get_nodes_in_group("lines"):
 					conflicts.append(a)
 #					a.queue_free()
@@ -1065,6 +1374,27 @@ func _process(delta):
 						queue = []
 						for l in line.points:
 							queue.append((l - Vector2(800, 500)) * 1000)
+							
+#						print("Some context on the universe: ")
+						
+#						context = "Some context on the universe: "
+#
+#						for n in nodes:
+#							context = context + n.name+ " is a location with "+ String(n.residents.size()) + " residents. It has the following services: "+ String(n.services)+ "and is of the faction: "+ n.faction
+##							print(n.name, " is a location with ", n.residents.size(), " residents. It has the following services: ", n.services, "and is of the faction: ", n.faction)
+#
+##						individual = nodes[randi()% nodes.size()].residents[0]
+#
+#						personcontext = "You are " + individual.name + " from " + individual.home +" Answer as, " + individual.name + ", the assistant, only. "
+#						personcontext = personcontext + "You are a "
+#						for s in individual.skills:
+#							personcontext = personcontext + s + ", "
+#						personcontext = personcontext + "."
+#
+#						personcontext = personcontext + "You know "
+#						for k in individual.knowledge:
+#							personcontext = personcontext + k + ", "
+#						personcontext = personcontext + "."
 
 					else:
 						line.queue_free()

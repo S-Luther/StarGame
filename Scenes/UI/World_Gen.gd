@@ -44,7 +44,7 @@ func difference(arr1, arr2):
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _physics_process(delta):
 	var mousePos = get_global_mouse_position()
 	
 	
@@ -157,8 +157,8 @@ func _on_Pause_pressed():
 
 	pass # Replace with function body.
 
-var sizes = [2000, 4000, 6000, 8000, 10000]
-var spacing = [100, 100, 50, 25, -50]
+var sizes = [50, 100, 150, 250, 500]
+var spacing = [50, 100, 200, 250, 300]
 var size_labels = ["Tiny", "Small", "Medium", "Large", "Massive"]
 var size_index = 2
 
@@ -167,7 +167,7 @@ func _on_Button5_pressed():
 	if size_index == 5:
 		size_index = 0
 	galaxy.size = sizes[size_index]
-	galaxy.spacing = spacing[size_index]
+	galaxy.mass = spacing[size_index]
 	sizeB.text = size_labels[size_index]
 
 var ship = 0

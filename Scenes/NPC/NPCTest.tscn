@@ -6,7 +6,7 @@
 [ext_resource path="res://Scenes/Test/Galaxy.tres" type="Theme" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 16.1245
+radius = 21.587
 
 [sub_resource type="Animation" id=2]
 resource_name = "Chat"
@@ -28,6 +28,7 @@ tracks/0/keys = {
 length = 0.001
 
 [node name="Node2D" type="KinematicBody2D"]
+scale = Vector2( 0.8, 0.8 )
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -47,6 +48,7 @@ anims/RESET = SubResource( 3 )
 [node name="Sprite2" type="Sprite" parent="Area2D"]
 modulate = Color( 1, 1, 1, 0 )
 position = Vector2( -7, -37 )
+z_index = 2
 texture = ExtResource( 3 )
 
 [node name="Label" type="Label" parent="Area2D"]

@@ -131,6 +131,7 @@ func _ready():
 	var queue = []
 	var points = []
 	var cities = []
+	var finished_planets = []
 	var bus_queue = []
 	for p in get_tree().get_nodes_in_group("mapPlanets"):
 		points.append((p.position - Vector2(800, 500))*1000)
@@ -157,7 +158,7 @@ func _ready():
 		
 		rng.randomize()
 
-		broadside.position = ((n.pos - Vector2(800, 500)) *1000)
+		broadside.position = ((n.pos - Vector2(800, 500)) *1000) + Vector2(3000,0)
 		broadside.origin = ((n.pos - Vector2(800, 500)) *1000)
 		broadside.z_index = 1
 		broadside.places = nodes
@@ -169,7 +170,7 @@ func _ready():
 		
 		rng.randomize()
 
-		shuttle.position = ((n.pos - Vector2(800, 500)) *1000)
+		shuttle.position = ((n.pos - Vector2(800, 500)) *1000) + Vector2(-3000,0)
 		shuttle.origin = ((n.pos - Vector2(800, 500)) *1000)
 		shuttle.z_index = 1
 		shuttle.places = nodes
@@ -188,6 +189,7 @@ func _ready():
 		l.text = n.name
 		
 		planet.position = pos *1000
+		planet.node = n
 		planet.rotation_degrees = (randi() % 4) * 90
 		planet.z_index = 0
 		l.set_position(planet.position)
@@ -197,7 +199,8 @@ func _ready():
 		var temp = rng.randi_range(100, 150) * coeff
 		planet.scale = Vector2(temp,temp)
 
-		self.add_child(planet)
+#		self.add_child(planet)
+		finished_planets.append(planet)
 		planet.add_to_group("planets")
 		
 		if Player.position.distance_to(pos) < 2000:
@@ -225,10 +228,12 @@ func _ready():
 				var lineColor = Color(i.color)
 				lineColor.a = .05
 				line.default_color = lineColor
+				line.z_index = 0
 
 				if planet.position.distance_to(((i.pos - Vector2(800, 500)) * 1000)) != 0:
 					line.width = 10000000 / planet.position.distance_to(((i.pos - Vector2(800, 500)) * 1000))
 				line.z_index = -1
+				line.add_to_group("NavLines")
 				self.add_child(line)
 			elif (n.neighbors.has(i.name)):
 				var line = Line2D.new()
@@ -241,6 +246,7 @@ func _ready():
 					line.width = 10000000 / planet.position.distance_to(((i.pos - Vector2(800, 500)) * 1000))
 				
 				line.z_index = -1
+				line.add_to_group("NavLines")
 				self.add_child(line)
 
 		
@@ -341,7 +347,7 @@ func _ready():
 		asteroid.add_to_group("asteroids")
 #		asteroid.velocity = Vector2(rng.randi_range(10,-10), rng.randi_range(10,-10))
 ##
-	for i in 50:
+	for i in 10:
 		var drone = LancerDrone.instance()
 		rng = RandomNumberGenerator.new()
 		rng.randomize()
@@ -351,6 +357,7 @@ func _ready():
 		drone.attacker = true
 		self.add_child(drone)
 		drone.add_to_group("drones")
+		drone.add_to_group("NPCs")
 		
 #	for i in 5:
 #		var drone = ShieldMaiden.instance()
@@ -499,7 +506,7 @@ func _ready():
 		asteroid.rotate(rng.randi_range(0, 360))
 		self.add_child(asteroid)
 		asteroid.add_to_group("asteroids")
-	for i in 150:
+	for i in 200:
 		var farm = Farm.instance()
 
 		rng.randomize()
@@ -507,11 +514,52 @@ func _ready():
 		farm.position = Vector2(rng.randi_range(sep*7,-sep*7), rng.randi_range(sep*7,-sep*7))
 		farm.z_index = 0
 
-		points.append(farm.position + Vector2(200,200))
-		farm.add_to_group("planets")
-		self.add_child(farm)
+		
+		var too_close = false
+		
+		for n in nodes:
+			var pos = n.pos - Vector2(800, 500)
+			pos = pos * 1000
+			
+			if farm.position.distance_to(pos) < 4000:
+				too_close = true
 
-	for i in 50:
+		
+		if too_close:
+			farm.queue_free()
+		else:
+			var farmer = null
+			var family_members = []
+			var lovers = []
+			var family = []
+			for n in nodes:
+				if farmer == null:
+					
+					for r in n.residents:
+						if r.homestead_candidate && farmer == null:
+							family_members = r.family
+							lovers = r.lovers
+							farmer = r
+							family.append(farmer)
+							n.residents.erase(r)
+						for m in family_members:
+							if r.name == m:
+								family.append(r)
+							
+						for l in lovers:
+							if r.name == l:
+								family.append(r)
+				else:
+					break
+					
+			if family.size() > 0:
+				farm.residents = family
+				farm.add_to_group("planets")
+				points.append(farm.position + Vector2(200,200))
+				self.add_child(farm)
+			else:
+				farm.queue_free()
+	for i in 20:
 		var pirateBay = PirateBay.instance()
 
 		rng.randomize()
@@ -519,8 +567,78 @@ func _ready():
 		pirateBay.position = Vector2(rng.randi_range(sep*8,-sep*8), rng.randi_range(sep*8,-sep*8))
 		pirateBay.z_index = 0
 
-		pirateBay.add_to_group("planets")
-		self.add_child(pirateBay)
+		
+		
+		var too_close = false
+		
+		for n in nodes:
+			var pos = n.pos - Vector2(800, 500)
+			pos = pos * 1000
+			
+			if pirateBay.position.distance_to(pos) < 4000:
+				too_close = true
+
+		
+		if too_close:
+			pirateBay.queue_free()
+		else:
+			var closest = null
+			var second_closest = null
+			var third_closest = null
+			for n in nodes:
+				var pos = n.pos - Vector2(800, 500)
+				pos = pos * 1000
+				if closest == null:
+					closest = n
+					second_closest = n
+					third_closest = n
+				elif pirateBay.position.distance_to(pos) < pirateBay.position.distance_to((closest.pos - Vector2(800, 500)) * 1000):
+					third_closest = second_closest
+					second_closest = closest
+					closest = n
+			closest.piracy_score = closest.piracy_score + 10
+			second_closest.piracy_score = second_closest.piracy_score + 6
+			third_closest.piracy_score = third_closest.piracy_score + 3
+			pirateBay.add_to_group("pirates")
+			var raidingline = Line2D.new()
+			
+			var sides = PoolColorArray()
+			var colour = PoolColorArray()
+			
+			var raiding_queue = [pirateBay.position,((closest.pos - Vector2(800, 500)) * 1000),((second_closest.pos - Vector2(800, 500)) * 1000),((third_closest.pos - Vector2(800, 500)) * 1000), pirateBay.position]
+			var drone = PirateRammer.instance()
+			
+			sides = raiding_queue
+			colour = [Color.aliceblue]
+			
+			var poly = Polygon2D.new()
+			poly.z_index = 0
+			poly.polygon = sides
+			poly.color = Color(.95, .94, .2, .1)
+			
+			self.add_child(poly)
+			
+			draw_polygon(sides,colour)
+
+			drone.position = pirateBay.position
+			drone.pre_target = raiding_queue[1]
+			drone.origin = pirateBay.position
+			drone.z_index = 2
+			drone.queue = raiding_queue
+			drone.health = 10
+			drone.MAX = 2500
+			drone.add_to_group("NPCs")
+			
+			self.add_child(drone)
+
+			
+			for r in raiding_queue:
+				raidingline.add_point(r)
+			raidingline.width = 15
+			raidingline.default_color = Color.gold
+			self.add_child(raidingline)
+			raidingline.add_to_group("NavLines")
+			self.add_child(pirateBay)
 		
 	points.shuffle()
 	cities.shuffle()
@@ -528,13 +646,23 @@ func _ready():
 	
 	queue = array_unique(dupe_queue)
 	
-	for i in 15:
+
+	var tractorline = Line2D.new()
+	
+	for l in queue:
+		tractorline.add_point(l)
+	tractorline.width = 10
+	tractorline.default_color = Color.crimson
+	tractorline.add_to_group("NavLines")
+	self.add_child(tractorline)
+	
+	for i in int(queue.size() / 5):
 		var tractor = Tractor.instance()
 
 		rng.randomize()
-		tractor.position = (queue[i*10])
-		tractor.pre_target = queue[(i*10) + 1]
-		tractor.origin = (queue[i*10])
+		tractor.position = (queue[i*4])
+		tractor.pre_target = queue[(i*4) + 1]
+		tractor.origin = (queue[i*4])
 		tractor.z_index = 1
 		tractor.queue = queue
 		tractor.health = 25
@@ -543,7 +671,7 @@ func _ready():
 		if(i == queue.size()):
 			tractor.dest_index = 0
 		else:
-			tractor.dest_index = (i*10)+1
+			tractor.dest_index = (i*4)+1
 
 		self.add_child(tractor)
 		
@@ -573,7 +701,11 @@ func _ready():
 	for l in bus_queue:
 		line.add_point(l)
 	line.width = 5
+	line.add_to_group("NavLines")
 	self.add_child(line)
+	
+	for f in finished_planets:
+		self.add_child(f)
 #	for i in 20:
 #		var asteroid = Asteroid5.instance()
 #		var rng = RandomNumberGenerator.new()
@@ -699,13 +831,15 @@ var services = []
 var culture = "";
 var runs = 0
 
-func _process(delta):
+func _physics_process(delta):
 	runs = runs + 1
 	var i = -1
 	
-	if runs % 1000 == 0:
-		print("genstep()")
+	if runs % 300 == 0:
+		
 		for g in get_tree().get_nodes_in_group("Galaxy"):
+			print("genstep( ", (runs/100) % g.nodes.size())
+			g.currentplace = (runs/100) % g.nodes.size()
 			g.genStep(true)
 	
 	if !paused:
@@ -779,40 +913,41 @@ func _process(delta):
 #				message = message + string[i]
 #			index = index + 1
 #addAsteroids()
-	var count = 0;
-	for a in get_tree().get_nodes_in_group("asteroids"):
-		count = count + 1
-		if a.position.distance_to(Player.position) > 50000:
-			a.queue_free()
+	if runs % 20 == 0:
+		var count = 0;
+		for a in get_tree().get_nodes_in_group("asteroids"):
+			count = count + 1
+			if a.position.distance_to(Player.position) > 50000:
+				a.queue_free()
+				
+		if count < 100 && !paused:
+			addAsteroids()
+
+		for n in nodes:
+			var pos = n.pos - Vector2(800, 500)
+			pos = pos * 1000
 			
-	if count < 100 && !paused:
-		addAsteroids()
+			if Player.position.distance_to(pos) < 4000:
+				residents = n.residents
+				place = n.name
+				placeName = n.name
+				culture = n.culture
+				welcome.text = "Welcome to " +n.name
+				welcome.visible = true
+				n.check_Services()
+				services = n.services
+	#			print(n.services)
 
-	for n in nodes:
-		var pos = n.pos - Vector2(800, 500)
-		pos = pos * 1000
-		
-		if Player.position.distance_to(pos) < 4000:
-			residents = n.residents
-			place = n.name
-			placeName = n.name
-			culture = n.culture
-			welcome.text = "Welcome to " +n.name
-			welcome.visible = true
-			n.check_Services()
-			services = n.services
-#			print(n.services)
-
-		else:
-			pass
-#			print("none")
+			else:
+				pass
+	#			print("none")
 
 	
-	if place == "":
-		message = ""
-		placeName = ""
-		index = 0
-		welcome.visible = false
+		if place == "":
+			message = ""
+			placeName = ""
+			index = 0
+			welcome.visible = false
 
 		#player.radar(player.get_position(),asteroids,planets,abs(LeftBD),abs(RightBD),abs(TopBD),abs(BottomBD))
 		#	RightB.position.x = RightB.position.x - .55

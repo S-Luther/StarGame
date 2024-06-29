@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://assets/Bus.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Bus.gd" type="Script" id=2]
@@ -9,9 +9,6 @@
 [sub_resource type="CapsuleShape2D" id=5]
 radius = 34.6669
 height = 101.333
-
-[sub_resource type="CircleShape2D" id=7]
-radius = 17.6148
 
 [sub_resource type="Animation" id=8]
 resource_name = "Hit"
@@ -544,13 +541,6 @@ texture = ExtResource( 4 )
 vframes = 2
 frame = 1
 
-[node name="Area2D" type="Area2D" parent="."]
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
-position = Vector2( 291.2, -0.199997 )
-rotation = -1.5708
-shape = SubResource( 7 )
-
 [node name="Sprite2" type="Sprite" parent="."]
 position = Vector2( -60.4, 1.6 )
 scale = Vector2( 1.22222, 0.774013 )
@@ -576,5 +566,3 @@ anims/Moving = SubResource( 14 )
 anims/RESET = SubResource( 15 )
 anims/Slice = SubResource( 16 )
 anims/strike = SubResource( 17 )
-
-[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
