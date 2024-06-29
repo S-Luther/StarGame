@@ -545,10 +545,12 @@ func _ready():
 						for m in family_members:
 							if r.name == m:
 								family.append(r)
+								n.residents.erase(r)
 							
 						for l in lovers:
 							if r.name == l:
 								family.append(r)
+								n.residents.erase(r)
 				else:
 					break
 					
@@ -599,6 +601,18 @@ func _ready():
 			closest.piracy_score = closest.piracy_score + 10
 			second_closest.piracy_score = second_closest.piracy_score + 6
 			third_closest.piracy_score = third_closest.piracy_score + 3
+			var criminals = []
+			for n in nodes:
+				if criminals.size() < 2:
+					
+					for r in n.residents:
+						if r.criminality > 7:
+							criminals.append(r)
+							n.residents.erase(r)
+				else:
+					break
+					
+			pirateBay.residents = criminals
 			pirateBay.add_to_group("pirates")
 			var raidingline = Line2D.new()
 			

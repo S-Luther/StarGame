@@ -17,6 +17,7 @@ onready var collision = $CollisionShape2D
 var health = .5;
 var origin_health = 0
 
+var NPC = true
 
 var trailer = false
 var pre_target = null

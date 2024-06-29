@@ -549,8 +549,13 @@ class Person:
 			print(name, " has died at ", age, " in ", home)
 		age = age + .25
 		self.wealth = self.wealth * tax_rate
+		
+		if criminality > 1:
+			self.wealth = self.wealth + (10 * criminality) + (10 * piracy_score)
+			criminality = criminality + 1
+		
 		if(self.wealth < 0):
-			self.criminality = self.criminality + 1
+			self.criminality = self.criminality + 5
 			self.happiness = self.happiness - 1
 			self.boredom = self.boredom - 1
 			self.wealth = self.wealth + (10 * criminality) + (10 * piracy_score)

@@ -19,6 +19,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scenes/Test/names.gd"
 }, {
+"base": "Area2D",
+"class": "Pirate_Bay",
+"language": "GDScript",
+"path": "res://Scripts/PirateBay.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Player1",
 "language": "GDScript",
@@ -32,6 +37,7 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "Farm": "",
 "Names": "",
+"Pirate_Bay": "",
 "Player1": "",
 "Walker": ""
 }

@@ -21,7 +21,7 @@ var player
 func _ready():
 	randomize()
 	generate_level()
-#	self.position = Vector2(0,-999999)
+	self.position = Vector2(10000,10000)
 	
 func getRandomColor():
 	var letters = '0123456789ABCDEF';

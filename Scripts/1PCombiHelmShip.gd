@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 
 export var ACCELERATION = 600
-export var MAX_SPEED = 800
+export var MAX_SPEED = 2000
 
 export var ROLL_SPEED = 10
 export var FRICTION = 1
@@ -71,7 +71,7 @@ func _process(delta):
 				var new_life = life.hearts + .25;
 				life.set_hearts(new_life)
 				velocity2 = Vector2.ZERO
-				self.position = self.position + Vector2(1500,0)
+				self.position = self.position + Vector2(2500,0)
 				toggle = false
 	if get_tree().get_nodes_in_group("cam")[0].current:
 		toggle = true
