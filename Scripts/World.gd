@@ -563,10 +563,18 @@ func _ready():
 				farm.queue_free()
 	for i in 20:
 		var pirateBay = PirateBay.instance()
+		
+		var x = 300 * cos(18*i)
+		var y = 300 * sin(18*i)
+		
+		var pos_out = Vector2(x, y)
+		
+		print(pos_out)
 
+		
 		rng.randomize()
 
-		pirateBay.position = Vector2(rng.randi_range(sep*8,-sep*8), rng.randi_range(sep*8,-sep*8))
+		pirateBay.position = pos_out * 1000
 		pirateBay.z_index = 0
 
 		
