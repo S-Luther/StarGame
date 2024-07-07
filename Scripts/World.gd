@@ -9,8 +9,14 @@ extends Node2D
 #onready var TopB = $TopBounds
 #onready var BottomB = $BottomBounds
 onready var timer = $Timer
-onready var welcome = $Player/Engine/NavTerminal/UI/Welcome
-onready var Player = $Player
+#onready var welcome = $Player/Engine/NavTerminal/UI/Welcome
+var Player
+
+const Player_Shuttle = preload('res://Scenes/Shuttle/1PShipWrapper.tscn')
+const Player_Leaflet = preload('res://Scenes/Leaflet/Facsimidoxy Leaflet.tscn')
+const Player_GunShip = preload('res://Scenes/GunShip/GunShip.tscn')
+const Player_Expeditionary = preload('res://Scenes/ExpeditionaryVessel/2PShipWrapper.tscn')
+const Player_Platform = preload('res://Scenes/Platform/ShipWrapper.tscn')
 
 const LancerDrone = preload('res://Scenes/NPCShips/LancerDrone.tscn')
 const FacsSapling = preload('res://Scenes/NPCShips/FacsSaplingNPC.tscn')
@@ -123,6 +129,8 @@ func array_unique(array: Array) -> Array:
 	return unique
 
 func _ready():
+	Player = Player_Shuttle.instance()
+	add_child(Player)
 	TSPNearestNeighbor(test)
 	add_child(t)
 	t.one_shot = true
@@ -204,8 +212,8 @@ func _ready():
 		planet.add_to_group("planets")
 		
 		if Player.position.distance_to(pos) < 2000:
-			welcome.text = "Welcome to " +n.name
-			welcome.visible = true
+			Player.welcome.text = "Welcome to " +n.name
+			Player.welcome.visible = true
 #			get_tree().get_nodes_in_group("Galaxy")[0].Place.add_to_group("current_location")
 	
 		var neighb = 0
@@ -954,8 +962,8 @@ func _physics_process(delta):
 				place = n.name
 				placeName = n.name
 				culture = n.culture
-				welcome.text = "Welcome to " +n.name
-				welcome.visible = true
+				Player.welcome.text = "Welcome to " +n.name
+				Player.welcome.visible = true
 				n.check_Services()
 				services = n.services
 	#			print(n.services)
@@ -969,7 +977,7 @@ func _physics_process(delta):
 			message = ""
 			placeName = ""
 			index = 0
-			welcome.visible = false
+			Player.welcome.visible = false
 
 		#player.radar(player.get_position(),asteroids,planets,abs(LeftBD),abs(RightBD),abs(TopBD),abs(BottomBD))
 		#	RightB.position.x = RightB.position.x - .55

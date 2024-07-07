@@ -33,13 +33,43 @@ _global_script_classes=[ {
 "class": "Walker",
 "language": "GDScript",
 "path": "res://Scenes/SpacePort/Walker.gd"
+}, {
+"base": "Resource",
+"class": "fade_rule",
+"language": "GDScript",
+"path": "res://meta_player-main/addons/meta_player/fade_rule.gd"
+}, {
+"base": "AudioStreamPlayer",
+"class": "meta_player",
+"language": "GDScript",
+"path": "res://meta_player-main/addons/meta_player/meta_player.gd"
+}, {
+"base": "fade_rule",
+"class": "point_fade",
+"language": "GDScript",
+"path": "res://meta_player-main/addons/meta_player/dis_fade.gd"
+}, {
+"base": "fade_rule",
+"class": "range_fade",
+"language": "GDScript",
+"path": "res://meta_player-main/addons/meta_player/range_fade.gd"
+}, {
+"base": "Resource",
+"class": "transition_rule",
+"language": "GDScript",
+"path": "res://meta_player-main/addons/meta_player/trans_rule.gd"
 } ]
 _global_script_class_icons={
 "Farm": "",
 "Names": "",
 "Pirate_Bay": "",
 "Player1": "",
-"Walker": ""
+"Walker": "",
+"fade_rule": "",
+"meta_player": "",
+"point_fade": "",
+"range_fade": "",
+"transition_rule": ""
 }
 
 [application]

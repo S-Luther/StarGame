@@ -7,17 +7,44 @@ onready var Player3 = $Player_3
 onready var Player3B = $Player3Add
 onready var Player4 = $Player_4
 onready var Player4B = $Player4Add
+onready var back = $rif
+onready var a = $A
+onready var ah = $AH
+onready var c = $C
+onready var ds = $DS
+onready var d = $D
+onready var e = $E
+onready var g = $G
 onready var Test_Setup = self
 var config = ConfigFile.new()
 var mode = ""
 var current_ev = 0
 
+var beatTimer = Timer.new()
+
+var riffTimer = Timer.new()
+
 var ev = InputEventKey.new()
 
 var setup = true
 
-func _ready():
 
+
+func _ready():
+#	back.stream.loop_offset = 1.44
+	back.play()
+	add_child(beatTimer)
+	beatTimer.one_shot = true
+	
+	beatTimer.start(4.5)
+	
+	add_child(riffTimer)
+	riffTimer.one_shot = true
+	
+	
+	
+	riffTimer.start(4.5)
+	
 	var configl = ConfigFile.new()
 
 	var err = configl.load("user://inputs.cfg")
@@ -316,3 +343,109 @@ func _on_Extra_pressed():
 func _on_2Player_pressed():
 	Test_Setup.visible =false
 	setup = false
+
+
+
+
+
+
+func _physics_process(delta):
+#	a.stream.loop_offset = 0.02
+
+	if (randi() % 5000) == 0:
+		var pause = randi() % 2
+		riffTimer.stop()
+		riffTimer.start(pause*2.25)
+		beatTimer.stop()
+		beatTimer.start(pause*2.25)
+
+
+	if riffTimer.is_stopped():
+		back.stop()
+		back.play()
+		riffTimer.start(2.25)
+	 
+	if beatTimer.is_stopped():
+		
+		
+		randomize()
+		var note = randi()%12
+		
+		
+		if note == 0:
+			a.stop()
+			ah.stop()
+			c.stop()
+			ds.stop()
+			d.stop()
+			e.stop()
+			g.stop()
+		elif note == 1:
+			a.stop()
+			ah.stop()
+			c.stop()
+			ds.stop()
+			d.stop()
+			e.stop()
+			g.stop()
+			a.play()
+		elif note == 2:
+			a.stop()
+			ah.stop()
+			c.stop()
+			ds.stop()
+			d.stop()
+			e.stop()
+			g.stop()
+			ah.play()
+		elif note == 3:
+			a.stop()
+			ah.stop()
+			c.stop()
+			ds.stop()
+			d.stop()
+			e.stop()
+			g.stop()
+			c.play()
+		elif note == 4:
+			a.stop()
+			ah.stop()
+			c.stop()
+			ds.stop()
+			d.stop()
+			e.stop()
+			g.stop()
+			ds.play()
+			pass
+		elif note == 5:
+			a.stop()
+			ah.stop()
+			c.stop()
+			ds.stop()
+			d.stop()
+			e.stop()
+			g.stop()
+			d.play()
+		elif note == 6:
+			a.stop()
+			ah.stop()
+			c.stop()
+			ds.stop()
+			d.stop()
+			e.stop()
+			g.stop()
+			e.play()
+		elif note == 7:
+			a.stop()
+			ah.stop()
+			c.stop()
+			ds.stop()
+			d.stop()
+			e.stop()
+			g.stop()
+			g.play()
+		elif note > 7:
+			pass
+			
+		beatTimer.start(.1875)
+

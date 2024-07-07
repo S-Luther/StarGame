@@ -32,6 +32,7 @@ func getRandomColor():
 
 func generate_level():
 	player = Player.instance()
+	player.MAX_SPEED = 240
 	add_child(player)
 	player.add_to_group("SpacePortPlayer")
 	

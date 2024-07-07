@@ -32,6 +32,7 @@ onready var gunners = $Gunners
 onready var engine = $Engine
 onready var timer = $Timer
 onready var animationPlayer = $Engine/Visible/AnimationPlayer
+onready var welcome = $NavTerminal/UI/Welcome
 
 var workable = false
 var working = false

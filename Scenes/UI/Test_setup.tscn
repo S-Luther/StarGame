@@ -1,9 +1,17 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://assets/Base_font.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Scripts/Test_Setup.gd" type="Script" id=2]
 [ext_resource path="res://Scripts/Multiplayer_configure.gd" type="Script" id=3]
 [ext_resource path="res://assets/Strip And GIF/space6_4-frames.png" type="Texture" id=4]
+[ext_resource path="res://assets/audio/rif5.mp3" type="AudioStream" id=5]
+[ext_resource path="res://assets/audio/G.mp3" type="AudioStream" id=6]
+[ext_resource path="res://assets/audio/AH.mp3" type="AudioStream" id=7]
+[ext_resource path="res://assets/audio/D#.mp3" type="AudioStream" id=8]
+[ext_resource path="res://assets/audio/D.mp3" type="AudioStream" id=9]
+[ext_resource path="res://assets/audio/C.mp3" type="AudioStream" id=10]
+[ext_resource path="res://assets/audio/E.mp3" type="AudioStream" id=11]
+[ext_resource path="res://assets/audio/A.mp3" type="AudioStream" id=12]
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -485,6 +493,38 @@ margin_right = 3128.0
 margin_bottom = 2021.17
 custom_fonts/font = ExtResource( 1 )
 text = "Map"
+
+[node name="rif" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+volume_db = -6.904
+
+[node name="A" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+volume_db = -14.952
+
+[node name="AH" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = -14.952
+
+[node name="C" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+volume_db = -14.952
+
+[node name="DS" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+volume_db = -14.952
+
+[node name="D" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+volume_db = -14.952
+
+[node name="E" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+volume_db = -14.952
+
+[node name="G" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = -14.952
 
 [connection signal="pressed" from="Scene_configure/1Player2" to="." method="_on_1Player2_pressed"]
 [connection signal="pressed" from="Scene_configure/1Player2" to="Scene_configure" method="_on_1Player2_pressed"]

@@ -182,6 +182,7 @@ resource_name = "strike"
 
 [node name="Node2D" type="KinematicBody2D"]
 scale = Vector2( 5, 5 )
+z_index = 2
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -24,6 +24,7 @@ var roll_vector = Vector2.DOWN
 var init = false
 
 onready var minimap = $Engine/NavTerminal/UI/
+onready var welcome = $Engine/NavTerminal/UI/Welcome
 
 onready var nav = $Engine/NavTerminal
 onready var player1 = $Engine/Player1

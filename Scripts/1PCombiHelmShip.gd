@@ -7,6 +7,7 @@ export var MAX_SPEED = 1000
 export var ROLL_SPEED = 10
 export var FRICTION = 1
 
+var shotTimer = Timer.new()
 var colCheckTimer = Timer.new();
 
 enum {
@@ -30,8 +31,10 @@ onready var nav = $Engine/NavTerminal/
 onready var minimap = $Engine/NavTerminal/UI/
 onready var player1 = $Engine/Player1
 onready var engine = $Engine
+onready var welcome = $Engine/NavTerminal/UI/Welcome
 var timer = Timer.new()
 onready var animationPlayer = $Engine/Visible/AnimationPlayer
+onready var firePlayer = $Engine/AnimationPlayer
 
 const projectile = preload('res://Scenes/Shared/Projectile.tscn')
 
@@ -45,9 +48,12 @@ var has_collided = false;
 
 func _ready():
 	self.add_child(timer)
+	self.add_child(shotTimer)
 	self.add_child(colCheckTimer)
 	colCheckTimer.one_shot = true
 	colCheckTimer.start(.2)
+	shotTimer.one_shot = true
+	shotTimer.start(.2)
 	randomize()
 	self.add_to_group("Player")
 	set_process(true)
@@ -142,15 +148,17 @@ static func normalize_angle(x):
 func move_state(delta):
 
 	if working && workable:
-		if Input.is_action_just_pressed("p1_fire"):
-			var p = projectile.instance()
-			p.position = engine.position
-			p.velocity = Vector2(15, 0).rotated(smooth_angle)
-			p.rotation = smooth_angle
-			p.z_index = 2
-			p.scale = Vector2(2,2)
-			add_child(p)
-			p.add_to_group("shots")
+		if Input.is_action_pressed("p1_fire"):
+			if shotTimer.is_stopped():
+				shotTimer.start(.2)
+				var p = projectile.instance()
+				p.position = engine.position
+				p.velocity = Vector2(15, 0).rotated(smooth_angle)
+				p.rotation = smooth_angle
+				p.z_index = 2
+				p.scale = Vector2(2,2)
+				add_child(p)
+				p.add_to_group("shots")
 			
 		
 		if player1.position.x < 40:

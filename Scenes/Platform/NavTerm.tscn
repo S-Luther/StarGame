@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Scripts/Minimap.gd" type="Script" id=1]
 [ext_resource path="res://assets/frame.png" type="Texture" id=2]
@@ -9,10 +9,23 @@
 [ext_resource path="res://assets/player.png" type="Texture" id=7]
 [ext_resource path="res://assets/LargeSpace.png" type="Texture" id=8]
 [ext_resource path="res://assets/7-noise-texture-overlays-3.png" type="Texture" id=9]
+[ext_resource path="res://assets/Base_font.tres" type="DynamicFont" id=10]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 12.0
 height = 72.0
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0, 0, 0, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 1, 1, 1, 1 )
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 31.5, 7.5 )
@@ -86,6 +99,18 @@ texture = ExtResource( 6 )
 position = Vector2( 596, -169 )
 scale = Vector2( 10.8594, 2.9375 )
 texture = ExtResource( 6 )
+
+[node name="Welcome" type="Label" parent="UI"]
+visible = false
+margin_left = -530.0
+margin_top = -481.0
+margin_right = 519.0
+margin_bottom = -421.0
+custom_fonts/font = ExtResource( 10 )
+custom_styles/normal = SubResource( 5 )
+text = "Welcome"
+align = 1
+valign = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 183.5, -123.5 )
