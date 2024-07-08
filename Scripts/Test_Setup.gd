@@ -8,6 +8,7 @@ onready var Player3B = $Player3Add
 onready var Player4 = $Player_4
 onready var Player4B = $Player4Add
 onready var back = $rif
+onready var back2 = $rif2
 onready var a = $A
 onready var ah = $AH
 onready var c = $C
@@ -28,11 +29,12 @@ var ev = InputEventKey.new()
 
 var setup = true
 
-
+#https://onlinesequencer.net/4090764
 
 func _ready():
 #	back.stream.loop_offset = 1.44
 	back.play()
+	back2.play()
 	add_child(beatTimer)
 	beatTimer.one_shot = true
 	
@@ -347,29 +349,39 @@ func _on_2Player_pressed():
 
 
 
+var max_notes = 8
+var runs = 0
 
 
-func _physics_process(delta):
+func _process(delta):
 #	a.stream.loop_offset = 0.02
-
-	if (randi() % 5000) == 0:
-		var pause = randi() % 2
+	runs = runs + 1
+	
+	if (runs % 5000) == 0:
+		max_notes = randi() % 8 + 5
+		var pause = randi() % 3
+		back2.stop()
 		riffTimer.stop()
 		riffTimer.start(pause*2.25)
 		beatTimer.stop()
-		beatTimer.start(pause*2.25)
+		beatTimer.start(pause * 2.25 * 4)
+		print(max_notes)
 
 
 	if riffTimer.is_stopped():
 		back.stop()
-		back.play()
+		if randi()%2 == 0:
+			back.play()
+		back2.stop()
+		back2.play()
 		riffTimer.start(2.25)
+		beatTimer.stop()
 	 
 	if beatTimer.is_stopped():
 		
 		
 		randomize()
-		var note = randi()%12
+		var note = randi()%max_notes
 		
 		
 		if note == 0:
@@ -389,7 +401,7 @@ func _physics_process(delta):
 			e.stop()
 			g.stop()
 			a.play()
-		elif note == 2:
+		elif note == 5:
 			a.stop()
 			ah.stop()
 			c.stop()
@@ -417,7 +429,7 @@ func _physics_process(delta):
 			g.stop()
 			ds.play()
 			pass
-		elif note == 5:
+		elif note == 2:
 			a.stop()
 			ah.stop()
 			c.stop()

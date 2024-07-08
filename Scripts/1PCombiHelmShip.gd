@@ -60,7 +60,7 @@ func _ready():
 
 var toggle = true
 
-func _process(delta):
+func _physics_process(delta):
 	update()
 	
 	var overview;
@@ -153,7 +153,7 @@ func move_state(delta):
 				shotTimer.start(.2)
 				var p = projectile.instance()
 				p.position = engine.position
-				p.velocity = Vector2(15, 0).rotated(smooth_angle)
+				p.velocity = Vector2(25, 0).rotated(smooth_angle)
 				p.rotation = smooth_angle
 				p.z_index = 2
 				p.scale = Vector2(2,2)
