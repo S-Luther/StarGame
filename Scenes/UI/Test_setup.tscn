@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://assets/Base_font.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Scripts/Test_Setup.gd" type="Script" id=2]
@@ -23,6 +23,10 @@
 [ext_resource path="res://assets/audio/layer2.mp3" type="AudioStream" id=21]
 [ext_resource path="res://assets/audio/layer1.mp3" type="AudioStream" id=22]
 [ext_resource path="res://assets/audio/layer5.mp3" type="AudioStream" id=23]
+[ext_resource path="res://assets/audio/wine.mp3" type="AudioStream" id=24]
+[ext_resource path="res://assets/audio/mid.mp3" type="AudioStream" id=25]
+[ext_resource path="res://assets/audio/perc.mp3" type="AudioStream" id=26]
+[ext_resource path="res://assets/audio/high.mp3" type="AudioStream" id=27]
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -579,6 +583,22 @@ volume_db = -10.0
 
 [node name="layer6" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 20 )
+volume_db = -10.0
+
+[node name="high" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 27 )
+volume_db = -10.0
+
+[node name="mid" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 25 )
+volume_db = -10.0
+
+[node name="wine" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 24 )
+volume_db = -10.0
+
+[node name="perc" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 26 )
 volume_db = -10.0
 
 [connection signal="pressed" from="Scene_configure/1Player2" to="." method="_on_1Player2_pressed"]

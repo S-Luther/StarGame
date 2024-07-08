@@ -22,6 +22,11 @@ onready var t2 = $track2
 onready var t3 = $track3
 onready var t4 = $track4
 
+onready var high = $high
+onready var mid = $mid
+onready var wine = $wine
+onready var perc = $perc
+
 onready var l1 = $layer1
 onready var l2 = $layer2
 onready var l3 = $layer3
@@ -44,6 +49,8 @@ var ev = InputEventKey.new()
 var setup = true
 
 #https://onlinesequencer.net/4090764
+#https://onlinesequencer.net/4091519
+#https://onlinesequencer.net/4091574
 
 func _ready():
 #	back.stream.loop_offset = 1.44
@@ -400,7 +407,19 @@ func startSongThree():
 	l2.play()
 	beatTimer.start(9.05)
 
-var song = 2
+
+func startSongFour():
+	a.stop()
+	ah.stop()
+	c.stop()
+	ds.stop()
+	d.stop()
+	e.stop()
+	g.stop()
+	high.play()
+	beatTimer.start(12)
+	
+var song = 3
 
 func _process(delta):
 #	a.stream.loop_offset = 0.02
@@ -409,7 +428,7 @@ func _process(delta):
 	
 	if runs%10000 == 0:
 		if beatTimer.is_stopped():
-			song = (song + 1) % 3
+			song = (song + 1) % 4
 			runs = runs + 1
 			print("new song ", song)
 			if song == 0:
@@ -418,6 +437,8 @@ func _process(delta):
 				startSongTwo()
 			if song == 2:
 				startSongThree()
+			if song == 3:
+				startSongFour()
 	else:
 		runs = runs + 1
 		
@@ -435,10 +456,15 @@ func _process(delta):
 
 			if randi() %2 == 0:
 				t1.play()
+			randomize()
 			if (randi() %2 == 0) && t1.is_playing():
 				t3.play()
+			randomize()
 			if (randi() %6 == 0) && t3.is_playing():
 				t4.play()
+			if randi() %2 == 0:
+				l1.play()
+			randomize()
 			beatTimer.start(9.05)
 
 	if song == 2:
@@ -456,15 +482,41 @@ func _process(delta):
 			
 			if randi() %2 == 0:
 				l1.play()
+			randomize()
 			if (randi() %3 == 0):
 				l3.play()
+			randomize()
 			if (randi() %4 == 0):
 				l4.play()
+			randomize()
 			if (randi() %5 == 0):
 				l5.play()
+			randomize()
 			if (randi() %6 == 0):
 				l6.play()
 			beatTimer.start(9.05)
+			
+	if song == 3:
+		if beatTimer.is_stopped():
+			randomize()
+			high.stop()
+			mid.stop()
+			wine.stop()
+			perc.stop()
+
+	#		if randi() %2 == 0:
+			high.play()
+			
+			if randi() %2 == 0:
+				perc.play()
+			randomize()
+			if (randi() %2 == 0):
+				wine.play()
+			randomize()
+			if (randi() %2 == 0):
+				mid.play()
+			beatTimer.start(12)
+			
 			
 	if song == 0:
 		if riffTimer.is_stopped():

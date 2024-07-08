@@ -13,6 +13,7 @@ var velocity = Vector2.ZERO
 
 onready var animationPlayer = $Area2D/Sprite/ProjectilePlayer
 onready var collider = $CollisionShape2D
+onready var plasma = $plasma
 
 #onready var animationTree = $Sprite/ProjectileTree
 #onready var animationState = animationTree.get('parameters/playback')
@@ -25,6 +26,7 @@ func _ready():
 	self.add_child(spawnDuration)
 	spawnDuration.one_shot = true
 	spawnDuration.start(4)
+	plasma.play()
 #	print(spawnDuration.time_left)
 	set_process(true)
 
