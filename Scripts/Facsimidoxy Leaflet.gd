@@ -6,9 +6,10 @@ export var MAX_SPEED = 0
 export var manueverSpeed = 200
 
 export var ROLL_SPEED = 0.5
-export var FRICTION = 1
+export var FRICTION = 100
 
 onready var animationPlayer = $ShipBase/Sprite/AnimationPlayer
+onready var welcome = $ShipBase/Nav/UI/Welcome
 
 enum {
 	MOVE,

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/plasma.mp3-49c4af4ab48d7dddf8fd24eaf81a49b1.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/plasma.mp3"
+dest_files=[ "res://.import/plasma.mp3-49c4af4ab48d7dddf8fd24eaf81a49b1.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

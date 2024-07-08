@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/wine.mp3-51a04c5ba4e73a67c116f897ee4d3020.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/wine.mp3"
+dest_files=[ "res://.import/wine.mp3-51a04c5ba4e73a67c116f897ee4d3020.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

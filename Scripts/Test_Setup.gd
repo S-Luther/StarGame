@@ -7,17 +7,67 @@ onready var Player3 = $Player_3
 onready var Player3B = $Player3Add
 onready var Player4 = $Player_4
 onready var Player4B = $Player4Add
+onready var back = $rif
+onready var back2 = $rif2
+onready var a = $A
+onready var ah = $AH
+onready var c = $C
+onready var ds = $DS
+onready var d = $D
+onready var e = $E
+onready var g = $G
+
+onready var t1 = $track1
+onready var t2 = $track2
+onready var t3 = $track3
+onready var t4 = $track4
+
+onready var high = $high
+onready var mid = $mid
+onready var wine = $wine
+onready var perc = $perc
+
+onready var l1 = $layer1
+onready var l2 = $layer2
+onready var l3 = $layer3
+onready var l4 = $layer4
+onready var l5 = $layer5
+onready var l6 = $layer6
+
+
 onready var Test_Setup = self
 var config = ConfigFile.new()
 var mode = ""
 var current_ev = 0
 
+var beatTimer = Timer.new()
+
+var riffTimer = Timer.new()
+
 var ev = InputEventKey.new()
 
 var setup = true
 
-func _ready():
+#https://onlinesequencer.net/4090764
+#https://onlinesequencer.net/4091519
+#https://onlinesequencer.net/4091574
 
+func _ready():
+#	back.stream.loop_offset = 1.44
+#	back.play()
+#	back2.play()
+	add_child(beatTimer)
+	beatTimer.one_shot = true
+	
+	beatTimer.start(1)
+	
+	add_child(riffTimer)
+	riffTimer.one_shot = true
+	
+	
+	
+	riffTimer.start(4.5)
+	
 	var configl = ConfigFile.new()
 
 	var err = configl.load("user://inputs.cfg")
@@ -316,3 +366,247 @@ func _on_Extra_pressed():
 func _on_2Player_pressed():
 	Test_Setup.visible =false
 	setup = false
+
+
+
+
+var max_notes = 8
+var runs = 1
+
+func startSongTwo():
+	a.stop()
+	ah.stop()
+	c.stop()
+	ds.stop()
+	d.stop()
+	e.stop()
+	g.stop()
+	t2.play()
+	beatTimer.start(9.05)
+
+func startSongOne():
+	a.stop()
+	ah.stop()
+	c.stop()
+	ds.stop()
+	d.stop()
+	e.stop()
+	g.stop()
+	t2.play()
+	back.play()
+	beatTimer.start(4.5)
+
+func startSongThree():
+	a.stop()
+	ah.stop()
+	c.stop()
+	ds.stop()
+	d.stop()
+	e.stop()
+	g.stop()
+	l2.play()
+	beatTimer.start(9.05)
+
+
+func startSongFour():
+	a.stop()
+	ah.stop()
+	c.stop()
+	ds.stop()
+	d.stop()
+	e.stop()
+	g.stop()
+	high.play()
+	beatTimer.start(12)
+	
+var song = 3
+
+func _process(delta):
+#	a.stream.loop_offset = 0.02
+	
+#	runs = runs + 1
+	
+	if runs%10000 == 0:
+		if beatTimer.is_stopped():
+			song = (song + 1) % 4
+			runs = runs + 1
+			print("new song ", song)
+			if song == 0:
+				startSongOne()
+			if song == 1:
+				startSongTwo()
+			if song == 2:
+				startSongThree()
+			if song == 3:
+				startSongFour()
+	else:
+		runs = runs + 1
+		
+	
+	if song == 1:
+		pass
+		if beatTimer.is_stopped():
+			randomize()
+			t1.stop()
+			t2.stop()
+			t3.stop()
+			t4.stop()
+	#		if randi() %2 == 0:
+			t2.play()
+
+			if randi() %2 == 0:
+				t1.play()
+			randomize()
+			if (randi() %2 == 0) && t1.is_playing():
+				t3.play()
+			randomize()
+			if (randi() %6 == 0) && t3.is_playing():
+				t4.play()
+			if randi() %2 == 0:
+				l1.play()
+			randomize()
+			beatTimer.start(9.05)
+
+	if song == 2:
+		if beatTimer.is_stopped():
+			randomize()
+			l1.stop()
+			l2.stop()
+			l3.stop()
+			l4.stop()
+			l5.stop()
+			l6.stop()
+
+	#		if randi() %2 == 0:
+			l2.play()
+			
+			if randi() %2 == 0:
+				l1.play()
+			randomize()
+			if (randi() %3 == 0):
+				l3.play()
+			randomize()
+			if (randi() %4 == 0):
+				l4.play()
+			randomize()
+			if (randi() %5 == 0):
+				l5.play()
+			randomize()
+			if (randi() %6 == 0):
+				l6.play()
+			beatTimer.start(9.05)
+			
+	if song == 3:
+		if beatTimer.is_stopped():
+			randomize()
+			high.stop()
+			mid.stop()
+			wine.stop()
+			perc.stop()
+
+	#		if randi() %2 == 0:
+			high.play()
+			
+			if randi() %2 == 0:
+				perc.play()
+			randomize()
+			if (randi() %2 == 0):
+				wine.play()
+			randomize()
+			if (randi() %2 == 0):
+				mid.play()
+			beatTimer.start(12)
+			
+			
+	if song == 0:
+		if riffTimer.is_stopped():
+			back.stop()
+			if randi()%2 == 0:
+				back.play()
+			back2.stop()
+			back2.play()
+			riffTimer.start(2.25)
+			beatTimer.stop()
+
+		if beatTimer.is_stopped():
+			randomize()
+			var note = randi()%max_notes
+
+
+			if note == 0:
+				a.stop()
+				ah.stop()
+				c.stop()
+				ds.stop()
+				d.stop()
+				e.stop()
+				g.stop()
+			elif note == 1:
+				a.stop()
+				ah.stop()
+				c.stop()
+				ds.stop()
+				d.stop()
+				e.stop()
+				g.stop()
+				a.play()
+			elif note == 5:
+				a.stop()
+				ah.stop()
+				c.stop()
+				ds.stop()
+				d.stop()
+				e.stop()
+				g.stop()
+				ah.play()
+			elif note == 3:
+				a.stop()
+				ah.stop()
+				c.stop()
+				ds.stop()
+				d.stop()
+				e.stop()
+				g.stop()
+				c.play()
+			elif note == 4:
+				a.stop()
+				ah.stop()
+				c.stop()
+				ds.stop()
+				d.stop()
+				e.stop()
+				g.stop()
+				ds.play()
+				pass
+			elif note == 2:
+				a.stop()
+				ah.stop()
+				c.stop()
+				ds.stop()
+				d.stop()
+				e.stop()
+				g.stop()
+				d.play()
+			elif note == 6:
+				a.stop()
+				ah.stop()
+				c.stop()
+				ds.stop()
+				d.stop()
+				e.stop()
+				g.stop()
+				e.play()
+			elif note == 7:
+				a.stop()
+				ah.stop()
+				c.stop()
+				ds.stop()
+				d.stop()
+				e.stop()
+				g.stop()
+				g.play()
+			elif note > 7:
+				pass
+
+			beatTimer.start(.1875)
+

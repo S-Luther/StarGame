@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/spark-preview5.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Projectile.gd" type="Script" id=2]
+[ext_resource path="res://assets/audio/plasma.mp3" type="AudioStream" id=3]
 
 [sub_resource type="Animation" id=4]
 resource_name = "Hit"
@@ -114,5 +115,8 @@ parameters/playback = SubResource( 10 )
 position = Vector2( 108, 1.99962 )
 shape = SubResource( 5 )
 disabled = true
+
+[node name="plasma" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
