@@ -1,0 +1,156 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://assets/Empty (1).png" type="Texture" id=1]
+[ext_resource path="res://assets/Empty.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/Bank.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/Empty.gd" type="Script" id=4]
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 114.5, 52.5735 )
+
+[sub_resource type="Animation" id=1]
+length = 0.7
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Area2D/CPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Area2D/CPUParticles2D2:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "blinkin"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite12:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3, 4, 5, 6, 7 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite13:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3, 4, 5, 6, 7 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Area2D/CPUParticles2D:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Area2D/CPUParticles2D2:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+
+[node name="Node2D" type="KinematicBody2D"]
+script = ExtResource( 3 )
+
+[node name="Sprite12" type="Sprite" parent="."]
+scale = Vector2( 2, 2 )
+z_index = 2
+texture = ExtResource( 1 )
+hframes = 3
+vframes = 3
+
+[node name="Sprite13" type="Sprite" parent="."]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+hframes = 3
+vframes = 3
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -236, -28, -238, 95, -176, 96, -177, 80, -219, 78, -221, 39, -173, 34, -150, -5, -70, -31, 21, -29, 37, 1, 69, -11, 92, -31, 139, -30, 218, 74, 177, 71, 178, 92, 235, 95, 234, -49, -236, -53 )
+
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( -1.19209e-07, 21.3161 )
+scale = Vector2( 1.68711, 0.957063 )
+shape = SubResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Area2D"]
+root_node = NodePath("../..")
+playback_speed = 0.5
+anims/RESET = SubResource( 1 )
+anims/blinkin = SubResource( 2 )
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Area2D"]
+position = Vector2( -113, 6 )
+emitting = false
+amount = 100
+lifetime = 0.5
+randomness = 0.11
+lifetime_randomness = 0.48
+emission_shape = 2
+emission_rect_extents = Vector2( 50, 70 )
+direction = Vector2( 200, 100 )
+spread = 0.0
+initial_velocity = 139.53
+scale_amount = 3.91
+scale_amount_random = 1.0
+color = Color( 0.98164, 1, 0.77, 1 )
+
+[node name="CPUParticles2D2" type="CPUParticles2D" parent="Area2D"]
+position = Vector2( 126, 4 )
+emitting = false
+amount = 100
+lifetime = 0.5
+randomness = 0.11
+lifetime_randomness = 0.48
+emission_shape = 2
+emission_rect_extents = Vector2( 50, 70 )
+direction = Vector2( -200, 100 )
+spread = 0.0
+initial_velocity = 139.53
+scale_amount = 3.91
+scale_amount_random = 1.0
+color = Color( 0.98164, 1, 0.77, 1 )
+
+[connection signal="area_entered" from="Area2D" to="Area2D" method="_on_Area2D_area_entered"]

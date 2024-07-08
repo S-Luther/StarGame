@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://assets/tiny-spaceships/tiny_ship3.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/LancerDrone.gd" type="Script" id=2]
@@ -177,6 +177,9 @@ tracks/4/keys = {
 } ]
 }
 
+[sub_resource type="Animation" id=5]
+resource_name = "strike"
+
 [node name="Node2D" type="KinematicBody2D"]
 scale = Vector2( 5, 5 )
 script = ExtResource( 2 )
@@ -199,12 +202,13 @@ reset_on_save = false
 anims/Hit = SubResource( 2 )
 anims/RESET = SubResource( 3 )
 anims/Slice = SubResource( 4 )
+anims/strike = SubResource( 5 )
 
 [node name="Explosion" type="Sprite" parent="."]
 visible = false
 texture = ExtResource( 3 )
 hframes = 8
-frame = 5
+frame = 2
 
 [node name="sliceSprite" type="Sprite" parent="."]
 visible = false

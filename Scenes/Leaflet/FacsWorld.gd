@@ -13,6 +13,7 @@ onready var welcome = $Player/ShipBase/Nav/UI/Welcome
 onready var Player = $Player
 
 const LancerDrone = preload('res://Scenes/NPCShips/LancerDrone.tscn')
+const PirateRammer = preload('res://Scenes/NPCShips/PirateRammer.tscn')
 
 const Planet = preload('res://Scenes/Props/Planet.tscn')
 const Planet2 = preload('res://Scenes/Props/Planet2.tscn')
@@ -48,6 +49,8 @@ func _ready():
 	add_child(t)
 	t.one_shot = true
 	t.start(2)
+	var rng = RandomNumberGenerator.new()
+
 	
 	self.add_to_group("Player")
 	for g in get_tree().get_nodes_in_group("Galaxy"):
@@ -56,7 +59,7 @@ func _ready():
 	for n in nodes:
 #		print(n.name)
 #		print(n.pos.x, " ", n.pos.y)
-		var rng = RandomNumberGenerator.new()
+
 		rng.randomize()
 		var planet = planet_choices[rng.randi_range(0,5)].instance()
 
@@ -169,7 +172,6 @@ func _ready():
 #		planet.add_to_group("planets")
 	for i in 50:
 		var asteroid = Asteroid1.instance()
-		var rng = RandomNumberGenerator.new()
 		rng.randomize()
 
 		asteroid.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
@@ -181,9 +183,17 @@ func _ready():
 		asteroid.add_to_group("asteroids")
 #		asteroid.velocity = Vector2(rng.randi_range(10,-10), rng.randi_range(10,-10))
 #
-	for i in 50:
+	for i in 15:
+		var drone = PirateRammer.instance()
+		rng = RandomNumberGenerator.new()
+		rng.randomize()
+
+		drone.position = Vector2(rng.randi_range(sep*10,-sep*10), rng.randi_range(sep*10,-sep*10))
+		drone.z_index = 0
+		self.add_child(drone)
+		drone.add_to_group("drones")
+	for i in 150:
 		var drone = LancerDrone.instance()
-		var rng = RandomNumberGenerator.new()
 		rng.randomize()
 
 		drone.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
@@ -194,7 +204,6 @@ func _ready():
 #
 	for i in 50:
 		var asteroid = Asteroid2.instance()
-		var rng = RandomNumberGenerator.new()
 		rng.randomize()
 
 		asteroid.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
@@ -206,7 +215,6 @@ func _ready():
 		asteroid.add_to_group("asteroids")
 	for i in 50:
 		var asteroid = Asteroid3.instance()
-		var rng = RandomNumberGenerator.new()
 		rng.randomize()
 
 		asteroid.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
@@ -218,7 +226,6 @@ func _ready():
 		asteroid.add_to_group("asteroids")
 	for i in 50:
 		var asteroid = Asteroid4.instance()
-		var rng = RandomNumberGenerator.new()
 		rng.randomize()
 
 		asteroid.position = Vector2(rng.randi_range(sep,-sep), rng.randi_range(sep,-sep))
@@ -265,9 +272,11 @@ func _ready():
 #		self.add_child(asteroid)
 #		asteroid.add_to_group("asteroids")	
 func addAsteroids():
+	var rng = RandomNumberGenerator.new()
+
 	for i in 50:
 		var asteroid = Asteroid2.instance()
-		var rng = RandomNumberGenerator.new()
+
 		rng.randomize()
 		
 		var x = rng.randi_range(sep,-sep)
@@ -283,7 +292,7 @@ func addAsteroids():
 			asteroid.add_to_group("asteroids")
 	for i in 50:
 		var asteroid = Asteroid3.instance()
-		var rng = RandomNumberGenerator.new()
+
 		rng.randomize()
 
 		var x = rng.randi_range(sep,-sep)
@@ -299,7 +308,7 @@ func addAsteroids():
 			asteroid.add_to_group("asteroids")
 	for i in 50:
 		var asteroid = Asteroid4.instance()
-		var rng = RandomNumberGenerator.new()
+
 		rng.randomize()
 
 		var x = rng.randi_range(sep,-sep)
@@ -315,7 +324,7 @@ func addAsteroids():
 			asteroid.add_to_group("asteroids")
 	for i in 50:
 		var asteroid = Asteroid1.instance()
-		var rng = RandomNumberGenerator.new()
+
 		rng.randomize()
 		var x = rng.randi_range(sep,-sep)
 		var y = rng.randi_range(sep,-sep)
@@ -346,8 +355,9 @@ var index = 0
 var placeName
 var message = ""
 var residents = []
+var culture = ""
 
-func _process(delta):
+func _physics_process(delta):
 	
 	var place = ""
 	
@@ -373,10 +383,11 @@ func _process(delta):
 	for n in nodes:
 		var pos = n.pos - Vector2(800, 500)
 		pos = pos * 1000
-		if Player.position.distance_to(pos) < 2000:
+		if Player.position.distance_to(pos) < 3500:
 			Player.nearestPlanet = pos
 			residents = n.residents
 			place = n.name
+			culture = n.culture
 			placeName = n.name
 			welcome.text = "Welcome to " +n.name
 			welcome.visible = true

@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scenes/NPCShips/ShieldMaidenNPC.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/NPCShips/FighterPlatform.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scripts/FacsimaWarParty.gd" type="Script" id=3]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 952, 580 )
+
+[node name="Node2D2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 905, -538 )
+
+[node name="Node2D3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 376, -1053 )
+
+[node name="Node2D4" parent="." instance=ExtResource( 1 )]
+position = Vector2( 82.9998, 1076 )
+
+[node name="Node2D5" parent="." instance=ExtResource( 2 )]
+position = Vector2( -58.0002, 0 )
+
+[node name="Node2D6" parent="." instance=ExtResource( 2 )]
+position = Vector2( -960, -1053 )
+
+[node name="Node2D7" parent="." instance=ExtResource( 2 )]
+position = Vector2( -1210, 1166 )
+
+[node name="Node2D8" parent="." instance=ExtResource( 1 )]
+position = Vector2( -1408, 344 )
+
+[node name="Node2D9" parent="." instance=ExtResource( 1 )]
+position = Vector2( -1144, -302 )

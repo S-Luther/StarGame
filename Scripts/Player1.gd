@@ -28,7 +28,13 @@ var workable = false
 var working = false
 var outfit = false
 
+var minerals = 0
+var liquids = 0
+
+var rumors = []
+
 var NPC = false
+var Player = true
 
 onready var animationPlayer = $AnimationPlayer
 onready var animationTree = $AnimationTree

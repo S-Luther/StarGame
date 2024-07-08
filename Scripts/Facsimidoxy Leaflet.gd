@@ -84,7 +84,7 @@ func _ready():
 
 var toggle = true
 
-func _process(delta):
+func _physics_process(delta):
 	RightGun.AngleOffset = engine.rotation
 				
 	update()

@@ -1,9 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scenes/Test/Galaxy.gd" type="Script" id=1]
 [ext_resource path="res://assets/LargeSpace.png" type="Texture" id=2]
-[ext_resource path="res://assets/Base_font.tres" type="DynamicFont" id=3]
-[ext_resource path="res://Scenes/Test/Galaxy.tres" type="Theme" id=4]
 
 [node name="Node2D" type="Node2D"]
 z_index = 1
@@ -21,12 +19,3 @@ texture = ExtResource( 2 )
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 833, 539 )
 zoom = Vector2( 0.6, 0.6 )
-
-[node name="Line2D" type="Line2D" parent="."]
-default_color = Color( 0.4, 0.501961, 1, 1 )
-
-[node name="Label" type="Label" parent="."]
-margin_right = 40.0
-margin_bottom = 14.0
-theme = ExtResource( 4 )
-custom_fonts/font = ExtResource( 3 )

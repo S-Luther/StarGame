@@ -20,8 +20,8 @@ var previousFactions = []
 var galaxy;
 var logsBack = ""
 #onready var randBu = $Button2
-var OnePlayerWorld = preload("res://Scenes/Shuttle/1pWorld.tscn").instance()
-var FacsWorld = preload("res://Scenes/Leaflet/FacsWorld.tscn").instance()
+var OnePlayerWorld = preload("res://Scenes/Shuttle/1pWorld.tscn")
+var FacsWorld = preload("res://Scenes/Leaflet/FacsWorld.tscn")
 var Galaxy
 var PlayerStats
 
@@ -44,7 +44,7 @@ func difference(arr1, arr2):
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _physics_process(delta):
 	var mousePos = get_global_mouse_position()
 	
 	
@@ -79,6 +79,12 @@ func _process(delta):
 		totalPop = totalPop + n.residents.size()
 		if !unique_factions.has(n.faction):
 			unique_factions.append(n.faction)
+			if n.culture == "A":
+				galaxy.unique_cultures[0] = galaxy.unique_cultures[0] + 1
+			if n.culture == "F":
+				galaxy.unique_cultures[1] = galaxy.unique_cultures[1] + 1
+			if n.culture == "E":
+				galaxy.unique_cultures[2] = galaxy.unique_cultures[2] + 1
 	
 	text = "Total Pop: " + String(totalPop) + "\nNumber of Worlds: " + String(nodes.size()) + "\n\n"
 	
@@ -138,9 +144,9 @@ func _on_Button2_pressed():
 
 func _on_Button3_pressed():
 	if ship == 0:
-		get_tree().get_root().add_child(OnePlayerWorld)
+		get_tree().get_root().add_child(OnePlayerWorld.instance())
 	elif ship == 1:
-		get_tree().get_root().add_child(FacsWorld)
+		get_tree().get_root().add_child(FacsWorld.instance())
 	self.visible = false
 
 
@@ -151,8 +157,8 @@ func _on_Pause_pressed():
 
 	pass # Replace with function body.
 
-var sizes = [2000, 4000, 6000, 8000, 10000]
-var spacing = [100, 100, 50, 25, -50]
+var sizes = [50, 100, 150, 250, 500]
+var spacing = [50, 100, 200, 250, 300]
 var size_labels = ["Tiny", "Small", "Medium", "Large", "Massive"]
 var size_index = 2
 
@@ -161,20 +167,20 @@ func _on_Button5_pressed():
 	if size_index == 5:
 		size_index = 0
 	galaxy.size = sizes[size_index]
-	galaxy.spacing = spacing[size_index]
+	galaxy.mass = spacing[size_index]
 	sizeB.text = size_labels[size_index]
 
 var ship = 0
 
 func _on_Left_pressed():
 	ship = ship - 1
-	if ship == -1:
+	if ship <= -1:
 		ship = 1
 	Ship.frame = ship
 
 
 func _on_Right_pressed():
 	ship = ship + 1
-	if ship == 2:
+	if ship >= 2:
 		ship = 0
 	Ship.frame = ship
