@@ -1112,6 +1112,7 @@ func _ready():
 	build()
 
 var unique_cultures = [10000,10000,10000];
+var unique_cultures_true = [0,0,0];
 var unique_factions = []
 var fullStop = false
 
@@ -1121,6 +1122,7 @@ func rebuild():
 	collisions = 0
 	clashCount = 0
 	unique_cultures = [10000,10000,10000];
+	unique_cultures_true = [0,0,0];
 	unique_factions.clear()
 	fullStop = false
 	for a in get_tree().get_nodes_in_group("mapPlanets"):
@@ -1155,6 +1157,7 @@ func _process(delta):
 	
 	runs = runs + 1
 	
+
 	if (runs % 5000) == 0:
 		for a in get_tree().get_nodes_in_group("labels"):
 			a.queue_free()
@@ -1211,6 +1214,7 @@ func _process(delta):
 				print("Rejected for out of bounds")
 				collisions = 0
 				clashCount = 0
+				unique_cultures_true = [0,0,0];
 				unique_cultures = [10000,10000,10000];
 				unique_factions.clear()
 				for a in get_tree().get_nodes_in_group("mapPlanets"):
@@ -1229,32 +1233,34 @@ func _process(delta):
 			asteroidm.add_to_group("mapPlanets")
 			
 		
-#	if runs == 1000:
-#
-#
-#		for p in places:
-#			var label = Label.new()
-#
-#			label.text = "      "+p.name+"   " + String(p.residents.size()) + "  " + p.culture
-#	#		print((label.text.length()))
-#			label.visible = false
-#			label.set_position(p.pos + Vector2((label.text.length()) * -8,20))
-#	#		label.set_position(p.pos)
-#
-#			label.rect_scale = Vector2(3,3);
-#	#		label.add_font_override("font", dynamic_font)
-#			self.add_child(label)
-#			label.add_to_group("labels")
-#			var neighb = p.neighbors
-#			for l in places:
-#				if neighb.has(l.name):
-#					if p.pos.distance_to(l.pos) > 200:
-#						p.neighbors.erase(l.name)
-#						l.neighbors.erase(p.name)
+
+	if runs == 200:
+		
+		
+		for p in places:
+			var label = Label.new()
+					
+			label.text = "      "+p.name+"   " + String(p.residents.size()) + "  " + p.culture
+	#		print((label.text.length()))
+			label.visible = false
+			label.set_position(p.pos + Vector2((label.text.length()) * -8,20))
+	#		label.set_position(p.pos)
+			
+			label.rect_scale = Vector2(3,3);
+	#		label.add_font_override("font", dynamic_font)
+			self.add_child(label)
+			label.add_to_group("labels")
+			var neighb = p.neighbors
+			for l in places:
+				if neighb.has(l.name):
+					if p.pos.distance_to(l.pos) > 200:
+						p.neighbors.erase(l.name)
+						l.neighbors.erase(p.name)
 	
-	if !finish && !fullStop && runs > 999:
+	if t.is_stopped() && !finish && !fullStop && runs > 199:
 		unique_factions.clear()
 		unique_cultures = [0, 0, 0]
+		unique_cultures_true = [0,0,0];
 	#
 #		t.start(.5)
 		clash()
@@ -1273,14 +1279,13 @@ func _process(delta):
 			
 			if !unique_factions.has(p.faction):
 				unique_factions.append(p.faction + " " + p.culture)
-				
 			
-			if p.culture == "A":
-				unique_cultures[0] = unique_cultures[0] + 1
-			if p.culture == "F":
-				unique_cultures[1] = unique_cultures[1] + 1
-			if p.culture == "E":
-				unique_cultures[2] = unique_cultures[2] + 1
+				if p.culture == "A":
+					unique_cultures[0] = unique_cultures[0] + 1
+				if p.culture == "F":
+					unique_cultures[1] = unique_cultures[1] + 1
+				if p.culture == "E":
+					unique_cultures[2] = unique_cultures[2] + 1
 
 			
 			var asteroidm = PlanetMarker.instance()
