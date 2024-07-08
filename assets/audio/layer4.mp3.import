@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/layer4.mp3-c2f06b02c5788d30f0a698a60f64d61f.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/layer4.mp3"
+dest_files=[ "res://.import/layer4.mp3-c2f06b02c5788d30f0a698a60f64d61f.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0
