@@ -11,8 +11,12 @@ var move_timer = Timer.new()
 var collision_timer = Timer.new()
 var regen_timer = Timer.new()
 const projectile = preload('res://Scenes/Shared/Projectile.tscn')
+
 onready var animationPlayer = $AnimationPlayer
 onready var collision = $CollisionShape2D
+onready var sprite = $Sprite
+
+var t;
 
 var health = .5;
 var origin_health = 0
@@ -24,6 +28,8 @@ var pre_target = null
 var origin = null
 var dest_index = 0
 var queue = []
+
+var radius = 100
 
 var near_something = false
 
@@ -109,7 +115,7 @@ func _physics_process(delta):
 	#			print("one ", rad2deg(self.velocity.angle()), " > ", lower)
 				if abs(rad2deg(self.velocity.angle())) < upper:
 	#				print("two ", rad2deg(self.velocity.angle()), " < ", upper)
-					if self.global_position.distance_to(get_tree().get_nodes_in_group("player")[0].global_position) < 1500:
+					if self.global_position.distance_to(get_tree().get_nodes_in_group("player")[0].global_position) < 2500:
 						if self.global_position.distance_to(get_tree().get_nodes_in_group("player")[0].global_position) > 500:
 							state = ATTACK
 
@@ -123,7 +129,9 @@ func _physics_process(delta):
 				if alive && attacker:
 		#			print("boom")
 					var p = projectile.instance()
-					p.position = Vector2(self.position.x, self.position.y)
+#					p.activeWait.start(.4)
+					
+					p.position = Vector2(self.position.x, self.position.y) + 1.5*Vector2(sprite.texture.get_width(), 0).rotated(velocity.angle())
 					p.velocity = Vector2(20, 0).rotated(velocity.angle())
 					p.rotation = velocity.angle()
 					p.z_index = 2
@@ -188,7 +196,7 @@ func move(target, delta):
 
 			if collision_timer.is_stopped():
 				swp = !swp
-				collision_timer.start(1)
+				collision_timer.start(.2)
 #				if swp:
 				angle = angle + PI * randf()
 #				else:
@@ -196,7 +204,7 @@ func move(target, delta):
 #				print(angle)
 #				print("tripped")
 				move_timer.start(1)
-				hit()
+				hit(get_slide_collision(0).collider)
 				
 	else:
 #		print("turning")
@@ -243,7 +251,7 @@ func hit_animation_finished():
 func slice_animation_finished():
 	queue_free()
 	
-func hit():
+func hit(orig = null):
 	animationPlayer.play("strike")
 	self.modulate.s = 100
 	health = health - 1
@@ -251,6 +259,12 @@ func hit():
 		alive = false
 		velocity = Vector2.ZERO
 		animationPlayer.play("Hit")
+	if orig is Projectile:
+		print("proj")
+		if orig.originator == "player":
+			attacker = true
+			pre_target = null
+			print("Hit by player")
 
 	
 func slice():
@@ -269,7 +283,7 @@ func get_circle_position(random):
 		kill_circle_centre = get_tree().get_nodes_in_group("player")[0].global_position
 	else:
 		kill_circle_centre = pre_target
-	var radius = 100
+	
 	 #Distance from center to circumference of circle
 	var angle = random * PI * 2;
 	var x = kill_circle_centre.x + cos(angle) * radius;

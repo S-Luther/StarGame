@@ -85,6 +85,7 @@ graph_offset = Vector2( -243.818, -50.125 )
 [sub_resource type="AnimationNodeStateMachinePlayback" id=10]
 
 [sub_resource type="CircleShape2D" id=5]
+radius = 15.1327
 
 [node name="Node2D" type="KinematicBody2D"]
 rotation = 1.5708
@@ -112,7 +113,7 @@ active = true
 parameters/playback = SubResource( 10 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 108, 1.99962 )
+position = Vector2( 109, 1.9996 )
 shape = SubResource( 5 )
 disabled = true
 

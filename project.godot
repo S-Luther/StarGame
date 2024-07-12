@@ -29,6 +29,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/Player1.gd"
 }, {
+"base": "KinematicBody2D",
+"class": "Projectile",
+"language": "GDScript",
+"path": "res://Scripts/Projectile.gd"
+}, {
 "base": "Node",
 "class": "Walker",
 "language": "GDScript",
@@ -64,6 +69,7 @@ _global_script_class_icons={
 "Names": "",
 "Pirate_Bay": "",
 "Player1": "",
+"Projectile": "",
 "Walker": "",
 "fade_rule": "",
 "meta_player": "",

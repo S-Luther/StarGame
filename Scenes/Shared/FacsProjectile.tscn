@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://assets/eclipse-1.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Projectile.gd" type="Script" id=2]
 [ext_resource path="res://assets/New Piskel.png" type="Texture" id=3]
+[ext_resource path="res://assets/audio/plasma.mp3" type="AudioStream" id=4]
 
 [sub_resource type="Animation" id=4]
 resource_name = "Hit"
@@ -170,5 +171,8 @@ texture = ExtResource( 1 )
 position = Vector2( 68, -0.000247955 )
 shape = SubResource( 5 )
 disabled = true
+
+[node name="plasma" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]

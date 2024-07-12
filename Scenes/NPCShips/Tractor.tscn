@@ -515,26 +515,26 @@ scale = Vector2( 5, 5 )
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 25.8, -24.2 )
+position = Vector2( 35.3999, -23.0001 )
 scale = Vector2( 0.1, 0.1 )
 shape = SubResource( 5 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 30.8, -23.6998 )
+position = Vector2( 36.1999, -24.4001 )
 rotation = 1.5708
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
 vframes = 2
 
 [node name="Sprite2" type="Sprite" parent="."]
-position = Vector2( -35.3, -32.4998 )
+position = Vector2( -24.4499, -33.8996 )
 scale = Vector2( 1, -0.5 )
 texture = ExtResource( 5 )
 vframes = 4
 frame = 3
 
 [node name="Sprite3" type="Sprite" parent="."]
-position = Vector2( -35.3, -45.8998 )
+position = Vector2( -24.4501, -46.5 )
 scale = Vector2( 1, 0.5 )
 texture = ExtResource( 5 )
 vframes = 4

@@ -58,17 +58,20 @@ func _process(delta):
 
 
 func _on_Node2D_area_entered(area):
-	if !get_tree().get_nodes_in_group("World")[0].paused:
-		hasHappened = true
-		var sp = SpacePort.instance()
-		sp.z_index = 999999
-		sp.residents = residents
-		get_tree().get_root().add_child(sp)
-		for p in get_tree().get_nodes_in_group("World"):
-			p.pause()
-		for p in get_tree().get_nodes_in_group("planets"):
-			p.visible = false
-		for p in get_tree().get_nodes_in_group("NavLines"):
-			p.visible = false
-	#	get_tree().get_root().
-		get_tree().get_nodes_in_group("FarmCam")[0].current = true
+	
+	for a in area.get_overlapping_bodies():
+		if a.NPC == false:
+			if !get_tree().get_nodes_in_group("World")[0].paused:
+				hasHappened = true
+				var sp = SpacePort.instance()
+				sp.z_index = 999999
+				sp.residents = residents
+				get_tree().get_root().add_child(sp)
+				for p in get_tree().get_nodes_in_group("World"):
+					p.pause()
+				for p in get_tree().get_nodes_in_group("planets"):
+					p.visible = false
+				for p in get_tree().get_nodes_in_group("NavLines"):
+					p.visible = false
+			#	get_tree().get_root().
+				get_tree().get_nodes_in_group("FarmCam")[0].current = true

@@ -2,14 +2,14 @@ extends KinematicBody2D
 
 
 export var ACCELERATION = 600
-export var MAX_SPEED = 1000
+export var MAX_SPEED = 5000
 
 export var ROLL_SPEED = 10
 export var FRICTION = 1
 
 var shotTimer = Timer.new()
 var colCheckTimer = Timer.new();
-
+var NPC = false
 enum {
 	MOVE,
 	FALL,
@@ -153,6 +153,8 @@ func move_state(delta):
 				shotTimer.start(.2)
 				var p = projectile.instance()
 				p.position = engine.position
+				p.activeWait.start(.1)
+				p.originator = "player"
 				p.velocity = Vector2(25, 0).rotated(smooth_angle)
 				p.rotation = smooth_angle
 				p.z_index = 2

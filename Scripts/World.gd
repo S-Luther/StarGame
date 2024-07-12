@@ -129,8 +129,7 @@ func array_unique(array: Array) -> Array:
 	return unique
 
 func _ready():
-	Player = Player_Shuttle.instance()
-	add_child(Player)
+
 	TSPNearestNeighbor(test)
 	add_child(t)
 	t.one_shot = true
@@ -147,7 +146,7 @@ func _ready():
 		
 	
 	
-	lastpos = Player.position
+	
 	
 	self.add_to_group("World")
 	for g in get_tree().get_nodes_in_group("Galaxy"):
@@ -170,7 +169,7 @@ func _ready():
 		broadside.origin = ((n.pos - Vector2(800, 500)) *1000)
 		broadside.z_index = 1
 		broadside.places = nodes
-		broadside.health = 15
+		broadside.health = 100
 		broadside.MAX = 500
 		broadside.add_to_group("NPCs")
 
@@ -210,10 +209,10 @@ func _ready():
 #		self.add_child(planet)
 		finished_planets.append(planet)
 		planet.add_to_group("planets")
-		
-		if Player.position.distance_to(pos) < 2000:
-			Player.welcome.text = "Welcome to " +n.name
-			Player.welcome.visible = true
+#
+#		if Player.position.distance_to(pos) < 2000:
+#			Player.welcome.text = "Welcome to " +n.name
+#			Player.welcome.visible = true
 #			get_tree().get_nodes_in_group("Galaxy")[0].Place.add_to_group("current_location")
 	
 		var neighb = 0
@@ -736,6 +735,11 @@ func _ready():
 	
 	for f in finished_planets:
 		self.add_child(f)
+		
+	Player = Player_Shuttle.instance()
+	add_child(Player)
+	Player.add_to_group("realPlayer")
+	lastpos = Player.position
 #	for i in 20:
 #		var asteroid = Asteroid5.instance()
 #		var rng = RandomNumberGenerator.new()

@@ -1,9 +1,11 @@
 extends KinematicBody2D
 
+class_name Projectile
+
 var spawnDuration = Timer.new()
 var activeWait = Timer.new()
-
-
+var NPC = true
+var originator = null
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -26,10 +28,11 @@ func _ready():
 	self.add_child(spawnDuration)
 	spawnDuration.one_shot = true
 	spawnDuration.start(4)
-	plasma.play()
+	plasma.play() 
 #	print(spawnDuration.time_left)
 	set_process(true)
 
+var done = false
 	
 	
 func _process(delta):
@@ -45,7 +48,8 @@ func _process(delta):
 	
 	if spawnDuration.is_stopped():
 		queue_free()
-	if activeWait.is_stopped():
+	if activeWait.is_stopped() && !done:
+		done = true
 		collider.disabled = false;
 
 func hit():
