@@ -17,6 +17,8 @@ onready var animationPlayer = $Area2D/Sprite/ProjectilePlayer
 onready var collider = $CollisionShape2D
 onready var plasma = $plasma
 
+var hashit = false
+var hitspot = Vector2.ZERO
 #onready var animationTree = $Sprite/ProjectileTree
 #onready var animationState = animationTree.get('parameters/playback')
 
@@ -36,12 +38,16 @@ var done = false
 	
 	
 func _process(delta):
-	
+	if hashit:
+		self.global_position = hitspot
 	var collision = move_and_collide(velocity,false)
 	if collision:
-		collider.disabled = true;
+		hitspot = self.global_position
+#		collider.disabled = true;
+		hashit = true
 		velocity = Vector2.ZERO
 		animationPlayer.play("Hit")
+		
 
 		
 #		queue_free()
@@ -53,9 +59,9 @@ func _process(delta):
 		collider.disabled = false;
 
 func hit():
-	collider.disabled = true;
 	velocity = Vector2.ZERO
 	animationPlayer.play("Hit")
+	collider.disabled = true;
 	
 func slice():
 	collider.disabled = true;

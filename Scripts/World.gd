@@ -645,7 +645,7 @@ func _ready():
 			poly.polygon = sides
 			poly.color = Color(.95, .94, .2, .1)
 			
-			self.add_child(poly)
+#			self.add_child(poly)
 			
 			draw_polygon(sides,colour)
 
@@ -665,7 +665,7 @@ func _ready():
 				raidingline.add_point(r)
 			raidingline.width = 15
 			raidingline.default_color = Color.gold
-			self.add_child(raidingline)
+#			self.add_child(raidingline)
 			raidingline.add_to_group("NavLines")
 			self.add_child(pirateBay)
 		
@@ -683,7 +683,7 @@ func _ready():
 	tractorline.width = 10
 	tractorline.default_color = Color.crimson
 	tractorline.add_to_group("NavLines")
-	self.add_child(tractorline)
+#	self.add_child(tractorline)
 	
 	for i in int(queue.size() / 5):
 		var tractor = Tractor.instance()
@@ -731,7 +731,7 @@ func _ready():
 		line.add_point(l)
 	line.width = 5
 	line.add_to_group("NavLines")
-	self.add_child(line)
+#	self.add_child(line)
 	
 	for f in finished_planets:
 		self.add_child(f)

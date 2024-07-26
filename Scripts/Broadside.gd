@@ -38,8 +38,8 @@ var opp = 1
 
 # Called every frame. 'delta' is the elapsed time sinsce the previous frame.
 func _process(delta):
-	if attacker:
-		print(self.rotation_degrees)
+#	if attacker:
+#		print(self.rotation_degrees)
 	
 	if attacker && launchTimer.is_stopped():
 		

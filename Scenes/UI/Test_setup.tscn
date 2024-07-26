@@ -511,95 +511,95 @@ text = "Map"
 
 [node name="rif" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
-volume_db = -40.0
+volume_db = -20.0
 
 [node name="rif2" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 13 )
-volume_db = -40.0
+volume_db = -20.0
 
 [node name="A" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 12 )
-volume_db = -40.0
+volume_db = -20.0
 
 [node name="AH" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )
-volume_db = -40.0
+volume_db = -20.0
 
 [node name="C" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 10 )
-volume_db = -40.0
+volume_db = -20.0
 
 [node name="DS" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
-volume_db = -40.0
+volume_db = -20.0
 
 [node name="D" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 9 )
-volume_db = -40.0
+volume_db = -20.0
 
 [node name="E" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 11 )
-volume_db = -40.0
+volume_db = -20.0
 
 [node name="G" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
-volume_db = -40.0
+volume_db = -20.0
 
 [node name="track1" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 15 )
-volume_db = -40.0
+volume_db = -20.0
 
 [node name="track2" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 14 )
-volume_db = -40.0
+volume_db = -20.0
 
 [node name="track3" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 16 )
-volume_db = -40.0
+volume_db = -20.0
 
 [node name="track4" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 17 )
-volume_db = -40.0
+volume_db = -20.0
 
 [node name="layer1" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 22 )
-volume_db = -40.0
+volume_db = -20.0
 
 [node name="layer2" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 21 )
-volume_db = -40.0
+volume_db = -20.0
 
 [node name="layer3" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 18 )
-volume_db = -40.0
+volume_db = -20.0
 
 [node name="layer4" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 19 )
-volume_db = -40.0
+volume_db = -20.0
 
 [node name="layer5" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 23 )
-volume_db = -40.0
+volume_db = -20.0
 
 [node name="layer6" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 20 )
-volume_db = -40.0
+volume_db = -20.0
 
 [node name="high" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 27 )
-volume_db = -40.0
+volume_db = -20.0
 
 [node name="mid" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 25 )
-volume_db = -40.0
+volume_db = -20.0
 
 [node name="wine" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 24 )
-volume_db = -40.0
+volume_db = -20.0
 
 [node name="perc" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 26 )
-volume_db = -40.0
+volume_db = -20.0
 
 [connection signal="pressed" from="Scene_configure/1Player2" to="." method="_on_1Player2_pressed"]
 [connection signal="pressed" from="Scene_configure/1Player2" to="Scene_configure" method="_on_1Player2_pressed"]
