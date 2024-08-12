@@ -9,6 +9,7 @@ const BroadsideDrone = preload('res://Scenes/NPCShips/BroadsideDrone.tscn')
 var launchTimer = Timer.new();
 
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	add_child(launchTimer)
@@ -40,6 +41,15 @@ var opp = 1
 func _process(delta):
 #	if attacker:
 #		print(self.rotation_degrees)
+
+	if attacker && self.global_position.distance_to(get_tree().get_nodes_in_group("realPlayer")[0].global_position) > 8000:
+		attacker = false
+		pre_target = backup_target
+		
+		for k in get_tree().get_nodes_in_group("kids"):
+			k.attacker = false
+			k.attackee = self
+			
 	
 	if attacker && launchTimer.is_stopped():
 		
@@ -54,8 +64,8 @@ func _process(delta):
 #			drone.scale = Vector2(.25,.25)
 			drone.z_index = 1
 			drone.health = .5
-			drone.SPEED = 100
-			drone.MAX = 2000
+			drone.SPEED = 200
+			drone.MAX = 1500
 			drone.attacker = true
 
 			get_tree().get_nodes_in_group("World")[0].add_child(drone)

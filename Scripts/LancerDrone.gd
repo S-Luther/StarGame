@@ -10,11 +10,14 @@ var pause_timer = Timer.new()
 var move_timer = Timer.new()
 var collision_timer = Timer.new()
 var regen_timer = Timer.new()
+
 const projectile = preload('res://Scenes/Shared/Projectile.tscn')
 
 onready var animationPlayer = $AnimationPlayer
 onready var collision = $CollisionShape2D
 onready var sprite = $Sprite
+
+
 
 var t;
 
@@ -25,6 +28,8 @@ var NPC = true
 
 var trailer = false
 var pre_target = null
+var backup_target = null
+var attackee = null
 var origin = null
 var dest_index = 0
 var queue = []
@@ -71,6 +76,7 @@ func _ready():
 	regen_timer.one_shot = true
 	regen_timer.start(15)
 	origin_health = health
+
 	
 
 	
@@ -80,6 +86,8 @@ func _ready():
 var runs = 0
 var paused = false
 func _physics_process(delta):
+	if attackee == null:
+		attackee = get_tree().get_nodes_in_group("player")[0]
 	if regen_timer.is_stopped():
 		if health < origin_health:
 			print("regen: ", health)
@@ -263,6 +271,7 @@ func hit(orig = null):
 		print("proj")
 		if orig.originator == "player":
 			attacker = true
+			backup_target = pre_target
 			pre_target = null
 			print("Hit by player")
 
@@ -280,7 +289,7 @@ func slice():
 func get_circle_position(random):
 	var kill_circle_centre = Vector2.ZERO
 	if pre_target == null:
-		kill_circle_centre = get_tree().get_nodes_in_group("player")[0].global_position
+		kill_circle_centre = attackee.global_position
 	else:
 		kill_circle_centre = pre_target
 	
